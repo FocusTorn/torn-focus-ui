@@ -1,0 +1,13 @@
+{
+    "iconDefinitions": {
+        "_cake": {
+            "iconPath": "./../icons/cake.svg"
+        },
+        "_file": {
+            "iconPath": "./../icons/file.svg"
+        },
+        "_python-folder": {
+            "iconPath": "./../icons/python-folder.svg"
+        }
+    }
+}
