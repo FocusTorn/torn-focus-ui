@@ -1,0 +1,45 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+root = true
+
+[*]
+tab_width = 4
+indent_size = 4
+indent_style = space
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 130
+
+
+
+
+[*.svg]
+insert_final_newline = false
+
+[*.json]
+trim_trailing_whitespace = false
+
+
+
+
+
+
+# root = true
+
+# [*]
+# insert_final_newline = true
+# charset = utf-8
+# trim_trailing_whitespace = true
+# end_of_line = lf
+
+# [*.{js,json,ts,tsx}]
+# indent_style = space
+# indent_size = 2
+
+# [Makefile]
+# indent_style = tab
+
+# [*.{md,markdown}]
+# trim_trailing_whitespace = false

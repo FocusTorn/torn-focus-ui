@@ -1,0 +1,106 @@
+{
+    "iconDefinitions": {
+        "_ahkf": {
+            "iconPath": "./file_icons/ahkf.svg"
+        },
+        "_ahks": {
+            "iconPath": "./file_icons/ahks.svg"
+        },
+        "_Artboard 1": {
+            "iconPath": "./file_icons/Artboard 1.svg"
+        },
+        "_bun-config": {
+            "iconPath": "./file_icons/bun-config.svg"
+        },
+        "_bun-lock": {
+            "iconPath": "./file_icons/bun-lock.svg"
+        },
+        "_bun": {
+            "iconPath": "./file_icons/bun.svg"
+        },
+        "_c": {
+            "iconPath": "./file_icons/c.svg"
+        },
+        "_coderabbit": {
+            "iconPath": "./file_icons/coderabbit.svg"
+        },
+        "_cpp": {
+            "iconPath": "./file_icons/cpp.svg"
+        },
+        "_editorconfig": {
+            "iconPath": "./file_icons/editorconfig.svg"
+        },
+        "_eslint": {
+            "iconPath": "./file_icons/eslint.svg"
+        },
+        "_git-ignore": {
+            "iconPath": "./file_icons/git-ignore.svg"
+        },
+        "_git": {
+            "iconPath": "./file_icons/git.svg"
+        },
+        "_image": {
+            "iconPath": "./file_icons/image.svg"
+        },
+        "_js": {
+            "iconPath": "./file_icons/js.svg"
+        },
+        "_json": {
+            "iconPath": "./file_icons/json.svg"
+        },
+        "_julia": {
+            "iconPath": "./file_icons/julia.svg"
+        },
+        "_license": {
+            "iconPath": "./file_icons/license.svg"
+        },
+        "_markdown": {
+            "iconPath": "./file_icons/markdown.svg"
+        },
+        "_node-ignore": {
+            "iconPath": "./file_icons/node-ignore.svg"
+        },
+        "_node": {
+            "iconPath": "./file_icons/node.svg"
+        },
+        "_package-lock": {
+            "iconPath": "./file_icons/package-lock.svg"
+        },
+        "_package": {
+            "iconPath": "./file_icons/package.svg"
+        },
+        "_poetry-lock": {
+            "iconPath": "./file_icons/poetry-lock.svg"
+        },
+        "_poetry": {
+            "iconPath": "./file_icons/poetry.svg"
+        },
+        "_readme": {
+            "iconPath": "./file_icons/readme.svg"
+        },
+        "_sh": {
+            "iconPath": "./file_icons/sh.svg"
+        },
+        "_svg": {
+            "iconPath": "./file_icons/svg.svg"
+        },
+        "_ts": {
+            "iconPath": "./file_icons/ts.svg"
+        },
+        "_tsconfig": {
+            "iconPath": "./file_icons/tsconfig.svg"
+        },
+        "_txt": {
+            "iconPath": "./file_icons/txt.svg"
+        },
+        "_vscode-ignore": {
+            "iconPath": "./file_icons/vscode-ignore.svg"
+        },
+        "_vscode": {
+            "iconPath": "./file_icons/vscode.svg"
+        },
+        "_yaml": {
+            "iconPath": "./file_icons/yaml.svg"
+        }
+    }
+}

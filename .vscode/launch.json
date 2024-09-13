@@ -5,36 +5,37 @@
 {
 	"version": "0.2.0",
 	"configurations": [
-		{
-			"name": "Debug Extension",
+		
+		
+		{	"name": "Debug Extension: Build and Watch",
 			"type": "extensionHost",
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
-			"args": ["--extensionDevelopmentPath=${workspaceFolder}"],
+			"args": [
+				"D:/!Dev/VSC_Extensions/.vscode/VSC_Extensions.code-workspace",
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--disable-extensions"
+			],
 			"sourceMaps": true,
 			"outFiles": ["${workspaceFolder}/out/src/**/*.js"],
-			"preLaunchTask": "npm: watch"
-		},
-		{
-            "name": "Build and Watch",
-            "type": "extensionHost",
-            "request": "launch",
-            "runtimeExecutable": "${execPath}",
-            "args": [
-				// "${workspaceFolder}/src/test/workspace/workspace.code-workspace",
-				
+			"preLaunchTask": "Build and Watch" 
+		},	
+        
+        
+        {	"name": "Debug Extension: No build",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
 				"D:/!Dev/VSC_Extensions/.vscode/VSC_Extensions.code-workspace",
-				"--extensionDevelopmentPath=${workspaceFolder}"
-			
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--disable-extensions"
 			],
-            "sourceMaps": true,
-            "outFiles": ["${workspaceFolder}/out/src/**/*.js"],
-            "preLaunchTask": "Build and Watch"
-        }
-
-
-
-]
+			"sourceMaps": true,
+			"outFiles": ["${workspaceFolder}/out/src/**/*.js"],
+			"preLaunchTask": "NPM: Watch" 
+		}
+		
+			
+	]
 }
-
-

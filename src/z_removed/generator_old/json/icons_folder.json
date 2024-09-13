@@ -1,0 +1,196 @@
+{
+    "iconDefinitions": {
+        "_folder-ahk-open": {
+            "iconPath": "./folder_icons/folder-ahk-open.svg"
+        },
+        "_folder-ahk": {
+            "iconPath": "./folder_icons/folder-ahk.svg"
+        },
+        "_folder-basic-open": {
+            "iconPath": "./folder_icons/folder-basic-open.svg"
+        },
+        "_folder-basic": {
+            "iconPath": "./folder_icons/folder-basic.svg"
+        },
+        "_folder-config-open": {
+            "iconPath": "./folder_icons/folder-config-open.svg"
+        },
+        "_folder-config": {
+            "iconPath": "./folder_icons/folder-config.svg"
+        },
+        "_folder-core-open": {
+            "iconPath": "./folder_icons/folder-core-open.svg"
+        },
+        "_folder-core": {
+            "iconPath": "./folder_icons/folder-core.svg"
+        },
+        "_folder-dict-open": {
+            "iconPath": "./folder_icons/folder-dict-open.svg"
+        },
+        "_folder-dict": {
+            "iconPath": "./folder_icons/folder-dict.svg"
+        },
+        "_folder-env-open": {
+            "iconPath": "./folder_icons/folder-env-open.svg"
+        },
+        "_folder-env": {
+            "iconPath": "./folder_icons/folder-env.svg"
+        },
+        "_folder-git-open": {
+            "iconPath": "./folder_icons/folder-git-open.svg"
+        },
+        "_folder-git": {
+            "iconPath": "./folder_icons/folder-git.svg"
+        },
+        "_folder-green-arrow-open": {
+            "iconPath": "./folder_icons/folder-green-arrow-open.svg"
+        },
+        "_folder-green-arrow": {
+            "iconPath": "./folder_icons/folder-green-arrow.svg"
+        },
+        "_folder-helper-open": {
+            "iconPath": "./folder_icons/folder-helper-open.svg"
+        },
+        "_folder-helper": {
+            "iconPath": "./folder_icons/folder-helper.svg"
+        },
+        "_folder-images-open": {
+            "iconPath": "./folder_icons/folder-images-open.svg"
+        },
+        "_folder-images": {
+            "iconPath": "./folder_icons/folder-images.svg"
+        },
+        "_folder-js-open": {
+            "iconPath": "./folder_icons/folder-js-open.svg"
+        },
+        "_folder-js": {
+            "iconPath": "./folder_icons/folder-js.svg"
+        },
+        "_folder-json-open": {
+            "iconPath": "./folder_icons/folder-json-open.svg"
+        },
+        "_folder-json": {
+            "iconPath": "./folder_icons/folder-json.svg"
+        },
+        "_folder-magic-open": {
+            "iconPath": "./folder_icons/folder-magic-open.svg"
+        },
+        "_folder-magic": {
+            "iconPath": "./folder_icons/folder-magic.svg"
+        },
+        "_folder-model-open": {
+            "iconPath": "./folder_icons/folder-model-open.svg"
+        },
+        "_folder-model": {
+            "iconPath": "./folder_icons/folder-model.svg"
+        },
+        "_folder-node-open": {
+            "iconPath": "./folder_icons/folder-node-open.svg"
+        },
+        "_folder-node": {
+            "iconPath": "./folder_icons/folder-node.svg"
+        },
+        "_folder-notes-open": {
+            "iconPath": "./folder_icons/folder-notes-open.svg"
+        },
+        "_folder-notes": {
+            "iconPath": "./folder_icons/folder-notes.svg"
+        },
+        "_folder-out-open": {
+            "iconPath": "./folder_icons/folder-out-open.svg"
+        },
+        "_folder-out": {
+            "iconPath": "./folder_icons/folder-out.svg"
+        },
+        "_folder-pycache-open": {
+            "iconPath": "./folder_icons/folder-pycache-open.svg"
+        },
+        "_folder-pycache": {
+            "iconPath": "./folder_icons/folder-pycache.svg"
+        },
+        "_folder-python-open": {
+            "iconPath": "./folder_icons/folder-python-open.svg"
+        },
+        "_folder-python": {
+            "iconPath": "./folder_icons/folder-python.svg"
+        },
+        "_folder-removed-open": {
+            "iconPath": "./folder_icons/folder-removed-open.svg"
+        },
+        "_folder-removed": {
+            "iconPath": "./folder_icons/folder-removed.svg"
+        },
+        "_folder-resources-open": {
+            "iconPath": "./folder_icons/folder-resources-open.svg"
+        },
+        "_folder-resources": {
+            "iconPath": "./folder_icons/folder-resources.svg"
+        },
+        "_folder-root-open": {
+            "iconPath": "./folder_icons/folder-root-open.svg"
+        },
+        "_folder-root": {
+            "iconPath": "./folder_icons/folder-root.svg"
+        },
+        "_folder-script-open": {
+            "iconPath": "./folder_icons/folder-script-open.svg"
+        },
+        "_folder-script": {
+            "iconPath": "./folder_icons/folder-script.svg"
+        },
+        "_folder-sh-open": {
+            "iconPath": "./folder_icons/folder-sh-open.svg"
+        },
+        "_folder-sh": {
+            "iconPath": "./folder_icons/folder-sh.svg"
+        },
+        "_folder-source-open": {
+            "iconPath": "./folder_icons/folder-source-open.svg"
+        },
+        "_folder-source": {
+            "iconPath": "./folder_icons/folder-source.svg"
+        },
+        "_folder-tests-open": {
+            "iconPath": "./folder_icons/folder-tests-open.svg"
+        },
+        "_folder-tests": {
+            "iconPath": "./folder_icons/folder-tests.svg"
+        },
+        "_folder-theme-open": {
+            "iconPath": "./folder_icons/folder-theme-open.svg"
+        },
+        "_folder-theme": {
+            "iconPath": "./folder_icons/folder-theme.svg"
+        },
+        "_folder-tools-open": {
+            "iconPath": "./folder_icons/folder-tools-open.svg"
+        },
+        "_folder-tools": {
+            "iconPath": "./folder_icons/folder-tools.svg"
+        },
+        "_folder-ts-open": {
+            "iconPath": "./folder_icons/folder-ts-open.svg"
+        },
+        "_folder-ts": {
+            "iconPath": "./folder_icons/folder-ts.svg"
+        },
+        "_folder-vault-open": {
+            "iconPath": "./folder_icons/folder-vault-open.svg"
+        },
+        "_folder-vault": {
+            "iconPath": "./folder_icons/folder-vault.svg"
+        },
+        "_folder-vscode-open": {
+            "iconPath": "./folder_icons/folder-vscode-open.svg"
+        },
+        "_folder-vscode": {
+            "iconPath": "./folder_icons/folder-vscode.svg"
+        },
+        "_folder-webpack-open": {
+            "iconPath": "./folder_icons/folder-webpack-open.svg"
+        },
+        "_folder-webpack": {
+            "iconPath": "./folder_icons/folder-webpack.svg"
+        }
+    }
+}

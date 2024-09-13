@@ -1,0 +1,130 @@
+
+        // {
+        //     "label": "Generate JSON",
+        //     "type": "shell",
+        //     "command": "node",
+        //     "args": [
+        //         "${workspaceFolder}/src/js/generate_json.js"
+        //     ],
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "presentation": {
+        //         "echo": true,
+        //         "reveal": "always",
+        //         "focus": true,
+        //         "panel": "shared"
+        //     },
+        //     "problemMatcher": []
+        // },
+        
+        
+        // {
+        //     "label": "Build",
+        //     "dependsOn": [
+        //         "Generate JSON"
+        //     ],
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "problemMatcher": []
+        // },
+        
+        
+        // {
+        //     "label": "Watch",
+        //     "type": "npm",
+        //     "script": "watch",
+        //     "problemMatcher": "$tsc-watch",
+        //     "isBackground": true,
+        //     "presentation": {
+        //         "reveal": "never"
+        //     },
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "dependsOn": [
+        //         "Build"
+        //     ]
+        // },
+        
+        
+        // {
+        //     "label": "Build and Watch",
+        //     "dependsOn": [
+        //         "Watch"
+        //     ],
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "presentation": {
+        //         "echo": true,
+        //         "reveal": "always",
+        //         "focus": true,
+        //         "panel": "shared"
+        //     },
+        //     "problemMatcher": []
+        // }
+//     ]
+// }
+
+
+
+
+
+
+// // See https://go.microsoft.com/fwlink/?LinkId=733558
+// // for the documentation about the tasks.json format
+// {
+// 	"version": "2.0.0",
+// 	"tasks": [
+// 		{
+// 			"type": "npm",
+// 			"script": "watch",
+// 			"problemMatcher": "$tsc-watch",
+// 			"isBackground": true,
+// 			"presentation": {
+// 				"reveal": "never"
+// 			},
+// 			"group": {
+// 				"kind": "build",
+// 				"isDefault": true
+// 			}
+			
+// 		},
+// 		{
+//             "label": "Generate JSON ",
+//             "type": "shell",
+//             "command": "node",
+//             "args": [
+//                 "${workspaceFolder}src/js/generate_json.js"
+                
+//             ],
+//             "group": {
+//                 "kind": "build",
+//                 "isDefault": true
+//             },
+//             "presentation": {
+//                 "echo": true,
+//                 "reveal": "always",
+//                 "focus": false,
+//                 "panel": "shared"
+//             },
+//             "problemMatcher": []
+//         },
+// 		{
+//             "label": "Build and Watch",
+//             "dependsOn": [
+//                 "Generate JSON",
+//                 "npm: watch"
+//             ],
+//             "group": "build",
+//             "dependsOrder": "sequence"
+//         }
+		
+// 	]
+// }

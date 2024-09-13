@@ -1,0 +1,336 @@
+{	
+    
+    "folderNames": {
+      
+      ".vscode":		  "_folder-vscode",
+      "src":	        "_folder-source",
+      
+      ".venv":	        "_folder-env",
+      
+      "resources":	  "_folder-resources",
+      
+      ".git":	        "_folder-git",
+      ".github":	        "_folder-git",
+      
+      "helper":	        "_folder-helper",
+      "helpers":	        "_folder-helper",
+      
+      
+      "core":	        "_folder-core",
+      
+      "dict":	        "_folder-dict",
+      "dictionary":	    "_folder-dict",
+      
+      
+      
+      "node_modules": "_folder-node",    
+      
+      "scripts":      "_folder-script",
+      
+      
+      "test":         "_folder-tests",
+      "tests":        "_folder-tests",
+      "_tests":       "_folder-tests",
+      ".vscode-test":	"_folder-tests",
+      
+      
+      
+      
+      ".devcontainer":	"_folder-webpack",
+      
+      
+      "js":         "_folder-js",
+      "ts":         "_folder-ts",
+      "sh":         "_folder-sh",
+      "json":         "_folder-json",
+      
+      
+      
+      
+      "_removed":      "_folder-removed",
+      "_X_removed":    "_folder-removed",
+      "_XX_removed":   "_folder-removed",
+      "_XXX_removed":  "_folder-removed",
+      "removed":      "_folder-removed",
+      "X_removed":    "_folder-removed",
+      "XX_removed":   "_folder-removed",
+      "XXX_removed":  "_folder-removed",
+      "unused":       "_folder-removed",
+      "X_unused":     "_folder-removed",
+      "XX_unused":    "_folder-removed",
+      "XXX_unused":   "_folder-removed",
+      
+      
+      
+      
+      
+      
+      ".notes": "_folder-notes",
+      ".pnotes": "_folder-notes",
+      "notes":	"_folder-notes",
+      "pnotes":	"_folder-notes",
+      
+      "dist": "_folder-out",
+      "out":	"_folder-out",
+      
+      "images": "_folder-images",
+      "icons":	"_folder-images",
+      
+      "theme":  "_folder-theme",
+      "themes": "_folder-theme",
+
+      "python":     "_folder-python",
+      ".python":    "_folder-python",
+      "_python":    "_folder-python",
+      "__python__": "_folder-python",
+      
+      "pycache":      "_folder-pycache",
+      ".pycache":     "_folder-pycache",
+      "_pycache":     "_folder-pycache",
+      "__pycache__":  "_folder-pycache",
+      
+      "pytest_cache":     "folder-pycache",
+      ".pytest_cache":    "folder-pycache",
+      "_pytest_cache":    "folder-pycache",
+      "__pytest_cache__": "folder-pycache"
+    },  
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    "folderNamesExpanded": {
+        
+      ".git":	        "_folder-git-open",
+      ".github":	    "_folder-git-open",
+      
+      
+      "helper":	        "_folder-helper-open",
+      "helpers":	        "_folder-helper-open",
+      
+      "core":	        "_folder-core-open",
+      
+      
+      "dict":	        "_folder-dict-open",
+      "dictionary":	    "_folder-dict-open",
+      
+      ".vscode":      "_folder-vscode-open", 
+      "src":	        "_folder-source-open",
+      
+      ".venv":	      "_folder-env-open",
+      
+      
+      
+      "resources":	  "_folder-resources-open",
+      
+      
+      
+      "node_modules": "_folder-node-open",
+      "scripts":      "_folder-script-open",
+      
+      
+      
+      
+      "test":         "_folder-tests-open",
+      "tests":        "_folder-tests-open",
+      "_tests":       "_folder-tests-open",
+      ".vscode-test":	"_folder-tests-open",
+      
+      
+      
+      ".devcontainer":	"_folder-webpack-open",
+      
+      
+      "js":         "_folder-js-open",
+      "ts":         "_folder-ts-open",
+      "sh":         "_folder-sh-open",
+      "ahk":         "_folder-ahk-open",
+      "json":         "_folder-json-open",
+      
+      
+      
+      
+      
+      
+      "_removed":      "_folder-removed-open",
+      "_X_removed":    "_folder-removed-open",
+      "_XX_removed":   "_folder-removed-open",
+      "_XXX_removed":  "_folder-removed-open",
+      "removed":      "_folder-removed-open",
+      "X_removed":    "_folder-removed-open",
+      "XX_removed":   "_folder-removed-open",
+      "XXX_removed":  "_folder-removed-open",
+      "unused":       "_folder-removed-open",
+      "X_unused":     "_folder-removed-open",
+      "XX_unused":    "_folder-removed-open",
+      "XXX_unused":   "_folder-removed-open",
+      
+      
+      
+      
+      
+      ".notes": "_folder-notes-open",
+      ".pnotes": "_folder-notes-open",
+      "notes":	"_folder-notes-open",
+      "pnotes":	"_folder-notes-open",
+      
+      
+      "icons":  "_folder-images-open",
+      "images": "_folder-images-open",
+      
+      "dist": "_folder-out-open",
+      "out":  "_folder-out-open",
+		  
+      "theme":  "_folder-theme-open",
+		  "themes": "_folder-theme-open",
+		
+      "python":     "_folder-python-open",
+      ".python":    "_folder-python-open",
+      "_python":    "_folder-python-open",
+      "__python__": "_folder-python-open",
+  
+      "pycache":      "_folder-pycache-open",
+      ".pycache":     "_folder-pycache-open",
+      "_pycache":     "_folder-pycache-open",
+      "__pycache__":  "_folder-pycache-open",
+  
+      "pytest_cache":     "_folder-python-cache-open",
+      ".pytest_cache":    "_folder-python-cache-open",
+      "_pytest_cache":    "_folder-python-cache-open",
+      "__pytest_cache__": "_folder-python-cache-open"
+    },  
+    
+    
+    
+
+	
+     
+    "fileExtensions": {
+      
+      "js":     "_js",
+      "js2":     "_js2",
+      
+      "json":   "_json",
+      "jl":     "_julia",
+      "md":     "_markdown",
+      "mjs":    "_js",
+      "ts":     "_ts",
+      "txt":    "_txt",
+      "sh":     "_sh",
+      "svg":    "_svg",
+      "svgai":  "_svgai",
+      
+      "jpg":  "_image",
+      "gif":  "_image",
+      "png":  "_image",
+      
+      "yml":  "_yaml",
+      
+      
+      
+      
+      "c":    "_c",
+      "cpp":  "_cpp",
+      "cs":   "_cs",
+      
+      "ahk":  "_ahkf",
+      "ah2":  "_ahks",
+      
+      "vsix":   			  "_vscode",
+      "code-workspace": "_vscode",
+      
+      "py":   "python",
+      "pyc":  "python-misc",
+      "whl":  "python-misc",
+      
+      "bash": "console",
+      
+      "ps1":    "powershell",
+      "psm1":   "powershell",
+      "psd1":   "powershell",
+      "ps1xml": "powershell",
+      "psc1":   "powershell",
+      "pssc":   "powershell"
+    },  
+    
+    
+    
+    
+
+    
+    
+    "fileNames": {
+        
+      "readme.md":    "_readme",
+      ".gitignore":   "_git-ignore",
+      
+      
+      "license.txt":  "_license",
+      "license.md":  "_license",
+      
+      
+      
+      
+      
+      
+      "bun.lockb":  "_bun-lock",
+      "bunfig.toml":  "_bun-config",
+      
+      ".coderabbit.yaml":  "_coderabbit",
+      
+      ".eslintrc.json":  "_eslint",
+      
+      
+      "package.json":  "_package",
+      "package-lock.json":  "_package-lock",
+      
+      
+      ".editorconfig":  "_editorconfig",
+      
+      "tsconfig.json":  "_tsconfig",
+      
+      
+      
+      ".gitattributes":  "_git",
+      ".npmignore":  "_node-ignore",
+      
+      
+      
+      
+      "vsc-extension-quickstart.md":  "_vscode",
+      ".vscodeignore":               	"_vscode-ignore",
+
+      ".python-version":  "python-misc",
+      ".pylintrc":        "python-misc",
+      "requirements.txt": "python-misc",
+      "pipfile":          "python-misc",
+      "manifest.in":      "python-misc",
+      "pylintrc":         "python-misc",
+      "pyproject.toml":   "python-misc",
+      "py.typed":         "python-misc"
+
+    },  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    "file":               "file",
+    "folder":             "_folder-basic",
+    "folderExpanded":     "_folder-basic-open",
+    "rootFolder":         "_folder-root",
+    "rootFolderExpanded": "_folder-root-open",
+    
+    "languageIds": {},  
+    "hidesExplorerArrows": true,
+    "highContrast": {"fileExtensions": {},"fileNames": {}}
+}

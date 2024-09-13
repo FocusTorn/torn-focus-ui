@@ -1,26 +1,258 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+/** @format */
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+import { ExtensionContext, window, workspace, commands,} from 'vscode';
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "torn-focus-ui" is now active!');
+import { updateIconThemeNoWorkspace } from './helpers/updateIconTheme';
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('torn-focus-ui.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Torn Focus UI!');
-	});
+import { registered, registerCommands } from './extension/helpers/registration';
 
-	context.subscriptions.push(disposable);
+
+
+
+
+
+export function activate(context: ExtensionContext) {
+
+    context.subscriptions.push(...registerCommands(context));
+
+    //--- onDidChangeConfiguration ---------------------------------------------------------------------->>
+
+
+    context.subscriptions.push(
+        workspace.onDidChangeConfiguration((e) => {
+
+
+
+            //- updateIconThemeNoWorkspace ---------------
+            if (e.affectsConfiguration('TornFocusUi.themes.customIcons')) {
+                updateIconThemeNoWorkspace(context);
+            }
+        })
+    );
+
+
+    //---------------------------------------------------------------------------------------------------<<
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    context.subscriptions.push(
+        commands.registerCommand(
+            'torn-focus-ui.wip',
+            async () => {
+
+
+
+
+
+
+
+            }));
+
+
+
+
+
+                // const activeEditor = window.activeTextEditor;
+                // if (activeEditor) {
+                //     const activeWorkspaceFolder = vscode.workspace.getWorkspaceFolder(activeEditor.document.uri);
+                //     console.log(activeWorkspaceFolder);
+                // }
+
+
+                // let sel = Get_ExplorerSelectedURI();
+                // let mr = Get_MultiRootEditorInfo();
+                // console.log(mr);
+
+
+
+                // //- Get workspace root folder ----------------------------------------------------------------
+                // const workspaceFolders = vscode.workspace.workspaceFolders;
+                // if (workspaceFolders && workspaceFolders.length > 0) {
+                //     // Get the URI of the first workspace folder
+                //     const workspaceFolderUri = workspaceFolders[0].uri;
+
+                //     // Check if it's a file URI (indicating a workspace file)
+                //     if (workspaceFolderUri.scheme === 'file') {
+                //         // Get the workspace file path
+                //         const workspaceFilePath = workspaceFolderUri.fsPath;
+
+                //         // Extract the workspace name from the file path
+                //         const workspaceName = path.basename(workspaceFilePath, '.code-workspace');
+
+                //         console.log(`Workspace Name: ${workspaceName}`);
+                //         // You can also display it in a message box
+                //         vscode.window.showInformationMessage(`Workspace Name: ${workspaceName}`);
+                //     } else {
+                //         console.log('Not a workspace file.');
+                //     }
+                // } else {
+                //     console.log('No workspace open.');
+                // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //--- LogSelectedName
+
+    // let LogSelectedName = commands.registerCommand('torn-focus-ui.LogSelectedName', async () => {
+    //     const selectedItem = window.activeTextEditor?.selection;
+
+    //     if (selectedItem) {
+    //         const selectedUri = window.activeTextEditor?.document.uri;
+
+    //         if (selectedUri) {
+    //             const selectedFilePath = selectedUri.fsPath;
+    //             console.log(`Selected File Path: ${selectedFilePath}`);
+    //         } else {
+    //             window.showErrorMessage('No selected file found.');
+    //         }
+    //     } else {
+    //         window.showErrorMessage('No selected file found.');
+    //     }
+    // });
+
+    // context.subscriptions.push(LogSelectedName);
+
+
+
+
+    //--- LogFocusedName
+
+    // let LogFocusedName = commands.registerCommand('torn-focus-ui.LogFocusedName', async (fileUri) => {
+    //     console.log(fileUri);
+    // });
+    // context.subscriptions.push(LogFocusedName);
+
+    // context.subscriptions.push(commands.registerCommand('torn-focus-ui.LogFocusedName',
+    //     async (fileUri) => {
+    //         console.log(fileUri);
+    //     }
+
+    // ));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+
+export function deactivate() { }
+
+
+

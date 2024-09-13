@@ -1,0 +1,124 @@
+{	
+    "folderNames": {    
+            
+        "node_modules": "_folder-node",    
+        "scripts":      "_folder-script",
+        "dist":         "_folder-share",
+        "out":          "_folder-share",
+        ".vscode":      "_folder-vscode",
+
+        
+        
+        
+        "python": "_folder-python",
+        ".python": "_folder-python",
+        "_python": "_folder-python",
+        "__python__": "_folder-python",
+        
+        "pycache": "_folder-python",
+        ".pycache": "_folder-python",
+        "_pycache": "_folder-python",
+        "__pycache__": "_folder-python",
+        
+        "pytest_cache": "_folder-python",
+        ".pytest_cache": "_folder-python",
+        "_pytest_cache": "_folder-python",
+        "__pytest_cache__": "_folder-python"
+    },  
+  
+    "folderNamesExpanded": {    
+        
+        "node_modules":     "_folder-node-open",
+        ".vscode":          "_folder-vscode-open",
+        "scripts":          "_folder-script-open",
+        
+        
+        
+        "dist":             "_folder-share-open",
+        "out":              "_folder-share-open",
+        
+        "python":           "_folder-python-open",
+        ".python":          "_folder-python-open",
+        "_python":          "_folder-python-open",
+        "__python__":       "_folder-python-open",
+        "pycache":          "_folder-python-open",
+        ".pycache":         "_folder-python-open",
+        "_pycache":         "_folder-python-open",
+        "__pycache__":      "_folder-python-open",
+        "pytest_cache":     "_folder-python-open",
+        ".pytest_cache":    "_folder-python-open",
+        "_pytest_cache":    "_folder-python-open",
+        "__pytest_cache__": "_folder-python-open"
+    },  
+    
+    "fileExtensions": { 
+    
+        "ahk":              "_ahks",
+        "ah2":              "_ahkf",
+        "c":                "_c",
+        "code-workspace":   "_vscode",
+        "cpp":              "_cpp",
+        "cs":               "_cs",
+        "js":               "_js",
+        "json":             "_json",
+        "jl":               "_julia",
+        "md":               "_markdown",
+        "ts":               "_ts",
+        "txt":              "_txt",
+        "sh":               "_sh",
+        "svg":              "_svg",
+        
+        
+        
+        
+        "py":               "python",
+        "pyc":              "python-misc",
+        "whl":              "python-misc",
+        
+        "bash":             "console",
+        
+        "ps1":              "powershell",
+        "psm1":             "powershell",
+        "psd1":             "powershell",
+        "ps1xml":           "powershell",
+        "psc1":             "powershell",
+        "pssc":             "powershell"
+    },  
+    
+    "fileNames": {  
+
+        "readme.md":                "_readme",
+        ".vscodeignore":            "_vscode-ignore",
+        ".gitignore":               "_git-ignore",
+        "vsc-extension-quickstart": "_vscode",
+        
+    
+    
+        "requirements.txt":         "python-misc",
+        "pipfile":                  "python-misc",
+        ".python-version":          "python-misc",
+        "manifest.in":              "python-misc",
+        "pylintrc":                 "python-misc",
+        ".pylintrc":                "python-misc",
+        "pyproject.toml":           "python-misc",
+        "py.typed":                 "python-misc"
+    },  
+    
+    "languageIds": {    
+        
+        "python":   "python",
+        "bash":     "_sh"
+    },  
+    
+    "highContrast": {
+        "fileExtensions": {},
+        "fileNames": {}
+    },
+    
+    "file": "file",
+    "hidesExplorerArrows": false,
+    "folder": "folder",
+    "folderExpanded": "folder-open",
+    "rootFolder": "python-folder",
+    "rootFolderExpanded": "folder-root-open"
+}

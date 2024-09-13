@@ -1,73 +1,232 @@
 {
-	"name": "torn-focus-ui",
-	"displayName": "Torn Focus UI",
-	"description": "UI Revamp",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.92.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onStartupFinished"
-	],
-	
-	"main": "./out/extension.js",
-
-  
-  
-
-
-	"contributes": {
-
-
-		"iconThemes": [
-			{
-				"id": "mycons",
-				"label": "Mycons",
-				"path": "./file_icons/file_icons.json"
-			}
-		],
-
-
-		"commands": [
-			{
-				"command": "torn-focus-ui.helloWorld",
-				"title": "Hello World"
-			}
-		]
-
-
-
-	},
-
-  
-  
-
-
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"test": "vscode-test"
-	},
-	
-	"devDependencies": {
-		"@types/mocha": "^10.0.7",
-		"@types/node": "20.x",
-		"@types/vscode": "^1.92.0",
-		"@typescript-eslint/eslint-plugin": "^7.14.1",
-		"@typescript-eslint/parser": "^7.11.0",
-		"@vscode/test-cli": "^0.0.9",
-		"@vscode/test-electron": "^2.4.0",
-		"eslint": "^8.57.0",
-		"typescript": "^5.4.5"
-	},
-	
-	"dependencies": {
-		"xml2js": "^0.6.2"
-	}
+    "name": "torn-focus-ui",
+    "displayName": "Torn Focus UI",
+    "description": "UI Revamp",
+    "publisher": "NewRealityDesigns",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.92.0"
+    },
+    "categories": [
+        "Themes"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./out/extension.js",
+    "icon": "assets/images/logo.png",
+    "galleryBanner": {
+        "color": "#0c0024",
+        "theme": "dark"
+    },
+    "extensionKind": [
+        "ui",
+        "workspace"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/FocusTorn/torn-focus-ui"
+    },
+    "scripts": {
+        "watch": "concurrently \"npm:watch:commands\" \"npm:watch:tsc\"",
+        "watch:tsc": "tsc -w -p ./",
+        "watch:commands": "nodemon --watch src/extension/commands/_commands.json --exec \"npm run generate-package.json\"",
+        "watch:icons": "nodemon --watch src/generator/models/**/* --exec \"npm run create_base_manifest\"",
+        "lint": "eslint src --ext ts",
+        "build": "tsc -p ./",
+        "generate-package.json": "node src/scripts/js/generate-package.js",
+        "create_base_manifest": "node src/generator/js/create_base_manifest.js",
+        
+        "pack_use": "npm run build",
+        
+        "pack_use_PS": "powershell -Command \"node src/generator/js/create_base_manifest.js; vsce package\""
+    },
+    "contributes": {
+        "themes": [
+            {
+                "label": "Torn Focus UI",
+                "uiTheme": "vs-dark",
+                "path": "assets/themes/torn-focus-ui-color-theme.json"
+            }
+        ],
+        "iconThemes": [
+            {
+                "label": "Torn Focus Icon Theme",
+                "id": "torn_focus_icons",
+                "path": "assets/themes/torn_focus_icons.json",
+                "_watch": true
+            }
+        ],
+        "commands": [
+            {
+                "title": "FT-UI: Use Alternate icon",
+                "command": "torn-focus-ui.assignIcon"
+            },
+            {
+                "title": "FT-UI: Use Default Icon",
+                "command": "torn-focus-ui.revertIcon"
+            },
+            {
+                "title": "FT-UI: Show Available Icons",
+                "command": "torn-focus-ui.showAvailableIcons"
+            },
+            {
+                "title": "FT-UI: Show Folder Assignments",
+                "command": "torn-focus-ui.showFolderIconAssignment"
+            },
+            {
+                "title": "FT-UI: Icons > Toggle Icons",
+                "command": "torn-focus-ui.toggleIcons"
+            },
+            {
+                "title": "FT-UI: Icons > Activate Icon Theme",
+                "command": "torn-focus-ui.activateIconTheme"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "group": "2_workspace@0",
+                    "submenu": "torn-focus-ui.assignIconSubmenu"
+                }
+            ],
+            "torn-focus-ui.assignIconSubmenu": [
+                {
+                    "group": "assignIconSubmenu@1",
+                    "command": "torn-focus-ui.assignIcon"
+                },
+                {
+                    "group": "assignIconSubmenu@1",
+                    "command": "torn-focus-ui.revertIcon"
+                },
+                {
+                    "group": "assignIconSubmenu2@1",
+                    "command": "torn-focus-ui.showAvailableIcons"
+                },
+                {
+                    "group": "assignIconSubmenu2@1",
+                    "command": "torn-focus-ui.showFolderIconAssignment"
+                }
+            ]
+        },
+        "submenus": [
+            {
+                "label": "FT-UI: Asign Icon",
+                "id": "torn-focus-ui.assignIconSubmenu"
+            }
+        ],
+        "configuration": [
+            {
+                "type": "object",
+                "title": "QoL: Following Terminal",
+                "properties": {
+                    "TornFocusUi.followingTerminal.main": {
+                        "order": 1,
+                        "type": "boolean",
+                        "description": "Controls if the current working directory will dynamically update according to the active file.",
+                        "default": false
+                    },
+                    "TornFocusUi.followingTerminal.updateTrigger": {
+                        "order": 2,
+                        "type": "string",
+                        "description": "Controls what causes an update in the terminal.",
+                        "default": "File",
+                        "enum": [
+                            "File",
+                            "Workspace Folder"
+                        ],
+                        "enumDescriptions": [
+                            "If needed, the directory is updated when the active file is changed",
+                            "The directory is updated when the new active file is in a different workspace root folder."
+                        ]
+                    },
+                    "TornFocusUi.followingTerminal.targetTerminal": {
+                        "order": 3,
+                        "type": "string",
+                        "description": "Controls which terminal to update.",
+                        "default": "Active",
+                        "enum": [
+                            "Active",
+                            "First"
+                        ],
+                        "enumDescriptions": [
+                            "Directory changes only in the active terminal",
+                            "Directory changes only in the first terminal"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "object",
+                "title": "Themes",
+                "properties": {
+                    "TornFocusUi.themes.colorTheme": {
+                        "order": 5,
+                        "type": "string",
+                        "scope": "resource",
+                        "default": "Torn Focus",
+                        "enum": [
+                            "Torn Focus",
+                            "Other"
+                        ],
+                        "enumDescriptions": [
+                            "Torn Focus UI: Color Theme",
+                            "meh"
+                        ]
+                    },
+                    "TornFocusUi.themes.fileIcons": {
+                        "order": 6,
+                        "type": "string",
+                        "scope": "resource",
+                        "default": "Torn Focus",
+                        "enum": [
+                            "Torn Focus",
+                            "Other"
+                        ],
+                        "enumDescriptions": [
+                            "Torn Focus UI: File Icons",
+                            "meh"
+                        ]
+                    },
+                    "TornFocusUi.themes.customIcons": {
+                        "order": 7,
+                        "type": "object",
+                        "scope": "resource",
+                        "description": "Customize file icon mappings. ",
+                        "default": {}
+                    }
+                }
+            },
+            {}
+        ]
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^11.0.4",
+        "@types/mocha": "^10.0.7",
+        "@types/node": "20.x",
+        "@types/vscode": "^1.92.0",
+        "@typescript-eslint/eslint-plugin": "^7.14.1",
+        "@typescript-eslint/parser": "^7.11.0",
+        "@vscode/test-cli": "^0.0.9",
+        "@vscode/test-electron": "^2.4.1",
+        "concurrently": "^9.0.1",
+        "consola": "^3.2.3",
+        "eslint": "^8.57.0",
+        "gulp-batch": "^1.0.5",
+        "gulp-sequence": "^1.0.0",
+        "gulp-watch": "^4.2.4",
+        "jest": "^29.7.0",
+        "nodemon": "^3.1.4",
+        "pino-pretty": "^11.2.2"
+    },
+    "dependencies": {
+        "fs-extra": "^11.2.0",
+        "gulp": "^5.0.0",
+        "jsdom": "^25.0.0",
+        "pathe": "^1.1.2",
+        "pino": "^9.3.2",
+        "sharp": "^0.33.5",
+        "strip-json-comments": "^5.0.1",
+        "xml2js": "^0.6.2"
+    }
 }

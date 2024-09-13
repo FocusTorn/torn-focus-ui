@@ -1,19 +1,32 @@
 {
 	"compilerOptions": {
 		"module": "Node16",
-		"target": "ES2022",
-		"outDir": "out",
-		"lib": [
-			"ES2022"
-		],
 		"sourceMap": true,
-		"rootDir": "src",
-		"strict": true   /* enable all strict type-checking options */
+        "strict": true,
+        
+        "target": "ES2022",
+        "lib": ["ES2022"],
+        "skipLibCheck": true,
+
+		"outDir": "out",
+        "rootDir": "src",
+        // "rootDir": ".",         
+        
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+            
+        "baseUrl": "./",
+        "paths": {
+            "@config": ["src/config"],
+            "@icons": ["assets/icons"]
+        },
 		
-		
-		/* Additional Checks */
-		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
-		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
-		// "noUnusedParameters": true,  /* Report errors on unused parameters. */
-	}
-}
+        
+        
+        
+
+    },
+    "include": ["src/**/*.ts", "test/**/*.ts"]
+    
+    
+} 
