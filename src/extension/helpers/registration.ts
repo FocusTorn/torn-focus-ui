@@ -8,6 +8,9 @@ import { showFolderIconAssignment } from '../../extension/commands/showFolderIco
 import { updateTerminalPath } from '../../extension/commands/terminalCommands';
 import { assignIcon, revertIcon } from '../../extension/commands/assignIcon';
 import { toggleIcons } from '../../extension/commands/toggleIcons';
+import { toggleExplorerArrows } from '../../extension/commands/explorerArrows';
+
+
 
 export const registered: vscode.Disposable[] = [];
 
@@ -84,7 +87,8 @@ export function registerCommands(context: vscode.ExtensionContext) {
         showFolderIconAssignment,
         toggleIcons,
         activateIconTheme,
-        showAvailableIcons
+        showAvailableIcons,
+        toggleExplorerArrows
 
     };
 
@@ -138,7 +142,7 @@ export function registerCommands(context: vscode.ExtensionContext) {
 
 
 
-// const extensionCommands: { [commmand: string]: () => Promise<void> } = {
+// const extensionCommands: { [command: string]: () => Promise<void> } = {
 //     activateIconTheme
 // };
 

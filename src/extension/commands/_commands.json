@@ -2,7 +2,7 @@
     
     //--- SUBMENU: assignIconSubMenu -------------------------------------------------------------------->> 
     "assignIconSubmenu": {
-        "label": "FT-UI: Asign Icon",
+        "label": "FT-UI: Assign Icon",
         "location": "explorer/context",
         "group": "2_workspace@0"
     },
@@ -47,6 +47,13 @@
         "group": "Icons",
         // "menu": { "name": "explorer/context", "group": "navigation@10" },
         "name": "Activate Icon Theme"
+        
+    },
+    
+    "toggleExplorerArrows": {
+        "group": "Icons",
+        // "menu": { "name": "explorer/context", "group": "navigation@10" },
+        "name": "Toggle Explorer Arrows"
         
     }
 

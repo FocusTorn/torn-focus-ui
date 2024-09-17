@@ -8,5 +8,5 @@ export {
     setConfig,
     getThemeConfig,
     getConfigValue,
-    merge,
+
 } from './configurationActions';

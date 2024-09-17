@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const puppeteer = require('puppeteer'); // Import Puppeteer
 
 async function generateHTML() {
     try {
@@ -22,7 +23,7 @@ async function generateHTML() {
             margin: 0;
             padding: 0;
 
-            /* border: 1px solid #dededf; */
+            /* border: 1px solid #dededf;
             border-collapse: collapse;
             border-spacing: 1px; */
 
@@ -32,7 +33,7 @@ async function generateHTML() {
             font-size: 14px;
             font-family: Arial, Helvetica, sans-serif;
 
-            padding: 20px 5px;
+            padding: 5px;
 
             /* border: 1px solid #333; */
           }
@@ -62,7 +63,9 @@ async function generateHTML() {
           }
         </style>
       </head>
-      <body style="background-color: #090a0c; margin: 0; padding: 0;">
+      <body style="background-color: #090a0c; margin: 20; padding: 0;">
+        <h1 style="color: #EEEEEE; text-align: center;">File Icons</h1> <table>
+          <thead>
         <table>
           <thead>
             <tr>
@@ -83,45 +86,84 @@ async function generateHTML() {
 
 
         // Calculate the number of rows needed
-    const numRows = Math.ceil(files.length / 5); // Adjusted for 10 columns
+        const numRows = Math.ceil(files.length / 5); // Adjusted for 10 columns
 
-    let fileIndex = 0;
-    for (let row = 0; row < numRows; row++) {
-      htmlContent += '<tr>';
-      for (let col = 0; col < 10; col += 2) { // Increment by 2 to handle icon/name pairs
-        if (fileIndex < files.length) {
-          const file = files[fileIndex];
-          const iconName = path.parse(file).name;
-          htmlContent += `
+        let fileIndex = 0;
+        for (let row = 0; row < numRows; row++) {
+            htmlContent += '<tr>';
+            for (let col = 0; col < 10; col += 2) { // Increment by 2 to handle icon/name pairs
+                if (fileIndex < files.length) {
+                    const file = files[fileIndex];
+                    const iconName = path.parse(file).name;
+                    htmlContent += `
             <td>
               <img src="${path.join('./', 'file_icons_png', file)}" alt="${iconName}" title="${iconName}">
             </td>
             <td>${iconName}</td>
           `;
-          fileIndex++;
-        } else {
-          // Add empty cells for both icon and name columns
-          htmlContent += '<td></td><td></td>';
+                    fileIndex++;
+                } else {
+                    // Add empty cells for both icon and name columns
+                    htmlContent += '<td></td><td></td>';
+                }
+            }
+            htmlContent += '</tr>';
         }
-      }
-      htmlContent += '</tr>';
-    }
 
-    htmlContent += `
+        htmlContent += `
           </tbody>
         </table>
       </body>
       </html>
     `;
 
-    const outputDir = path.join(__dirname, '..', 'png_icons', 'file_icons.html');
-    fs.writeFileSync(outputDir, htmlContent);
+        const outputDir = path.join(__dirname, '..', 'png_icons', 'file_icons.html');
+        fs.writeFileSync(outputDir, htmlContent);
 
-    console.log('HTML file generated successfully: file_icons.html');
+        console.log('HTML file generated successfully: file_icons.html');
 
-  } catch (error) {
-    console.error('Error generating HTML:', error);
-  }
+
+
+        try {
+            const browser = await puppeteer.launch({ headless: true });
+            const page = await browser.newPage();
+
+
+            // Load the generated HTML file
+            await page.goto(`file://${outputDir}`);
+
+            // Select the table element
+            const tableElement = await page.$('table');
+
+            // Take a screenshot of the table element
+            await tableElement.screenshot({
+                path: path.join(__dirname, '..', 'png_icons', 'file_icons_table.png')
+            });
+
+            console.log('Table screenshot saved successfully: file_icons_table.png');
+
+            await browser.close();
+        } catch (screenshotError) {
+            console.error('Error capturing screenshot:', screenshotError);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    } catch (error) {
+        console.error('Error generating HTML:', error);
+    }
 }
 
 generateHTML();

@@ -45,23 +45,6 @@ export const activateIconTheme = async () => {
 
 
 
-// In my src/extension/commands/activateIconTheme.ts
-
-// Why does this work importing from src/config/constants.ts
-// import { constants } from '../../config/constants';
-
-// but this throws an error importing from
-// import { constants } from '../../config/index';
-
-
-// config/constants file:
-// D:\z Linked from C\Documents\!Mike\!Dev\VSC_Extensions\extensions\torn-focus-ui\src\config\constants.ts
-
-// config/index file:
-// D:\z Linked from C\Documents\!Mike\!Dev\VSC_Extensions\extensions\torn-focus-ui\src\config\index.ts
-
-
-
 
 
 

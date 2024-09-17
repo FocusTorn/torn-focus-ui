@@ -12,7 +12,6 @@
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
 			"args": [
-				"D:/!Dev/VSC_Extensions/.vscode/VSC_Extensions.code-workspace",
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--disable-extensions"
 			],
@@ -27,7 +26,6 @@
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
 			"args": [
-				"D:/!Dev/VSC_Extensions/.vscode/VSC_Extensions.code-workspace",
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--disable-extensions"
 			],

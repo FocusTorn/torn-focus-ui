@@ -4,6 +4,7 @@ export const constants = {
     extension: {
         nickName: 'FT-UI',
         name: 'torn-focus-ui',
+        configKey: "TornFocusUi",
         publisher: 'NewRealityDesigns',
         baseManifestName: 'base_theme.json',
         iconThemeManifest: '',
@@ -24,27 +25,9 @@ export const constants = {
 
 
 
-/**
- * Key to identify the log event.
- */
-
-// export const logEventKey = `${extensionName}-log-event`;
 
 
-
-/**
- * Path where the icons are located.
- */
-
-// export const iconFolderPath = './../icons/';
-
-
-
-
-
-
-
-
+//cspell: disable
 // export const constants = {
 //   environment: { production: false },
 //   extension: {
@@ -67,7 +50,7 @@ export const constants = {
 //   },
 //   vsicons: {
 //     name: 'vsicons',
-//     associations: {
+//     associations: {../extension/commands/_commands.json
 //       name: 'associations',
 //       fullname: 'vsicons.associations',
 //       filesSetting: 'vsicons.associations.files',

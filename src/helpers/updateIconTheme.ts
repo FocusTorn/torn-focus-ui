@@ -3,53 +3,30 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 
+interface BaseThemeData {
+    fileExtensions: { [key: string]: string };
+    fileNames: { [key: string]: string };
+    folderNames: { [key: string]: string };
+    folderNamesExpanded: { [key: string]: string };
+}
 
 
-//--- updateIconThemeNoWorkspace -------------------------------------------------------------------->>
+interface CustomIcons {
+    [key: string]: string;
+}
 
 
 export function updateIconThemeNoWorkspace(context: vscode.ExtensionContext) {
     try {
-        // Set theme file paths
         const baseThemePath = path.join(context.extensionPath, 'assets', 'themes', 'base_theme.json');
-        const outputThemePath = path.join(context.extensionPath, 'assets', 'themes',  'torn_focus_icons.json');
+        const outputThemePath = path.join(context.extensionPath, 'assets', 'themes', 'torn_focus_icons.json');
+        const baseThemeData: BaseThemeData = JSON.parse(fs.readFileSync(baseThemePath, 'utf-8'));
+        const customIcons: CustomIcons = vscode.workspace.getConfiguration('TornFocusUi.themes').get('customIcons', {});
 
-        // Get the base theme data from base_theme.json
-        const baseThemeData = JSON.parse(fs.readFileSync(baseThemePath, 'utf-8'));
-
-        // Get custom icon assignments from settings.json
-        const customIcons: { [key: string]: { [key: string]: string } } = vscode.workspace.getConfiguration('TornFocusUi.themes').get('customIcons', {});
-
-        // Merge custom icons into the base theme
         for (const itemName in customIcons) {
-            const iconName = customIcons[itemName];
-
-            if (itemName.startsWith('*.') && itemName.length > 2) {
-                // File extension (remove the "*.")
-                baseThemeData.fileExtensions[itemName.slice(2)] = `_${iconName}`;
-            } else if (itemName.includes('.')) {
-                // File name
-                baseThemeData.fileNames[itemName] = `_${iconName}`;
-            } else {
-                // Folder icon
-                baseThemeData.folderNames[itemName] = `_folder-${iconName}`;
-                baseThemeData.folderNamesExpanded[itemName] = `_folder-${iconName}-open`;
-            }
+            updateBaseTheme(baseThemeData, itemName, customIcons[itemName]);
         }
-
-        // Write the updated theme to primary theme
         fs.writeFileSync(outputThemePath, JSON.stringify(baseThemeData, null, 2));
-
-        //> 5. (Optional) Prompt the user to reload VS Code
-        // const reloadChoice = await vscode.window.showInformationMessage(
-        //     'Icon theme updated. Reload to apply changes?',
-        //     'Reload'
-        // );
-        // if (reloadChoice === 'Reload') {
-        //     vscode.commands.executeCommand('workbench.action.reloadWindow');
-        // }
-        //<
-
     } catch (error) {
         console.error('Error updating icon theme:', error);
         vscode.window.showErrorMessage('An error occurred while updating the icon theme.');
@@ -57,11 +34,145 @@ export function updateIconThemeNoWorkspace(context: vscode.ExtensionContext) {
 }
 
 
+function updateBaseTheme(baseThemeData: BaseThemeData, itemName: string, iconName: string) {
+    if (itemName.startsWith('*.') && itemName.length > 2) {
+        baseThemeData.fileExtensions[itemName.slice(2)] = `_${iconName}`;
+    } else if (itemName.includes('.')) {
+        baseThemeData.fileNames[itemName] = `_${iconName}`;
+    } else {
+        baseThemeData.folderNames[itemName] = `_folder-${iconName}`;
+        baseThemeData.folderNamesExpanded[itemName] = `_folder-${iconName}-open`;
+    }
+}
+
+
+export function updateHidesExplorerArrows(hideArrows: boolean) {
+    try {
+        const iconThemePath = path.join( __dirname, '..', '..', 'assets', 'themes', 'torn_focus_icons.json' );
+        const iconThemeData = JSON.parse(fs.readFileSync(iconThemePath, 'utf-8'));
+
+        iconThemeData.hidesExplorerArrows = hideArrows;
+        fs.writeFileSync(iconThemePath, JSON.stringify(iconThemeData, null, 2));
+    } catch (error) {
+        console.error('Error toggling explorer arrows:', error);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export async function toggleExplorerArrows() {
+//     try {
+
+//         // 1. Get the path to your icon theme's package.json
+//         const extensionPath = vscode.extensions.getExtension('your-extension-id')?.extensionPath;
+//         if (!extensionPath) {
+//             throw new Error('Could not determine extension path.');
+//         }
+//         const themePackageJsonPath = path.join(extensionPath, 'package.json');
+
+
+//         // 2. Read the package.json file
+//         const packageJsonContent = await fs.promises.readFile(themePackageJsonPath, 'utf-8');
+//         const packageJson = JSON.parse(packageJsonContent);
+
+//         // 3. Toggle the "hidesExplorerArrows" property
+//         packageJson.contributes.iconThemes[0].hidesExplorerArrows =
+//             !packageJson.contributes.iconThemes[0].hidesExplorerArrows;
+
+//         // 4. Write the updated package.json back to the file
+//         await fs.promises.writeFile(themePackageJsonPath, JSON.stringify(packageJson, null, 2));
+
+//         // // 5. (Optional) Prompt the user to reload VS Code
+//         // const reloadChoice = await vscode.window.showInformationMessage(
+//         //     'Explorer arrow visibility toggled. Reload to apply changes?',
+//         //     'Reload'
+//         // );
+//         // if (reloadChoice === 'Reload') {
+//         //     vscode.commands.executeCommand('workbench.action.reloadWindow');
+//         // }
+
+//     } catch (error) {
+//         console.error('Error toggling explorer arrows:', error);
+//         vscode.window.showErrorMessage('An error occurred while toggling explorer arrows.');
+//     }
+// }
+
+
+
+// //--- updateIconThemeNoWorkspace -------------------------------------------------------------------->>
+
+
+// export function updateIconThemeNoWorkspace(context: vscode.ExtensionContext) {
+//     try {
+//         // Set theme file paths
+//         const baseThemePath = path.join(context.extensionPath, 'assets', 'themes', 'base_theme.json');
+//         const outputThemePath = path.join(context.extensionPath, 'assets', 'themes',  'torn_focus_icons.json');
+
+//         // Get the base theme data from base_theme.json
+//         const baseThemeData = JSON.parse(fs.readFileSync(baseThemePath, 'utf-8'));
+
+//         // Get custom icon assignments from settings.json
+//         const customIcons: { [key: string]: { [key: string]: string } } = vscode.workspace.getConfiguration('TornFocusUi.themes').get('customIcons', {});
+
+//         // Merge custom icons into the base theme
+//         for (const itemName in customIcons) {
+//             const iconName = customIcons[itemName];
+
+//             if (itemName.startsWith('*.') && itemName.length > 2) {
+//                 // File extension (remove the "*.")
+//                 baseThemeData.fileExtensions[itemName.slice(2)] = `_${iconName}`;
+//             } else if (itemName.includes('.')) {
+//                 // File name
+//                 baseThemeData.fileNames[itemName] = `_${iconName}`;
+//             } else {
+//                 // Folder icon
+//                 baseThemeData.folderNames[itemName] = `_folder-${iconName}`;
+//                 baseThemeData.folderNamesExpanded[itemName] = `_folder-${iconName}-open`;
+//             }
+//         }
+
+//         // Write the updated theme to primary theme
+//         fs.writeFileSync(outputThemePath, JSON.stringify(baseThemeData, null, 2));
+
+//         //> 5. (Optional) Prompt the user to reload VS Code
+//         // const reloadChoice = await vscode.window.showInformationMessage(
+//         //     'Icon theme updated. Reload to apply changes?',
+//         //     'Reload'
+//         // );
+//         // if (reloadChoice === 'Reload') {
+//         //     vscode.commands.executeCommand('workbench.action.reloadWindow');
+//         // }
+//         //<
+
+//     } catch (error) {
+//         console.error('Error updating icon theme:', error);
+//         vscode.window.showErrorMessage('An error occurred while updating the icon theme.');
+//     }
+// }
+
+
+
+
+
+
+
+
 //---------------------------------------------------------------------------------------------------<<
-
-
-
-
 
 // //--- updateIconThemeWithWorkspace   ---------------------------------------------------------------->>
 

@@ -1,11 +1,11 @@
 /** @format */
 
-import { ExtensionContext, window, workspace, commands,} from 'vscode';
+import { ExtensionContext, workspace, commands,} from 'vscode';
 
-import { updateIconThemeNoWorkspace } from './helpers/updateIconTheme';
+import { updateIconThemeNoWorkspace, updateHidesExplorerArrows } from './helpers/updateIconTheme';
 
-import { registered, registerCommands } from './extension/helpers/registration';
-
+import { registerCommands } from './extension/helpers/registration';
+import{ getThemeConfig } from './config/configurationActions';
 
 
 
@@ -16,10 +16,23 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(...registerCommands(context));
 
     //--- onDidChangeConfiguration ---------------------------------------------------------------------->>
-
+    // We tryEt again
 
     context.subscriptions.push(
         workspace.onDidChangeConfiguration((e) => {
+
+
+
+
+            if (e.affectsConfiguration('TornFocusUi.themes.hidesExplorerArrows')) {
+
+                const hidesExplorerArrows:boolean = getThemeConfig().get('themes.hidesExplorerArrows') ?? true;
+                updateHidesExplorerArrows(hidesExplorerArrows);
+
+            }
+
+
+
 
 
 
@@ -29,6 +42,9 @@ export function activate(context: ExtensionContext) {
             }
         })
     );
+
+
+
 
 
     //---------------------------------------------------------------------------------------------------<<
@@ -252,7 +268,7 @@ export function activate(context: ExtensionContext) {
 }
 
 
-export function deactivate() { }
+// export function deactivate() { }
 
 
 

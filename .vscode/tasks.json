@@ -2,64 +2,28 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo var",
+            "label": "User - Echo Var",
             "type": "shell",
             "command": "echo workspaceFolder: ${workspaceFolder} \n workspaceRoot: ${workspaceRoot}",
             "problemMatcher": []
         },
+        // {
+        //     "label": "Package and Install",
+        //     "type": "shell",
+        //     "command": "node src/core/generator/js/create_icon_json.js && vsce package && code --install-extension torn-focus-ui-0.0.4.vsix",
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "problemMatcher": []
+        // },
+        
+        
+        
+        
+        
         {
-            "label": "FT-UI Gen JSON",
-            "type": "shell",
-            "command": "node ",
-            "args": [
-                "${workspaceFolder}/src/js/generate_json.js"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "dedicated"
-            },
-            "problemMatcher": []
-        },
-        {
-            // node src/core/generator/js/create_icon_json.js
-            // vsce package
-            // code --install-extension torn-focus-ui-0.0.4.vsix
-            "label": "Create Icon JSON",
-            "type": "shell",
-            "command": "node ",
-            "args": [
-                "${workspaceFolder}/src/core/generator/js/create_icon_json.js"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "dedicated"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Package and Install",
-            "type": "shell",
-            "command": "node src/core/generator/js/create_icon_json.js && vsce package && code --install-extension torn-focus-ui-0.0.4.vsix",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "NPM: Watch",
+            "label": "NPM - Watch",
             "type": "npm",
             "script": "watch",
             "problemMatcher": "$tsc-watch",
@@ -75,7 +39,7 @@
             }
         },
         {
-            "label": "NPM: Build",
+            "label": "NPM - Build",
             "type": "npm",
             "script": "build",
             
@@ -91,9 +55,25 @@
             },
             "problemMatcher": []
         },
-        
         {
-            "label": "Build and Watch",
+            "label": "NPM - Generate Package",
+            "type": "npm",
+            "script": "generate-package.json",
+            
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "NPM - Build and Watch",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -105,9 +85,36 @@
                 "panel": "dedicated"
             },
             "dependsOrder": "sequence",
-            "dependsOn": ["NPM: Build", "NPM: Watch"],
+            "dependsOn": ["NPM - Build", "NPM - Generate Package", "NPM - Watch"],
             "problemMatcher": [],
             
-        }
+        },
+        
+        
+        
+        
+        
+        
+        {
+            "label": "WebPack - Build",
+            "type": "shell",
+            "command": "npm run wpbuild",
+            "problemMatcher": [],
+            "presentation": {
+              "reveal": "always",
+              "panel": "dedicated" 
+            }
+        },
+        {
+            "label": "WebPack - Watch",
+            "type": "shell",
+            "command": "npm run wpwatch",
+            "problemMatcher": [],
+            "presentation": {
+              "reveal": "always",
+              "panel": "dedicated" 
+            }
+          },
+         
     ]
 }

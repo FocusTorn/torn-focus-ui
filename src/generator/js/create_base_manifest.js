@@ -7,31 +7,15 @@ const folderIcons = require('../models/folder_icons.model.js');
 
 const themesDir = 'assets/themes';
 
-// const outputFile = path.join(themesDir, 'base_theme.json');
 const outputFile = path.posix.join(themesDir, 'base_theme.json');
 
 
 const iconsDir = 'assets/icons';
 
-// const fileIconsDir = path.join(iconsDir, 'file_icons');
-// const folderIconsDir = path.join(iconsDir, 'folder_icons');
-// const fileIconRelPath = path.relative(themesDir, fileIconsDir);
-// const folderIconRelPath = path.relative(themesDir, folderIconsDir);
-
 const fileIconsDir = path.posix.join(iconsDir, 'file_icons');
 const folderIconsDir = path.posix.join(iconsDir, 'folder_icons');
 const fileIconRelPath = path.posix.relative(themesDir, fileIconsDir);
 const folderIconRelPath = path.posix.relative(themesDir, folderIconsDir);
-
-
-// const filePosix = path.posix.join(iconsDir, 'file_icons');
-// const filePosixRel = path.posix.relative(themesDir, fileIconsDir);
-
-// console.log(`fileIconsDir: ${fileIconsDir}`);
-// console.log(`filePosix: ${filePosix}`);
-
-// console.log(`fileIconRelPath: ${fileIconRelPath}`);
-// console.log(`filePosixRel: ${filePosixRel}`);
 
 
 
@@ -163,6 +147,11 @@ if (fs.existsSync(outputFile)) {
 const combinedIconsData = transformIcons(fileIcons, folderIcons);
 saveToJson(outputFile, combinedIconsData);
 console.log(`Icons saved to: ${outputFile}`);
+
+// Save a copy as torn_focus_icons.json
+const tornFocusIconsFile = path.posix.join(path.posix.dirname(outputFile), 'torn_focus_icons.json');
+saveToJson(tornFocusIconsFile, combinedIconsData);
+console.log(`Icons saved to: ${tornFocusIconsFile}`);
 
 
 

@@ -1,28 +1,10 @@
 
 const gulp = require('gulp');
 const { exec } = require('child_process');
-var watch = require('gulp-watch');
-var batch = require('gulp-batch');
 
 
 
-
-// //- nodemon version generate-package.json------->>
-
-// const nodemon = require('nodemon');
-
-// gulp.task('generate-package.json', function (done) {
-//     nodemon({
-//         script: 'src/scripts/js/generate-package.js',
-//         ext: 'js',
-
-//     });
-//     done();
-// });
-
-// //----------------------------------------------------------------<<
-
-gulp.task('generate-package-json', function (done) {
+gulp.task('Generate_package.json', function (done) {
     exec('node src/scripts/js/generate-package.js', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
@@ -36,8 +18,8 @@ gulp.task('generate-package-json', function (done) {
 
 
 
-gulp.task('create_base_manifest', function (done) {
-    exec('node src/generator/js/create_base_manifest.js', (err, stdout, stderr) => {
+gulp.task('Create_Base_Icon_Manifest', function (done) {
+    exec('node src/scripts/js/create_icon_manifests.js', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             return;
@@ -49,8 +31,8 @@ gulp.task('create_base_manifest', function (done) {
 });
 
 
-gulp.task('Do__Icon-Preview-html', function (done) {
-    exec('node src/generator/js/generate_file_icon_preview_html.js', (err, stdout, stderr) => {
+gulp.task('Generate_Preview_Images', function (done) {
+    exec('node src/generator/js/generate_preview_images.js', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             return;
@@ -64,15 +46,29 @@ gulp.task('Do__Icon-Preview-html', function (done) {
 
 
 
-
-// gulp.task('watch', function () {
-//     watch('src/extension/commands/_commands.json', batch(function (events, done) {
-//         gulp.start('generate-package-json', done);
-//     }));
+// gulp.task('WebPack_Watch', (cb) => {
+//     exec('npx webpack --mode development --watch', (err, stdout, stderr) => {
+//         console.log(stdout);
+//         console.error(stderr);
+//         cb(err);
+//     });
 // });
 
-// gulp.task('Watch_commands-json', gulp.series('generate-package-json', 'watch'));
 
 
+// gulp.task('wp_watch', (cb) => {
+//     const webpackProcess = exec('npx webpack --mode development --watch');
 
+//     // Pipe stdout and stderr to the main process's output
+//     webpackProcess.stdout.pipe(process.stdout);
+//     webpackProcess.stderr.pipe(process.stderr);
 
+//     webpackProcess.on('exit', (code) => {
+//         if (code !== 0) {
+//             console.error(`Webpack process exited with code ${code}`);
+//             cb(new Error(`Webpack process exited with code ${code}`));
+//         } else {
+//             cb();
+//         }
+//     });
+// });

@@ -27,11 +27,22 @@ async function convertIcons(pSize, pSvgIconsDir, pPngIconsDir) {
             await fs.promises.rm(pPngIconsDir, { recursive: true });
             await fs.promises.mkdir(pPngIconsDir);
 
-            console.log(`Successfully recreated: ${path.basename(pPngIconsDir)}`);
+            console.log(`Successfully re-created: ${path.basename(pPngIconsDir)}`);
+
+        } catch (err) {
+            console.error('Error during directory re-creation operations:', err);
+        }
+    }else{
+        try {
+            await fs.promises.mkdir(pPngIconsDir);
+
+            console.log(`Successfully created: ${path.basename(pPngIconsDir)}`);
 
         } catch (err) {
             console.error('Error during directory operations:', err);
         }
+
+
     }
 
     // Convert icons concurrently using Promise.all

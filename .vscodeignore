@@ -13,3 +13,29 @@ vsc-extension-quickstart.md
 .editorconfig
 
 .pnotes/**
+
+
+# Files to include in the extension package
+# Documentation for this format:
+# https://code.visualstudio.com/api/working-with-extensions/publishing-extension#using-.vscodeignore
+!CHANGELOG.md
+!LICENSE.txt
+!README.md
+!logo.png
+
+!package.json
+!package.nls.json
+!package.nls.*.json
+
+!dist
+
+# !out
+
+!assets
+
+# Exclude everything else
+**/*
+
+
+
+

@@ -1,0 +1,40 @@
+// {
+//     "type": "object",
+//     "title": "QoL: Following Terminal",
+//     "properties": {
+//         "TornFocusUi.followingTerminal.main": {
+//             "order": 1,
+//             "type": "boolean",
+//             "description": "Controls if the current working directory will dynamically update according to the active file.",
+//             "default": false
+//         },
+//         "TornFocusUi.followingTerminal.updateTrigger": {
+//             "order": 2,
+//             "type": "string",
+//             "description": "Controls what causes an update in the terminal.",
+//             "default": "File",
+//             "enum": [
+//                 "File",
+//                 "Workspace Folder"
+//             ],
+//             "enumDescriptions": [
+//                 "If needed, the directory is updated when the active file is changed",
+//                 "The directory is updated when the new active file is in a different workspace root folder."
+//             ]
+//         },
+//         "TornFocusUi.followingTerminal.targetTerminal": {
+//             "order": 3,
+//             "type": "string",
+//             "description": "Controls which terminal to update.",
+//             "default": "Active",
+//             "enum": [
+//                 "Active",
+//                 "First"
+//             ],
+//             "enumDescriptions": [
+//                 "Directory changes only in the active terminal",
+//                 "Directory changes only in the first terminal"
+//             ]
+//         }
+//     }
+// },
