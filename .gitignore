@@ -1,3 +1,4 @@
+node_modules
 out
 dist
 node_modules
@@ -6,6 +7,9 @@ node_modules
 .example/
 .pnotes/
 */*_removed.*
-
 */generator/png_icons/*
 src/icons/*
+
+
+
+
