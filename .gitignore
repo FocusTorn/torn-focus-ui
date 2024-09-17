@@ -7,7 +7,6 @@ node_modules
 .example/
 .pnotes/
 */*_removed.*
-*/generator/png_icons/*
 src/icons/*
 
 

@@ -13,7 +13,7 @@
     "activationEvents": [
         "onStartupFinished"
     ],
-    "main": "./dist/entry-file.js", 
+    "main": "./out/src/extension.js",
     "icon": "assets/images/logo.png",
     "galleryBanner": {
         "color": "#0c0024",
@@ -28,32 +28,22 @@
         "url": "https://github.com/FocusTorn/torn-focus-ui"
     },
     "scripts": {
-        "watch": "concurrently \"npm:watch:commands\" \"npm:watch:tsc\"",
+        "npm-watch": "concurrently watch:commands watch:tsc",
         "watch:tsc": "tsc -w -p ./",
         "watch:commands": "nodemon --watch src/extension/commands/_commands.json --exec \"npm run generate-package.json\"",
-        "watch:icons": "nodemon --watch src/generator/models/**/* --exec \"npm run create_base_manifest\"",
         "lint": "eslint src --ext ts",
         "build": "tsc -p ./",
-        "wpwatch": "webpack --mode development --watch",
-        
         "wpbuild": "webpack --mode production && vsce package",
-        
-        "wpbuildXX": "webpack --mode production && node src/scripts/js/set-entry-point.js && vsce package",
-        
-        
-        
         "wpbuild22": "webpack --mode production",
-        
-        
-        
-        
-        "wpwatch2": "webpack --config webpack.config.dev.js",
+        "wpbuildXX": "webpack --mode production && node src/scripts/js/set-entry-point.js && vsce package",
         "wpbuild2": "webpack --config webpack.config.prod.js",
         "generate-package.json": "node src/scripts/js/generate-package.js",
         "create_base_manifest": "node src/generator/js/create_base_manifest.js",
         "vpack": "tsc -p ./; vsce package",
         "wpack": "webpack",
-        "pack_use_PS": "powershell -Command \"node src/generator/js/create_base_manifest.js; vsce package\""
+        "pack_use_PS": "powershell -Command \"node src/generator/js/create_base_manifest.js; vsce package\"",
+        "wpwatch": "webpack --mode development --watch",
+        "wpwatch2": "webpack --config webpack.config.dev.js"
     },
     "contributes": {
         "themes": [
