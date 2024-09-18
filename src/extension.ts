@@ -13,10 +13,15 @@ import{ getThemeConfig } from './config/configurationActions';
 
 export function activate(context: ExtensionContext) {
 
+    
+    console.log('It loaded.');
+    
     context.subscriptions.push(...registerCommands(context));
 
     //--- onDidChangeConfiguration ---------------------------------------------------------------------->>
     // We tryEt again
+    
+    
 
     context.subscriptions.push(
         workspace.onDidChangeConfiguration((e) => {
@@ -268,7 +273,7 @@ export function activate(context: ExtensionContext) {
 }
 
 
-// export function deactivate() { }
+export function deactivate() { }
 
 
 

@@ -5,13 +5,13 @@
     "publisher": "NewRealityDesigns",
     "version": "1.0.0",
     "engines": {
-        "vscode": "^1.92.0"
+        "vscode": "1.93.1"
     },
     "categories": [
         "Themes"
     ],
     "activationEvents": [
-        "onStartupFinished"
+        "*"
     ],
     "main": "./out/src/extension.js",
     "icon": "assets/images/logo.png",
@@ -20,8 +20,8 @@
         "theme": "dark"
     },
     "extensionKind": [
-        "ui",
-        "workspace"
+        "workspace",
+        "ui"
     ],
     "repository": {
         "type": "git",
@@ -386,7 +386,6 @@
         ]
     },
     "devDependencies": {
-        "@types/fs-extra": "^11.0.4",
         "@types/mocha": "^10.0.7",
         "@types/node": "20.x",
         "@types/vscode": "^1.92.0",
@@ -394,30 +393,18 @@
         "@typescript-eslint/parser": "^7.11.0",
         "@vscode/test-cli": "^0.0.9",
         "@vscode/test-electron": "^2.4.1",
-        "concurrently": "^9.0.1",
-        "consola": "^3.2.3",
         "eslint": "^8.57.0",
-        "gulp-batch": "^1.0.5",
-        "gulp-sequence": "^1.0.0",
         "jest": "^29.7.0",
         "nodemon": "^3.1.4",
-        "pino-pretty": "^11.2.2",
         "ts-loader": "^9.5.1",
         "typescript": "^5.6.2",
         "webpack": "^5.94.0",
-        "webpack-cli": "^5.1.4",
-        "write-file-webpack-plugin": "^4.5.1"
+        "webpack-cli": "^5.1.4"
     },
     "dependencies": {
-        "chalk": "^5.3.0",
-        "fs-extra": "^11.2.0",
         "gulp": "^5.0.0",
-        "jsdom": "^25.0.0",
-        "pathe": "^1.1.2",
-        "pino": "^9.3.2",
         "puppeteer": "^23.3.0",
         "sharp": "^0.33.5",
-        "strip-json-comments": "^5.0.1",
         "xml2js": "^0.6.2"
     }
 }

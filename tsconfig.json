@@ -10,7 +10,6 @@
 
 		"outDir": "out/src",
         "rootDir": "src",
-        // "rootDir": ".",         
         
         "noUnusedLocals": false,
         "noUnusedParameters": false,
@@ -21,11 +20,6 @@
             "@config": ["src/config"],
             "@icons": ["assets/icons"]
         },
-		
-        
-        
-        
-
     },
     "include": ["src/**/*.ts", "test/**/*.ts"]
     

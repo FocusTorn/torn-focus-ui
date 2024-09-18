@@ -55,16 +55,16 @@
 
 
 
-import pino from 'pino';
+// import pino from 'pino';
 
-const logger = pino({
-    level: 'info', // Set your desired log level
-    transport: {
-        target: 'pino-pretty',
-        options: {
-            colorize: true
-        }
-    }
-});
+// const logger = pino({
+//     level: 'info', // Set your desired log level
+//     transport: {
+//         target: 'pino-pretty',
+//         options: {
+//             colorize: true
+//         }
+//     }
+// });
 
-export default logger;
+// export default logger;
