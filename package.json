@@ -13,7 +13,7 @@
     "activationEvents": [
         "*"
     ],
-    "main": "./out/src/extension.js",
+    "main": "./dist/extension.js",
     "icon": "assets/images/logo.png",
     "galleryBanner": {
         "color": "#0c0024",
@@ -31,6 +31,19 @@
         "npm-watch": "concurrently watch:commands watch:tsc",
         "watch:tsc": "tsc -w -p ./",
         "watch:commands": "nodemon --watch src/extension/commands/_commands.json --exec \"npm run generate-package.json\"",
+        
+        "prepublish": "npm run wpv_package",
+        "wpv_compile": "webpack",
+        "wpv_watch": "webpack --watch",
+        "wpv_package": "webpack --mode production --devtool hidden-source-map",
+        "wpv_compile-tests": "tsc -p . --outDir out",
+        "wpv_watch-tests": "tsc -p . -w --outDir out",
+        "wpv_pretest": "npm run compile-tests && npm run compile && npm run lint",
+        "wpv_lint": "eslint src",
+        "wpv_test": "vscode-test",
+        
+        
+        
         "lint": "eslint src --ext ts",
         "build": "tsc -p ./",
         "wpbuild": "webpack --mode production && vsce package",

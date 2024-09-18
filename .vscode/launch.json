@@ -8,39 +8,48 @@
         {	"name": "Watch",
 			"type": "extensionHost",
 			"request": "launch",
-            
+
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"${workspaceFolder}",
-				
-				
-				
-				
-				
+				// "${workspaceFolder}",
 				//"--extensionDevelopmentPath=D:/_dev/torn-focus-ui",
 				"--disable-extensions"
+
 			],
             "cwd": "${workspaceFolder}",
 			"sourceMaps": true,
 			"outFiles": ["${workspaceFolder}/out/src/**/*.js"],
-			"preLaunchTask": "NPM - Watch" 
+			"preLaunchTask": "NPM - Watch"
+		},
+
+
+        {	"name": "Webpack - Debug",
+			"type": "extensionHost",
+			"request": "launch",
+			// "runtimeExecutable": "${execPath}",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				// "${workspaceFolder}",
+				"--disable-extensions"
+			],
+			"sourceMaps": true,
+			"outFiles": ["${workspaceFolder}/dist/extension.js"],
+			"preLaunchTask": "${defaultBuildTask}"
 		}
+
+
+
+
+
+
+
+
+
+
+
 	]
 }
 
 
 
-
-        
-        // {	"name": "Webpack - Debug",
-		// 	"type": "extensionHost",
-		// 	"request": "launch",
-		// 	"runtimeExecutable": "${execPath}",
-		// 	"args": [
-		// 		"--extensionDevelopmentPath=${workspaceFolder}",
-		// 		"--disable-extensions"
-		// 	],
-		// 	"sourceMaps": true,
-		// 	"outFiles": ["${workspaceFolder}/dist/extension.js"],
-		// }

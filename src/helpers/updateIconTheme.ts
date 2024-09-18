@@ -48,7 +48,7 @@ function updateBaseTheme(baseThemeData: BaseThemeData, itemName: string, iconNam
 
 export function updateHidesExplorerArrows(hideArrows: boolean) {
     try {
-        const iconThemePath = path.join( __dirname, '..', '..', 'assets', 'themes', 'torn_focus_icons.json' );
+        const iconThemePath = path.join( __dirname, '..',  'assets', 'themes', 'torn_focus_icons.json' );
         const iconThemeData = JSON.parse(fs.readFileSync(iconThemePath, 'utf-8'));
 
         iconThemeData.hidesExplorerArrows = hideArrows;
