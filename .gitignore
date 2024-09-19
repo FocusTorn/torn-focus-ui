@@ -6,7 +6,7 @@ dist
 .pnotes/
 */*_removed.*
 src/icons/*
-
+assets/icons/ref_icons/*
 
 
 

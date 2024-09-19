@@ -3,7 +3,7 @@
     "displayName": "Torn Focus UI",
     "description": "UI Revamp",
     "publisher": "NewRealityDesigns",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "engines": {
         "vscode": "1.93.1"
     },
@@ -11,7 +11,7 @@
         "Themes"
     ],
     "activationEvents": [
-        "*"
+        "onStartupFinished"
     ],
     "main": "./dist/extension.js",
     "icon": "assets/images/logo.png",
@@ -31,7 +31,6 @@
         "npm-watch": "concurrently watch:commands watch:tsc",
         "watch:tsc": "tsc -w -p ./",
         "watch:commands": "nodemon --watch src/extension/commands/_commands.json --exec \"npm run generate-package.json\"",
-        
         "prepublish": "npm run wpv_package",
         "wpv_compile": "webpack",
         "wpv_watch": "webpack --watch",
@@ -41,9 +40,9 @@
         "wpv_pretest": "npm run compile-tests && npm run compile && npm run lint",
         "wpv_lint": "eslint src",
         "wpv_test": "vscode-test",
-        
-        
-        
+        "mocha": "mocha --recursive -r ts-node/register test/**/*.test.ts",
+        "jest": "jest",
+        "sjest": "jest --runInBand",
         "lint": "eslint src --ext ts",
         "build": "tsc -p ./",
         "wpbuild": "webpack --mode production && vsce package",
@@ -57,6 +56,27 @@
         "pack_use_PS": "powershell -Command \"node src/generator/js/create_base_manifest.js; vsce package\"",
         "wpwatch": "webpack --mode development --watch",
         "wpwatch2": "webpack --config webpack.config.dev.js"
+    },
+    "devDependencies": {
+        "@types/jest": "^29.5.13",
+        "@types/node": "20.x",
+        "@types/vscode": "^1.92.0",
+        "@typescript-eslint/eslint-plugin": "^7.14.1",
+        "@typescript-eslint/parser": "^7.11.0",
+        "@vscode/test-cli": "^0.0.10",
+        "@vscode/test-electron": "^2.4.1",
+        "eslint": "^8.57.0",
+        "gulp": "^5.0.0",
+        "jest": "^29.7.0",
+        "nodemon": "^3.1.4",
+        "puppeteer": "^23.4.0",
+        "sharp": "^0.33.5",
+        "ts-jest": "^29.2.5",
+        "ts-loader": "^9.5.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.6.2",
+        "webpack": "^5.94.0",
+        "webpack-cli": "^5.1.4"
     },
     "contributes": {
         "themes": [
@@ -90,6 +110,10 @@
             {
                 "title": "FT-UI: Show Folder Assignments",
                 "command": "torn-focus-ui.showFolderIconAssignment"
+            },
+            {
+                "title": "FT-UI: Log Message",
+                "command": "torn-focus-ui.debug.logMessage"
             },
             {
                 "title": "FT-UI: Icons > Toggle Icons",
@@ -127,6 +151,12 @@
                 {
                     "group": "assignIconSubmenu2@1",
                     "command": "torn-focus-ui.showFolderIconAssignment"
+                }
+            ],
+            "editor/context": [
+                {
+                    "group": "navigation@1",
+                    "command": "torn-focus-ui.debug.logMessage"
                 }
             ]
         },
@@ -398,26 +428,7 @@
             }
         ]
     },
-    "devDependencies": {
-        "@types/mocha": "^10.0.7",
-        "@types/node": "20.x",
-        "@types/vscode": "^1.92.0",
-        "@typescript-eslint/eslint-plugin": "^7.14.1",
-        "@typescript-eslint/parser": "^7.11.0",
-        "@vscode/test-cli": "^0.0.9",
-        "@vscode/test-electron": "^2.4.1",
-        "eslint": "^8.57.0",
-        "jest": "^29.7.0",
-        "nodemon": "^3.1.4",
-        "ts-loader": "^9.5.1",
-        "typescript": "^5.6.2",
-        "webpack": "^5.94.0",
-        "webpack-cli": "^5.1.4"
-    },
     "dependencies": {
-        "gulp": "^5.0.0",
-        "puppeteer": "^23.3.0",
-        "sharp": "^0.33.5",
         "xml2js": "^0.6.2"
     }
 }

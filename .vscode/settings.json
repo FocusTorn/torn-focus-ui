@@ -6,6 +6,19 @@
 	"search.exclude": {
 		"out": true // set this to false to include "out" folder in search results
 	},
+
+	// "javascript.preferences.importModuleKind": "esnext",
+
+
+
+	// "mochaExplorer.launcherScript": "node_modules/mocha-explorer-launcher-scripts/vscode-test",
+	// "mochaExplorer.autoload": false,
+	// "mochaExplorer.ipcRole": "server",
+	// "mochaExplorer.env": { "VSCODE_VERSION": "1.93.1",	"ELECTRON_RUN_AS_NODE": null }, // "VSCODE_VERSION": "insiders", 
+
+
+
 	// Turn off tsc task auto detection since we have the necessary tasks as npm scripts
 	"typescript.tsc.autoDetect": "off"
+
 }

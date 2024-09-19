@@ -14,8 +14,12 @@ function getIconIdsFromDirectory(directoryPath: string): string[] {
             );
         })
         .map((file) => {
-            let iconId = path.parse(file).name; // Get the filename without extension
-            iconId = iconId.replace(/^_/, '').replace(/^folder-/, ''); // Remove prefixes
+            
+            // Get the filename without extension
+            let iconId = path.parse(file).name; 
+            
+            // Remove prefixes
+            iconId = iconId.replace(/^_/, '').replace(/^folder-/, ''); 
             const iconPrefix = directoryPath.endsWith('folder_icons') ? '📁' : '📄';
             return `${iconPrefix} ${iconId}`;
         });
@@ -25,6 +29,9 @@ function getIconIdsFromDirectory(directoryPath: string): string[] {
 
 export const showAvailableIcons = async (context: vscode.ExtensionContext) => {
     try {
+        
+        console.log(`function called: showAvailableIcons`);
+        
         const folderIconsDir = path.join(context.extensionPath, 'assets', 'icons', 'folder_icons');
         const fileIconsDir = path.join(context.extensionPath, 'assets', 'icons', 'file_icons');
 

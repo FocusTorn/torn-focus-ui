@@ -1,17 +1,23 @@
 import * as path from 'path';
-import * as fs from 'fs';
-import { workspace, window, Uri, ConfigurationTarget } from 'vscode';
+import * as fs from 'fs'; 
+import { ExtensionContext, workspace, window, Uri, ConfigurationTarget } from 'vscode';
 
 
-const fileIconsDir = path.join(__dirname,'..', '..', '..','assets', 'icons', 'file_icons');
-const folderIconsDir = path.join(__dirname,'..', '..', '..','assets', 'icons', 'folder_icons');
+// const fileIconsDir = path.join(__dirname, '..', '..','assets', 'icons', 'file_icons');
+// const folderIconsDir = path.join(__dirname, '..', '..','assets', 'icons', 'folder_icons');
 
 
 
 
 
-export const assignIcon = async (fileUri: Uri) => {
+export const assignIcon = async (context: ExtensionContext, fileUri: Uri) => {
+    
+    const folderIconsDir = path.join(context.extensionPath, 'assets', 'icons', 'folder_icons');
+    const fileIconsDir = path.join(context.extensionPath, 'assets', 'icons', 'file_icons');
+    
     try {
+        
+        
         let iconChosen: string | undefined = '';
 
         const fileIconOptions = getIconOptionsFromDirectory(fileIconsDir);

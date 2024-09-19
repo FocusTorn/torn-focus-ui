@@ -1,18 +1,18 @@
 {
-    
-    //--- SUBMENU: assignIconSubMenu -------------------------------------------------------------------->> 
+
+    //--- SUBMENU: assignIconSubMenu -------------------------------------------------------------------->>
     "assignIconSubmenu": {
         "label": "FT-UI: Assign Icon",
         "location": "explorer/context",
         "group": "2_workspace@0"
     },
-    
-    //- Commands for AssignIcon submenu ---------- 
+
+    //- Commands for AssignIcon submenu ----------
     "assignIcon": {
         "name": "Use Alternate icon",
         "submenu": "assignIconSubmenu"
     },
-    
+
     "revertIcon": {
         "name": "Use Default Icon",
         "submenu": "assignIconSubmenu"
@@ -20,95 +20,103 @@
 
     "showAvailableIcons": {
         "name": "Show Available Icons",
-        "submenu": "assignIconSubmenu",
-        "subgroup":2
+        "submenu": "assignIconSubmenu", "subgroup":2
     },
 
     "showFolderIconAssignment": {
         "name": "Show Folder Assignments",
-        "submenu": "assignIconSubmenu",
-        "subgroup":2
+        "submenu": "assignIconSubmenu", "subgroup":2
     },
     //---------------------------------------------------------------------------------------------------<<
-    
-    
-    
-    
-    
-    
-    "toggleIcons": {
-        "group": "Icons",
-        "name": "Toggle Icons"
-    },
-    
-    
-    
-    "activateIconTheme": {
-        "group": "Icons",
-        // "menu": { "name": "explorer/context", "group": "navigation@10" },
-        "name": "Activate Icon Theme"
-        
-    },
-    
-    "toggleExplorerArrows": {
-        "group": "Icons",
-        // "menu": { "name": "explorer/context", "group": "navigation@10" },
-        "name": "Toggle Explorer Arrows"
-        
-    }
 
     
+    //- Editor/Context ------------------------------------------------------------ 
+    
+    "debug.logMessage": { 
+        "name": "Log Message",
+        "menu": { "name": "editor/context", "group": "navigation@10" } // TODO Fix why this outputs "group": "navigation@101",
+    },
     
     
+    
+    //- Command Palette only ------------------------------------------------------ 
+
+    "toggleIcons":          { "name": "Toggle Icons",           "group": "Icons" },
+    "activateIconTheme":    { "name": "Activate Icon Theme",    "group": "Icons" },
+    "toggleExplorerArrows": { "name": "Toggle Explorer Arrows", "group": "Icons" }
+
     
     
 }
 
 
 
+// "menu": { "name": "explorer/context", "group": "navigation@10" },
+
+// ** OR **
+
+// "assignIconSubmenu": {
+//     "label": "FT-UI: Assign Icon",
+//     "location": "explorer/context",
+//     "group": "2_workspace@0"
+// },
+
+// "submenu": "assignIconSubmenu",
+// "subgroup": 2
 
 
 
-//- location: explorer/context -------------- 
-//     navigation - Commands related to navigation across VS Code. This group comes first in all cases.
-//     2_workspace - Commands related to workspace manipulation.
-//     3_compare - Commands related to comparing files in the diff editor.
-//     4_search - Commands related to searching in the search view.
-//     5_cutcopypaste - Commands related to cutting, copying, and pasting of files.
-//     6_copypath - Commands related to copying file paths.
-//     7_modification - Commands related to the modification of file.
 
-//- location: editor tab -------------------- 
-//     * 1_close - Commands related to closing editors.
-//     * 3_preview - Commands related to pinning editors.
+//- location: editor/context ----------------------------------------------
 
-//- location: editor title ------------------ 
-//     - Shown in the primary editor title area.
-//         * navigation - Commands related to navigating.
-//         * 1_run - Commands related to running and debugging the editor.
-//     - Shown in the secondary area - under the ... menu.
-//         * 1_diff - Commands related to working with diff editors.
-//         * 3_open - Commands related to opening editors.
-//         * 5_close - Commands related to closing editors.
+//      * navigation:       first in all cases.
+//      * 1_modification:   code modification.
+//      * 9_cutcopypaste:   cutting, copying, and pasting of files.
+//      * z_commands:       The last default group.
 
-//- location: terminal tab ------------------ 
-//     * 1_create - Commands related to creating terminals.
-//     * 3_run - Commands related to running/executing something in the terminal.
-//     * 5_manage - Commands related to managing a terminal.
-//     * 7_configure - Commands related to terminal configuration.
+//- location: explorer/context ----------------------------------------------------------------
+//      * navigation:       navigation across VS Code.
+//      * 2_workspace:      workspace manipulation.
+//      * 3_compare:        comparing files in the diff editor.
+//      * 4_search:         searching in the search view.
+//      * 5_cutcopypaste:   cutting, copying, and pasting of files.
+//      * 6_copypath:       copying file paths.
+//      * 7_modification:   the modification of file.
 
-//- location: terminal context -------------- 
-//     * 1_create - Commands related to creating terminals.
-//     * 3_edit - Commands related to manipulating text, the selection or the clipboard.
-//     * 5_clear - Commands related to clearing the terminal.
-//     * 7_kill - Commands related to closing/killing the terminal.
-//     * 9_config - Commands related to terminal configuration.
+//- location: editor tab ----------------------------------------------------------------------
+//      * 1_close:          closing editors.
+//      * 3_preview:        pinning editors.
 
-//- location: timeline view item ------------ 
-//     * inline - Important or frequently used timeline item commands. Rendered as a toolbar.
-//     * 1_actions - Commands related to working with timeline items.
-//     * 5_copy - Commands related to copying timeline item information.
+//- location: editor title --------------------------------------------------------------------
+//
+//      - Primary title area.
+//          * navigation:   navigating.
+//          * 1_run:        running and debugging the editor.
+//
+//
+//      - Under the ... menu.
+//          * 1_diff:       working with diff editors.
+//          * 3_open:       opening editors.
+//          * 5_close:      closing editors.
 
-//- location: extensions view --------------- 
-//     * 1_copy - Commands related to copying extension information.
-//     * 2_configure - Commands related to configuring an extension.
+//- location: terminal tab --------------------------------------------------------------------
+//     * 1_create:          creating terminals.
+//     * 3_run:             running/executing something in the terminal.
+//     * 5_manage:          managing a terminal.
+//     * 7_configure:       terminal configuration.
+
+//- location: terminal context ----------------------------------------------------------------
+//     * 1_create:          creating terminals.
+//     * 3_edit:            manipulating text, the selection or the clipboard.
+//     * 5_clear:           clearing the terminal.
+//     * 7_kill:            closing/killing the terminal.
+//     * 9_config:          terminal configuration.
+
+//- location: timeline view item --------------------------------------------------------------
+//     * inline:            Important or frequently used timeline item commands. Rendered as a toolbar.
+//     * 1_actions:         working with timeline items.
+//     * 5_copy:            copying timeline item information.
+
+//- location: extensions view -----------------------------------------------------------------
+//     * 1_copy:            copying extension information.
+//     * 2_configure:       configuring an extension.

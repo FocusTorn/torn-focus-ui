@@ -107,6 +107,7 @@ let fileIcons = {
                                     'cjs.map'
                                 ],
                                                                             },
+        { name: "jest-config",  fileNames: ["jest.config.js"],              },
         { name: "julia",        fileExtensions: ["jl"],                     },
         { name: "license",      fileNames:      [
                                     "license.txt",
@@ -165,6 +166,8 @@ let fileIcons = {
         { name: "tsconfig",     fileNames:      ["tsconfig.json"],          },
         { name: "text-file",    fileExtensions: ["txt"],                    },
         { name: "yaml",         fileExtensions: ["yaml"],                   },
+        { name: "yarn-config",  fileNames:      [".yarnrc"],                },
+        { name: "yarn-lock",    fileNames:      ["yarn.lock"],              },
         { name: "vscode",       fileNames:      [
                                     "vsc-extension-quickstart.md"
                                 ],

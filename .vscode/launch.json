@@ -2,54 +2,57 @@
 // Use IntelliSense to learn about possible attributes.
 // Hover to view descriptions of existing attributes.
 // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-{
-	"version": "0.2.0",
-	"configurations": [
-        {	"name": "Watch",
-			"type": "extensionHost",
-			"request": "launch",
 
-			"runtimeExecutable": "${execPath}",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}",
-				// "${workspaceFolder}",
-				//"--extensionDevelopmentPath=D:/_dev/torn-focus-ui",
-				"--disable-extensions"
+{"version": "0.2.0", "configurations": [{
 
-			],
-            "cwd": "${workspaceFolder}",
-			"sourceMaps": true,
-			"outFiles": ["${workspaceFolder}/out/src/**/*.js"],
-			"preLaunchTask": "NPM - Watch"
-		},
+	"name": "Webpack - Debug",
+	"type": "extensionHost",
 
+	"request": 		 "launch",
+	"preLaunchTask": "${defaultBuildTask}",
+	"args": [ 
+		
+		"--profile=Clean",
+		"--extensionDevelopmentPath=${workspaceFolder}", 
+		// "--disable-extensions" 
+	],
 
-        {	"name": "Webpack - Debug",
-			"type": "extensionHost",
-			"request": "launch",
-			// "runtimeExecutable": "${execPath}",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}",
-				// "${workspaceFolder}",
-				"--disable-extensions"
-			],
-			"sourceMaps": true,
-			"outFiles": ["${workspaceFolder}/dist/extension.js"],
-			"preLaunchTask": "${defaultBuildTask}"
-		}
+	"internalConsoleOptions": "openOnSessionStart",
+	
+ 	"outFiles": ["${workspaceFolder}/dist/extension.js"],
+	"sourceMaps": true
+	
+	
+	
+	
+	
+	
+
+}]}
 
 
 
 
 
 
+// "runtimeExecutable": "${execPath}",
+// "${workspaceFolder}",
 
+	// {
+	// 	"name": "Watch",
+	// 	"type": "extensionHost",
+	// 	"request": "launch",
 
+	// 	"runtimeExecutable": "${execPath}",
+	// 	"args": [
+	// 		"--extensionDevelopmentPath=${workspaceFolder}",
+	// 		// "${workspaceFolder}",
+	// 		//"--extensionDevelopmentPath=D:/_dev/torn-focus-ui",
+	// 		"--disable-extensions"
 
-
-
-	]
-}
-
-
-
+	// 	],
+	// 	"cwd": "${workspaceFolder}",
+	// 	"sourceMaps": true,
+	// 	"outFiles": ["${workspaceFolder}/out/src/**/*.js"],
+	// 	"preLaunchTask": "NPM - Watch"
+	// },

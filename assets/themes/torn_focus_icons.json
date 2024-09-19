@@ -69,6 +69,9 @@
     "_javascript-map": {
       "iconPath": "../icons/file_icons/javascript-map.svg"
     },
+    "_jest-config": {
+      "iconPath": "../icons/file_icons/jest-config.svg"
+    },
     "_julia": {
       "iconPath": "../icons/file_icons/julia.svg"
     },
@@ -131,6 +134,12 @@
     },
     "_yaml": {
       "iconPath": "../icons/file_icons/yaml.svg"
+    },
+    "_yarn-config": {
+      "iconPath": "../icons/file_icons/yarn-config.svg"
+    },
+    "_yarn-lock": {
+      "iconPath": "../icons/file_icons/yarn-lock.svg"
     },
     "_vscode": {
       "iconPath": "../icons/file_icons/vscode.svg"
@@ -351,6 +360,9 @@
     "_webpack": {
       "iconPath": "../icons/file_icons/webpack.svg"
     },
+    "_yarn": {
+      "iconPath": "../icons/file_icons/yarn.svg"
+    },
     "_zip-alt": {
       "iconPath": "../icons/file_icons/zip-alt.svg"
     },
@@ -479,7 +491,10 @@
     "themes": "_folder-themes",
     "ts": "_folder-ts",
     ".vscode": "_folder-vscode",
-    ".devcontainer": "_folder-webpack"
+    ".devcontainer": "_folder-webpack",
+    "VSC_Extensions": "_folder-[object Object]",
+    "resources2": "_folder-removed",
+    "png_icons": "_folder-images"
   },
   "folderNamesExpanded": {
     "commands": "_folder-action-arrows-open",
@@ -557,7 +572,10 @@
     "themes": "_folder-themes-open",
     "ts": "_folder-ts-open",
     ".vscode": "_folder-vscode-open",
-    ".devcontainer": "_folder-webpack-open"
+    ".devcontainer": "_folder-webpack-open",
+    "VSC_Extensions": "_folder-[object Object]-open",
+    "resources2": "_folder-removed-open",
+    "png_icons": "_folder-images-open"
   },
   "fileExtensions": {
     "ahk": "_ahk",
@@ -653,6 +671,7 @@
     "gulpfile.cts": "_gulp",
     "gulpfile.mts": "_gulp",
     "gulpfile.babel.js": "_gulp",
+    "jest.config.js": "_jest-config",
     "license.txt": "_license",
     "license.md": "_license",
     ".npmignore": "_node-ignore",
@@ -670,6 +689,8 @@
     "py.typed": "_python-misc",
     "readme.md": "_readme",
     "tsconfig.json": "_tsconfig",
+    ".yarnrc": "_yarn-config",
+    "yarn.lock": "_yarn-lock",
     "vsc-extension-quickstart.md": "_vscode",
     ".vscodeignore": "_vscode-ignore"
   },
@@ -679,7 +700,7 @@
   "rootFolder": "_folder-root",
   "rootFolderExpanded": "_folder-root-open",
   "languageIds": {},
-  "hidesExplorerArrows": false,
+  "hidesExplorerArrows": true,
   "highContrast": {
     "fileExtensions": {},
     "fileNames": {}

@@ -1,6 +1,0 @@
-{
-    "torn-focus-ui.showFolderIconAssignment": "../commands/showFolderIconAssignment",
-    "torn-focus-ui.showAvailableIcons": "../commands/showAvailableIcons",
-    "torn-focus-ui.assignIcon": "../commands/assignIcon",
-    "torn-focus-ui.assignWorkspaceIcon": "../commands/assignWorkspaceIcon"
-}

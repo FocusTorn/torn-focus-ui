@@ -4,12 +4,13 @@ const path = require("path");
 
 
 const fileIcons = require('../../dict/file_icons.model.js');
-const folderIcons = require('../../dict/file_icons.model.js');
+const folderIcons = require('../../dict/folder_icons.model.js');
 
 
 const themesDir = 'assets/themes';
 
-const outputFile = path.posix.join(themesDir, 'base_theme.json');
+const baseThemeFile = path.posix.join(themesDir, 'base_theme.json');
+const themeFile = path.posix.join(themesDir, 'torn_focus_icons.json');
 
 
 const iconsDir = 'assets/icons';
@@ -19,53 +20,22 @@ const folderIconsDir = path.posix.join(iconsDir, 'folder_icons');
 const fileIconRelPath = path.posix.relative(themesDir, fileIconsDir);
 const folderIconRelPath = path.posix.relative(themesDir, folderIconsDir);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function saveToJson(filePath, data) {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
 }
 
-// Helper function to generate icon metadata from a directory
 function generateMetadata(directoryPath) {
     return fs.readdirSync(directoryPath).reduce((iconsData, file) => {
         const ext = path.extname(file).toLowerCase();
         if (['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg'].includes(ext)) {
             const name = `_${path.parse(file).name}`;
-            const iconPath = path.posix.join(path.posix.relative(path.dirname(outputFile), directoryPath), file);
+            const iconPath = path.posix.join(path.posix.relative(path.dirname(baseThemeFile), directoryPath), file);
             iconsData[name] = { iconPath };
         }
         return iconsData;
     }, {});
 }
 
-// Function to transform icon data into the desired format
 function transformIcons(fileIconsData, folderIconsData) {
     const result = {
         iconDefinitions: {},
@@ -86,7 +56,6 @@ function transformIcons(fileIconsData, folderIconsData) {
         }
     };
 
-    // Helper function to process icon associations (file extensions, names, folder names)
     function processIconAssociations(iconsData, type) {
         const encounteredNames = new Set();
         iconsData.icons.forEach((icon) => {
@@ -140,15 +109,17 @@ function transformIcons(fileIconsData, folderIconsData) {
 }
 
 // Delete the old output file if it exists
-if (fs.existsSync(outputFile)) {
-    fs.unlinkSync(outputFile);
-    console.log(`Deleted existing icons file: ${outputFile}`);
+if (fs.existsSync(baseThemeFile)) {
+    fs.unlinkSync(baseThemeFile);
+    console.log(`Deleted existing icons file: ${baseThemeFile}`);
 }
 
 // Generate and save the combined icon data
 const combinedIconsData = transformIcons(fileIcons, folderIcons);
-saveToJson(outputFile, combinedIconsData);
-console.log(`Icons saved to: ${outputFile}`);
+saveToJson(baseThemeFile, combinedIconsData);
+saveToJson(themeFile, combinedIconsData);
+
+console.log(`Icons saved to: ${baseThemeFile}`);
 
 
-
+module.exports = transformIcons;
