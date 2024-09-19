@@ -2,26 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "NPM - Watch",
-            "type": "npm",
-            "script": "watch:tsc",
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
-            "isBackground": true,
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": true,
-                "panel": "dedicated"
-            },
-            "problemMatcher": "$tsc-watch"
-        },
-        {
             "label": "WebPack - Watch",
             "type": "npm",
-            "script": "wpv_watch",
+            "script": "wp-watch",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -30,31 +13,52 @@
 			"isBackground": true,
             "presentation": { "reveal": "never", "group": "watchers" },
         },
-
-
-
-
-
-
-        // {
-        //     "label": "NPM - Watch",
-        //     "type": "npm",
-        //     "script": "npm-watch",
-        //     "group": {
-        //         "kind": "build",
-        //         "isDefault": true
-        //     },
-        //     "isBackground": true,
-        //     "presentation": {
-        //         "echo": true,
-        //         "reveal": "always",
-        //         "focus": true,
-        //         "panel": "dedicated"
-        //     },
-        //     "problemMatcher": "$tsc-watch"
-        // }
     ]
 }
+
+
+
+
+
+// {
+//     "label": "NPM - Watch",
+//     "type": "npm",
+//     "script": "watch:tsc",
+//     "group": {
+//         "kind": "build",
+//         "isDefault": false
+//     },
+//     "isBackground": true,
+//     "presentation": {
+//         "echo": true,
+//         "reveal": "always",
+//         "focus": true,
+//         "panel": "dedicated"
+//     },
+//     "problemMatcher": "$tsc-watch"
+// },
+
+
+
+
+    // {
+    //     "label": "NPM - Watch",
+    //     "type": "npm",
+    //     "script": "npm-watch",
+    //     "group": {
+    //         "kind": "build",
+    //         "isDefault": true
+    //     },
+    //     "isBackground": true,
+    //     "presentation": {
+    //         "echo": true,
+    //         "reveal": "always",
+    //         "focus": true,
+    //         "panel": "dedicated"
+    //     },
+    //     "problemMatcher": "$tsc-watch"
+    // }
+
 
 
 

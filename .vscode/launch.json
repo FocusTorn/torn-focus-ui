@@ -4,30 +4,17 @@
 // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 
 {"version": "0.2.0", "configurations": [{
-
 	"name": "Webpack - Debug",
 	"type": "extensionHost",
-
 	"request": 		 "launch",
 	"preLaunchTask": "${defaultBuildTask}",
-	"args": [ 
-		
+	"args": [
 		"--profile=Clean",
 		"--extensionDevelopmentPath=${workspaceFolder}", 
-		// "--disable-extensions" 
 	],
-
 	"internalConsoleOptions": "openOnSessionStart",
-	
  	"outFiles": ["${workspaceFolder}/dist/extension.js"],
 	"sourceMaps": true
-	
-	
-	
-	
-	
-	
-
 }]}
 
 

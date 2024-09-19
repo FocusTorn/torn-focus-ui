@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const packageJsonPath = './package.json';
+const packageJsonPath = './package.mod.json';
 
 
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
@@ -19,36 +19,38 @@ delete commands.submenus;
 
 
 
-// function addBlankLinesBeforeKey(obj, targetKeys, numBlankLines = 2) {
-//     let newScriptsContent = "";
-//     let targetKeyFound = false;
+function addBlankLinesBeforeKey(obj, targetKeys, numBlankLines = 2) {
+    let newScriptsContent = "";
+    let targetKeyFound = false;
 
-//     const scriptEntries = Object.entries(obj.scripts);
+    const scriptEntries = Object.entries(obj.scripts);
 
-//     for (let i = 0; i < scriptEntries.length; i++) {
-//         const [key, value] = scriptEntries[i];
+    for (let i = 0; i < scriptEntries.length; i++) {
+        const [key, value] = scriptEntries[i];
 
-//         if (targetKeys.includes(key)) {
-//             if (!targetKeyFound) {
-//                 for (let j = 0; j < numBlankLines; j++) {
-//                     newScriptsContent += '\n';
-//                 }
-//                 targetKeyFound = true;
-//             }
-//         }
+        if (targetKeys.includes(key) && !targetKeyFound) {
+            for (let j = 0; j < numBlankLines; j++) {
+                newScriptsContent += '\n';
+            }
+            targetKeyFound = true;
+        }
 
-//         // Add comma and newline only if it's not the last entry
-//         if (i < scriptEntries.length - 1) {
-//             newScriptsContent += `"${key}": "${value}",\n`;
-//         } else {
-//             newScriptsContent += `"${key}": "${value}"\n`;
-//         }
-//     }
+        // Construct the key-value pair as a string
+        newScriptsContent += '"' + key + '": "' + value + '"';
 
-//     obj.scripts = JSON.parse(`{\n${newScriptsContent}\n}`);
+        // Add comma and newline, except for the last entry
+        if (i < scriptEntries.length - 1) {
+            newScriptsContent += ',\n';
+        } else {
+            newScriptsContent += '\n';
+        }
+    }
 
-//     return obj;
-// }
+    // Parse the content within the "scripts" object
+    obj.scripts = JSON.parse('{"scripts": {\n' + newScriptsContent + '\n}}').scripts;
+
+    return obj;
+}
 
 
 
@@ -102,7 +104,7 @@ function generateCommandsArray(commands) {
 
 // Original Function to generate the "contributes.menus" object
 function generateMenusObject(commands, submenus) {
-    const menus = {}; 
+    const menus = { ...packageJson.contributes.menus };
 
     //- Clear original menu sections -------------
     packageJson.contributes.menus = {};
@@ -181,14 +183,16 @@ const formattedLanguages = languages.icons.map(lang => ({
 }));
 
 
+// Call addBlankLinesBeforeKey 
+const trial = addBlankLinesBeforeKey(packageJson, ["wp-compile", "wp-watch", "wpv_test", "generate-package.json"]);
 
-packageJson.contributes.commands = generateCommandsArray(commands);
-packageJson.contributes.menus = generateMenusObject(commands, submenus);
+console.log(trial.scripts);
 
-packageJson.contributes.languages = formattedLanguages;
 
-// addBlankLinesBeforeKey(packageJson, ["wp-compile", "wp-watch", "wpv_test", "generate-package.json"]);
-
+// Other modifications to packageJson (commands, languages, etc.)
+// packageJson.contributes.commands = generateCommandsArray(commands);
+// packageJson.contributes.languages = formattedLanguages;
+// packageJson.contributes.menus = generateMenusObject(commands, submenus); 
 
 // Finally, write to the file
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 4));
