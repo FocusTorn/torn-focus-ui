@@ -2,11 +2,144 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "User - Echo Var",
-            "type": "shell",
-            "command": "echo workspaceFolder: ${workspaceFolder} \n workspaceRoot: ${workspaceRoot}",
-            "problemMatcher": []
+            "label": "WebPack - Watch",
+            "type": "npm",
+            "script": "wp-watch",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$ts-webpack-watch",
+			"isBackground": true,
+            "presentation": { "reveal": "never", "group": "watchers" },
         },
+    ]
+}
+
+
+
+
+
+// {
+//     "label": "NPM - Watch",
+//     "type": "npm",
+//     "script": "watch:tsc",
+//     "group": {
+//         "kind": "build",
+//         "isDefault": false
+//     },
+//     "isBackground": true,
+//     "presentation": {
+//         "echo": true,
+//         "reveal": "always",
+//         "focus": true,
+//         "panel": "dedicated"
+//     },
+//     "problemMatcher": "$tsc-watch"
+// },
+
+
+
+
+    // {
+    //     "label": "NPM - Watch",
+    //     "type": "npm",
+    //     "script": "npm-watch",
+    //     "group": {
+    //         "kind": "build",
+    //         "isDefault": true
+    //     },
+    //     "isBackground": true,
+    //     "presentation": {
+    //         "echo": true,
+    //         "reveal": "always",
+    //         "focus": true,
+    //         "panel": "dedicated"
+    //     },
+    //     "problemMatcher": "$tsc-watch"
+    // }
+
+
+
+
+
+
+
+
+
+
+
+        // {
+        //     "label": "WebPack - Build",
+        //     "type": "shell", "command": "npm run wpbuild",
+        //     "presentation": {
+        //       "reveal": "always",
+        //       "panel": "dedicated"
+        //     }
+        // },
+
+
+
+
+        // {
+        //     "label": "User - Echo Var",
+        //     "type": "shell",
+        //     "command": "echo workspaceFolder: ${workspaceFolder} \n workspaceRoot: ${workspaceRoot}",
+        //     "problemMatcher": []
+        // },
+
+        // {
+        //     "label": "NPM - Build",
+        //     "type": "npm",
+        //     "script": "build",
+
+        //     "isBackground": true,
+        //     "presentation": {
+        //         "reveal": "always",
+        //         "focus": true,
+        //         "panel": "dedicated"
+        //     },
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "problemMatcher": []
+        // },
+
+
+        // {
+        //     "label": "NPM - Generate Package",
+        //     "type": "npm",
+        //     "script": "generate-package.json",
+
+        //     "isBackground": true,
+        //     "presentation": {
+        //         "reveal": "always",
+        //         "focus": true,
+        //         "panel": "dedicated"
+        //     },
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "problemMatcher": []
+        // },
+
+
+
+        // {
+        //     "label": "WebPack - Watch",
+        //     "type": "shell",
+        //     "command": "npm run wpwatch",
+        //     "problemMatcher": [],
+        //     "presentation": {
+        //       "reveal": "always",
+        //       "panel": "dedicated"
+        //     }
+        //   },
+
+
+
         // {
         //     "label": "Package and Install",
         //     "type": "shell",
@@ -17,104 +150,7 @@
         //     },
         //     "problemMatcher": []
         // },
-        
-        
-        
-        
-        
-        {
-            "label": "NPM - Watch",
-            "type": "npm",
-            "script": "watch",
-            "problemMatcher": "$tsc-watch",
-            "isBackground": true,
-            "presentation": {
-                "reveal": "always",
-                "focus": true,
-                "panel": "dedicated"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "NPM - Build",
-            "type": "npm",
-            "script": "build",
-            
-            "isBackground": true,
-            "presentation": {
-                "reveal": "always",
-                "focus": true,
-                "panel": "dedicated"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "NPM - Generate Package",
-            "type": "npm",
-            "script": "generate-package.json",
-            
-            "isBackground": true,
-            "presentation": {
-                "reveal": "always",
-                "focus": true,
-                "panel": "dedicated"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "NPM - Build and Watch",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": true,
-                "panel": "dedicated"
-            },
-            "dependsOrder": "sequence",
-            "dependsOn": ["NPM - Build", "NPM - Generate Package", "NPM - Watch"],
-            "problemMatcher": [],
-            
-        },
-        
-        
-        
-        
-        
-        
-        {
-            "label": "WebPack - Build",
-            "type": "shell",
-            "command": "npm run wpbuild",
-            "problemMatcher": [],
-            "presentation": {
-              "reveal": "always",
-              "panel": "dedicated" 
-            }
-        },
-        {
-            "label": "WebPack - Watch",
-            "type": "shell",
-            "command": "npm run wpwatch",
-            "problemMatcher": [],
-            "presentation": {
-              "reveal": "always",
-              "panel": "dedicated" 
-            }
-          },
-         
-    ]
-}
+
+
+
+

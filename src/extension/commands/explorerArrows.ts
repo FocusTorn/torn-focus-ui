@@ -5,6 +5,9 @@ import { setThemeConfig, getConfigValue } from '../../config/configurationAction
 export const toggleExplorerArrows = async () => {
     try {
         const status = areExplorerArrowsHidden();
+        
+        console.log(status);
+        
         const response = await showQuickPickItems(status);
         return handleQuickPickActions(response);
     } catch (error) {

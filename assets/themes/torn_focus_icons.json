@@ -6,6 +6,9 @@
         "_ahk-alt": {
             "iconPath": "../icons/file_icons/ahk-alt.svg"
         },
+        "_biome": {
+            "iconPath": "../icons/file_icons/biome.svg"
+        },
         "_binary": {
             "iconPath": "../icons/file_icons/binary.svg"
         },
@@ -17,9 +20,6 @@
         },
         "_c": {
             "iconPath": "../icons/file_icons/c.svg"
-        },
-        "_cpp": {
-            "iconPath": "../icons/file_icons/cpp.svg"
         },
         "_csharp": {
             "iconPath": "../icons/file_icons/csharp.svg"
@@ -38,6 +38,9 @@
         },
         "_console": {
             "iconPath": "../icons/file_icons/console.svg"
+        },
+        "_cpp": {
+            "iconPath": "../icons/file_icons/cpp.svg"
         },
         "_cs": {
             "iconPath": "../icons/file_icons/cs.svg"
@@ -68,6 +71,9 @@
         },
         "_javascript-map": {
             "iconPath": "../icons/file_icons/javascript-map.svg"
+        },
+        "_jest-config": {
+            "iconPath": "../icons/file_icons/jest-config.svg"
         },
         "_julia": {
             "iconPath": "../icons/file_icons/julia.svg"
@@ -120,6 +126,9 @@
         "_svg": {
             "iconPath": "../icons/file_icons/svg.svg"
         },
+        "_svgo-config": {
+            "iconPath": "../icons/file_icons/svgo-config.svg"
+        },
         "_typescript": {
             "iconPath": "../icons/file_icons/typescript.svg"
         },
@@ -131,6 +140,12 @@
         },
         "_yaml": {
             "iconPath": "../icons/file_icons/yaml.svg"
+        },
+        "_yarn-config": {
+            "iconPath": "../icons/file_icons/yarn-config.svg"
+        },
+        "_yarn-lock": {
+            "iconPath": "../icons/file_icons/yarn-lock.svg"
         },
         "_vscode": {
             "iconPath": "../icons/file_icons/vscode.svg"
@@ -345,11 +360,20 @@
         "_pycache": {
             "iconPath": "../icons/file_icons/pycache.svg"
         },
+        "_raspberry-pi-svgrepo-com": {
+            "iconPath": "../icons/file_icons/raspberry-pi-svgrepo-com.svg"
+        },
         "_svg-alt": {
             "iconPath": "../icons/file_icons/svg-alt.svg"
         },
+        "_svgo": {
+            "iconPath": "../icons/file_icons/svgo.svg"
+        },
         "_webpack": {
             "iconPath": "../icons/file_icons/webpack.svg"
+        },
+        "_yarn": {
+            "iconPath": "../icons/file_icons/yarn.svg"
         },
         "_zip-alt": {
             "iconPath": "../icons/file_icons/zip-alt.svg"
@@ -575,7 +599,6 @@
         "mitigus": "_binary",
         "binsource": "_binary",
         "c": "_c",
-        "cpp": "_cpp",
         "cs": "_cs",
         "clj": "_clojure",
         "cljs": "_clojure",
@@ -595,6 +618,7 @@
         "fish": "_terminal",
         "exp": "_terminal",
         "nu": "_terminal",
+        "cpp": "_cpp",
         "jpg": "_image",
         "gif": "_image",
         "png": "_image",
@@ -628,6 +652,7 @@
         "rar": "_zip"
     },
     "fileNames": {
+        "biome.json": "_biome",
         "bun.lockb": "_bun-lock",
         "bunfig.toml": "_bun-config",
         "changelog": "_changelog",
@@ -653,6 +678,7 @@
         "gulpfile.cts": "_gulp",
         "gulpfile.mts": "_gulp",
         "gulpfile.babel.js": "_gulp",
+        "jest.config.js": "_jest-config",
         "license.txt": "_license",
         "license.md": "_license",
         ".npmignore": "_node-ignore",
@@ -669,7 +695,12 @@
         "pylintrc": "_python-misc",
         "py.typed": "_python-misc",
         "readme.md": "_readme",
+        "svgo.config.mjs": "_svgo-config",
+        "svgo.config.js": "_svgo-config",
+        "svgo.config.yaml": "_svgo-config",
         "tsconfig.json": "_tsconfig",
+        ".yarnrc": "_yarn-config",
+        "yarn.lock": "_yarn-lock",
         "vsc-extension-quickstart.md": "_vscode",
         ".vscodeignore": "_vscode-ignore"
     },

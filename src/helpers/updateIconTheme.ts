@@ -2,6 +2,9 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 
+import { ConfigurationTarget, window as codeWindow } from 'vscode';
+import { getConfig } from '../config/index';
+
 
 interface BaseThemeData {
     fileExtensions: { [key: string]: string };
@@ -46,17 +49,50 @@ function updateBaseTheme(baseThemeData: BaseThemeData, itemName: string, iconNam
 }
 
 
-export function updateHidesExplorerArrows(hideArrows: boolean) {
-    try {
-        const iconThemePath = path.join( __dirname, '..', '..', 'assets', 'themes', 'torn_focus_icons.json' );
-        const iconThemeData = JSON.parse(fs.readFileSync(iconThemePath, 'utf-8'));
+// export async function updateHidesExplorerArrows(hideArrows: boolean) {
 
-        iconThemeData.hidesExplorerArrows = hideArrows;
-        fs.writeFileSync(iconThemePath, JSON.stringify(iconThemeData, null, 2));
+export const updateHidesExplorerArrows = async (hideArrows: boolean) => {
+    try {
+        const config = getConfig();
+        const section = 'TornFocusUi.themes.hidesExplorerArrows';
+
+        const chosenTarget = await codeWindow.showQuickPick(
+            [
+                { label: 'Globally', target: ConfigurationTarget.Global },
+                { label: 'For this Workspace', target: ConfigurationTarget.Workspace }
+            ],
+            { placeHolder: 'Where do you want to apply the icon theme?' }
+        );
+        if (!chosenTarget) { return; }
+
+        await config.update(section, hideArrows, chosenTarget.target);
+
+        const activeSetting = getConfig().inspect(section)?.[chosenTarget.target === ConfigurationTarget.Global ? 'globalValue' : 'workspaceValue'];
+        if (activeSetting !== hideArrows) {
+            codeWindow.showErrorMessage(`Failed to toggle folder arrows: ${chosenTarget.label.toLowerCase()}.`);
+            return;
+        }
+
+        const infoMessage = activeSetting !== true ? `Folder arrows are hidden ${chosenTarget.label.toLowerCase()}!`: `Folder arrows are visable ${chosenTarget.label.toLowerCase()}!`;
+        codeWindow.showInformationMessage(infoMessage);
+
     } catch (error) {
-        console.error('Error toggling explorer arrows:', error);
+        console.error(error);
+        codeWindow.showErrorMessage('An error occurred while toggling folder arrows.');
     }
-}
+
+    // try {
+    //     const iconThemePath = path.join( __dirname, '..',  'assets', 'themes', 'torn_focus_icons.json' );
+    //     const iconThemeData = JSON.parse(fs.readFileSync(iconThemePath, 'utf-8'));
+
+    //     iconThemeData.hidesExplorerArrows = hideArrows;
+    //     fs.writeFileSync(iconThemePath, JSON.stringify(iconThemeData, null, 2));
+
+    // } catch (error) {
+    //     console.error('Error toggling explorer arrows:', error);
+    // }
+
+};
 
 
 

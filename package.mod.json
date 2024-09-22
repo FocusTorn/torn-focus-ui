@@ -1,0 +1,304 @@
+{
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/FocusTorn/torn-focus-ui"
+    },
+    "scripts": {
+        "prepublish": "npm run wp-package",
+        "wp-package": "webpack --mode production --devtool hidden-source-map",
+        "wp-compile": "webpack",
+        "wp-watch": "webpack --watch",
+        "wpv_test": "vscode-test",
+        "jest": "jest",
+        "sjest": "jest --runInBand",
+        "lint": "eslint src --ext ts",
+        "generate-package.json": "node src/scripts/js/generate-package.js",
+        "create_base_manifest": "node src/generator/js/create_base_manifest.js"
+    },
+    "contributes": {
+        "commands": [
+            {
+                "title": "FT-UI: Use Alternate icon",
+                "command": "torn-focus-ui.assignIcon"
+            },
+            {
+                "title": "FT-UI: Use Default Icon",
+                "command": "torn-focus-ui.revertIcon"
+            },
+            {
+                "title": "FT-UI: Show Available Icons",
+                "command": "torn-focus-ui.showAvailableIcons"
+            },
+            {
+                "title": "FT-UI: Show Folder Assignments",
+                "command": "torn-focus-ui.showFolderIconAssignment"
+            },
+            {
+                "title": "FT-UI: Log Message",
+                "command": "torn-focus-ui.debug.logMessage"
+            },
+            {
+                "title": "FT-UI: Icons > Toggle Icons",
+                "command": "torn-focus-ui.toggleIcons"
+            },
+            {
+                "title": "FT-UI: Icons > Activate Icon Theme",
+                "command": "torn-focus-ui.activateIconTheme"
+            },
+            {
+                "title": "FT-UI: Icons > Toggle Explorer Arrows",
+                "command": "torn-focus-ui.toggleExplorerArrows"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "group": "2_workspace@0",
+                    "submenu": "torn-focus-ui.assignIconSubmenu"
+                }
+            ],
+            "torn-focus-ui.assignIconSubmenu": [
+                {
+                    "group": "assignIconSubmenu@1",
+                    "command": "torn-focus-ui.assignIcon"
+                },
+                {
+                    "group": "assignIconSubmenu@1",
+                    "command": "torn-focus-ui.revertIcon"
+                },
+                {
+                    "group": "assignIconSubmenu2@1",
+                    "command": "torn-focus-ui.showAvailableIcons"
+                },
+                {
+                    "group": "assignIconSubmenu2@1",
+                    "command": "torn-focus-ui.showFolderIconAssignment"
+                }
+            ],
+            "editor/context": [
+                {
+                    "group": "navigation@101",
+                    "command": "torn-focus-ui.debug.logMessage"
+                }
+            ]
+        },
+        "submenus": [
+            {
+                "label": "FT-UI: Assign Icon",
+                "id": "torn-focus-ui.assignIconSubmenu"
+            }
+        ],
+        "languages": [
+            {
+                "id": "ahk",
+                "icon": {
+                    "light": "./assets/icons/file_icons/ahk.svg",
+                    "dark": "./assets/icons/file_icons/ahk.svg"
+                }
+            },
+            {
+                "id": "bat",
+                "icon": {
+                    "light": "./assets/icons/file_icons/terminal.svg",
+                    "dark": "./assets/icons/file_icons/terminal.svg"
+                }
+            },
+            {
+                "id": "c",
+                "icon": {
+                    "light": "./assets/icons/file_icons/c.svg",
+                    "dark": "./assets/icons/file_icons/c.svg"
+                }
+            },
+            {
+                "id": "cpp",
+                "icon": {
+                    "light": "./assets/icons/file_icons/cpp.svg",
+                    "dark": "./assets/icons/file_icons/cpp.svg"
+                }
+            },
+            {
+                "id": "csharp",
+                "icon": {
+                    "light": "./assets/icons/file_icons/csharp.svg",
+                    "dark": "./assets/icons/file_icons/csharp.svg"
+                }
+            },
+            {
+                "id": "code-text-binary",
+                "icon": {
+                    "light": "./assets/icons/file_icons/binary.svg",
+                    "dark": "./assets/icons/file_icons/binary.svg"
+                }
+            },
+            {
+                "id": "coffeescript",
+                "icon": {
+                    "light": "./assets/icons/file_icons/coffee.svg",
+                    "dark": "./assets/icons/file_icons/coffee.svg"
+                }
+            },
+            {
+                "id": "cpp",
+                "icon": {
+                    "light": "./assets/icons/file_icons/cpp.svg",
+                    "dark": "./assets/icons/file_icons/cpp.svg"
+                }
+            },
+            {
+                "id": "css",
+                "icon": {
+                    "light": "./assets/icons/file_icons/css.svg",
+                    "dark": "./assets/icons/file_icons/css.svg"
+                }
+            },
+            {
+                "id": "dockercompose",
+                "icon": {
+                    "light": "./assets/icons/file_icons/docker.svg",
+                    "dark": "./assets/icons/file_icons/docker.svg"
+                }
+            },
+            {
+                "id": "dockerfile",
+                "icon": {
+                    "light": "./assets/icons/file_icons/docker.svg",
+                    "dark": "./assets/icons/file_icons/docker.svg"
+                }
+            },
+            {
+                "id": "git-commit",
+                "icon": {
+                    "light": "./assets/icons/file_icons/git.svg",
+                    "dark": "./assets/icons/file_icons/git.svg"
+                }
+            },
+            {
+                "id": "git-rebase",
+                "icon": {
+                    "light": "./assets/icons/file_icons/git.svg",
+                    "dark": "./assets/icons/file_icons/git.svg"
+                }
+            },
+            {
+                "id": "javascript",
+                "icon": {
+                    "light": "./assets/icons/file_icons/javascript.svg",
+                    "dark": "./assets/icons/file_icons/javascript.svg"
+                }
+            },
+            {
+                "id": "json",
+                "icon": {
+                    "light": "./assets/icons/file_icons/json.svg",
+                    "dark": "./assets/icons/file_icons/json.svg"
+                }
+            },
+            {
+                "id": "jsonl",
+                "icon": {
+                    "light": "./assets/icons/file_icons/json.svg",
+                    "dark": "./assets/icons/file_icons/json.svg"
+                }
+            },
+            {
+                "id": "jsonc",
+                "icon": {
+                    "light": "./assets/icons/file_icons/json.svg",
+                    "dark": "./assets/icons/file_icons/json.svg"
+                }
+            },
+            {
+                "id": "julia",
+                "icon": {
+                    "light": "./assets/icons/file_icons/julia.svg",
+                    "dark": "./assets/icons/file_icons/julia.svg"
+                }
+            },
+            {
+                "id": "juliamarkdown",
+                "icon": {
+                    "light": "./assets/icons/file_icons/julia.svg",
+                    "dark": "./assets/icons/file_icons/julia.svg"
+                }
+            },
+            {
+                "id": "log",
+                "icon": {
+                    "light": "./assets/icons/file_icons/changelog.svg",
+                    "dark": "./assets/icons/file_icons/changelog.svg"
+                }
+            },
+            {
+                "id": "python",
+                "icon": {
+                    "light": "./assets/icons/file_icons/python.svg",
+                    "dark": "./assets/icons/file_icons/python.svg"
+                }
+            },
+            {
+                "id": "plaintext",
+                "icon": {
+                    "light": "./assets/icons/file_icons/text-file.svg",
+                    "dark": "./assets/icons/file_icons/text-file.svg"
+                }
+            },
+            {
+                "id": "python",
+                "icon": {
+                    "light": "./assets/icons/file_icons/python.svg",
+                    "dark": "./assets/icons/file_icons/python.svg"
+                }
+            },
+            {
+                "id": "powershell",
+                "icon": {
+                    "light": "./assets/icons/file_icons/terminal.svg",
+                    "dark": "./assets/icons/file_icons/terminal.svg"
+                }
+            },
+            {
+                "id": "shellscript",
+                "icon": {
+                    "light": "./assets/icons/file_icons/shell.svg",
+                    "dark": "./assets/icons/file_icons/shell.svg"
+                }
+            },
+            {
+                "id": "snippets",
+                "icon": {
+                    "light": "./assets/icons/file_icons/vscode.svg",
+                    "dark": "./assets/icons/file_icons/vscode.svg"
+                }
+            },
+            {
+                "id": "typescript",
+                "icon": {
+                    "light": "./assets/icons/file_icons/typescript.svg",
+                    "dark": "./assets/icons/file_icons/typescript.svg"
+                }
+            },
+            {
+                "id": "txtc",
+                "icon": {
+                    "light": "./assets/icons/file_icons/text-file.svg",
+                    "dark": "./assets/icons/file_icons/text-file.svg"
+                }
+            },
+            {
+                "id": "cpp",
+                "icon": {
+                    "light": "./assets/icons/file_icons/cpp.svg",
+                    "dark": "./assets/icons/file_icons/cpp.svg"
+                }
+            },
+            {
+                "id": "yaml",
+                "icon": {
+                    "light": "./assets/icons/file_icons/yaml.svg",
+                    "dark": "./assets/icons/file_icons/yaml.svg"
+                }
+            }
+        ]
+    }
+}

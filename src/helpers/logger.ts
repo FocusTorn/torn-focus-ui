@@ -2,7 +2,7 @@
 
 // // Create a Pino logger instance
 // const logger = pino({
-//     level: 'info', // Set the minimum log level (e.g., 'info', 'debug', 'error')
+//     level: 'info', // Set the minimum log level
 //     transport: {
 //         target: 'pino-pretty', // Use pino-pretty for formatted console output
 //         options: {
@@ -55,16 +55,16 @@
 
 
 
-import pino from 'pino';
+// import pino from 'pino';
 
-const logger = pino({
-    level: 'info', // Set your desired log level
-    transport: {
-        target: 'pino-pretty',
-        options: {
-            colorize: true
-        }
-    }
-});
+// const logger = pino({
+//     level: 'info', // Set your desired log level
+//     transport: {
+//         target: 'pino-pretty',
+//         options: {
+//             colorize: true
+//         }
+//     }
+// });
 
-export default logger;
+// export default logger;

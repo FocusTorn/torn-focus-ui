@@ -1,15 +1,12 @@
 node_modules
-out
 dist
-node_modules
 .vscode-test/
 *.vsix
 .example/
 .pnotes/
 */*_removed.*
-*/generator/png_icons/*
 src/icons/*
-
+assets/icons/ref_icons/*
 
 
 

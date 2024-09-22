@@ -1,9 +1,10 @@
 //cspell:disable
-let fileIcons = {
+const fileIcons = {
     file: { name: "file" },
     icons: [
         { name: "ahk",          fileExtensions: ["ahk"],                    },
         { name: "ahk-alt",      fileExtensions: ["ah2"],                    },
+        { name: "biome",        fileNames:      ["biome.json"],             },
         { name: 'binary',       fileExtensions: [
                                     'asm',
                                     'a51',
@@ -17,14 +18,11 @@ let fileIcons = {
                                     'argus',
                                     'mitigus',
                                     'binsource',
-                                ],
-                                                                            },
+                                ],                                          },
         { name: "bun-lock",     fileNames:      ["bun.lockb"],              },
         { name: "bun-config",   fileNames:      ["bunfig.toml"],            },
         { name: "c",            fileExtensions: ["c"],                      },
-        { name: "cpp",          fileExtensions: ["cpp"],                    },
         { name: "csharp",       fileExtensions: ["cs"],                     },
-
         { name: 'changelog',    fileNames:      [
                                     "changelog",
                                     "changelog.md",
@@ -34,46 +32,38 @@ let fileIcons = {
                                     "changes.md",
                                     "changes.rst",
                                     "changes.txt",
-                                ],
-                                                                            },
+                                ],                                          },
         { name: 'clojure',      fileExtensions: [
                                     'clj',
                                     'cljs',
                                     'cljc'
-                                ]
-                                                                            },
+                                ]                                          },
         { name: "coderabbit",   fileNames:      [".coderabbit.yaml"],       },
         { name: 'coffee',       fileExtensions: [
                                     'coffee',
                                     'cson',
                                     'iced'
-                                ]
-                                                                            },
-
-
-        {
-            name: 'console',
-            fileExtensions: [
-                'sh',
-                'ksh',
-                'csh',
-                'tcsh',
-                'zsh',
-                'bash',
-                'bat',
-                'cmd',
-                'awk',
-                'fish',
-                'exp',
-                'nu',
-            ],
-            fileNames: ['commit-msg', 'pre-commit', 'pre-push', 'post-merge'],
-            },
-
-
-
-
-        { name: "console",      fileExtensions: ["bash"],                   },
+                                ]                                          },
+        { name: 'console',      fileExtensions: [
+                                    'sh',
+                                    'ksh',
+                                    'csh',
+                                    'tcsh',
+                                    'zsh',
+                                    'bash',
+                                    'bat',
+                                    'cmd',
+                                    'awk',
+                                    'fish',
+                                    'exp',
+                                    'nu',
+                                ],
+                                fileNames:      [
+                                    'commit-msg',
+                                    'pre-commit',
+                                    'pre-push',
+                                    'post-merge'
+                                ],                                          },
         { name: "cpp",          fileExtensions: ["cpp"],                    },
         { name: "cs",           fileExtensions: ["cs"],                     },
         { name: "editorconfig", fileNames:      [".editorconfig"],          },
@@ -88,8 +78,7 @@ let fileIcons = {
                                     "gulpfile.cts",
                                     "gulpfile.mts",
                                     "gulpfile.babel.js",
-                                ],
-                                                                            },
+                                ],                                          },
         { name: "image",        fileExtensions: [
                                     "jpg",
                                     "gif",
@@ -99,20 +88,18 @@ let fileIcons = {
         { name: "javascript",   fileExtensions: [
                                     "js",
                                     "mjs"
-                                ],
-        },
+                                ],                                          },
         { name: 'javascript-map',fileExtensions:[
                                     'js.map',
                                     'mjs.map',
                                     'cjs.map'
-                                ],
-                                                                            },
+                                ],                                          },
+        { name: "jest-config",  fileNames: ["jest.config.js"],              },
         { name: "julia",        fileExtensions: ["jl"],                     },
         { name: "license",      fileNames:      [
                                     "license.txt",
                                     "license.md"
-                                ],
-                                                                            },
+                                ],                                          },
         { name: "markdown",     fileExtensions: ["md"],                     },
         { name: "model",        fileExtensions: ["model.js"],               },
         { name: "node-ignore",  fileNames:      [".npmignore"],             },
@@ -134,8 +121,7 @@ let fileIcons = {
                                     'fish',
                                     'exp',
                                     'nu',
-                                ],
-                                                                            },
+                                ],                                          },
         { name: "python",       fileExtensions: ["py"],                     },
         { name: "pyproject",    fileNames:      ["pyproject.toml"],         },
         { name: "python-misc",  fileNames:      [
@@ -150,8 +136,7 @@ let fileIcons = {
                                 fileExtensions: [
                                     "pyc",
                                     "whl"
-                                ],
-                                                                            },
+                                ],                                          },
         { name: "readme",       fileNames:      ["readme.md"],              },
         { name: "shell",        fileExtensions: [
                                     "sh",
@@ -161,26 +146,31 @@ let fileIcons = {
                                     'tcsh',
                                 ],                     },
         { name: "svg",          fileExtensions: ["svg"],                    },
+        { name: "svgo-config",  fileNames:      [
+                                    "svgo.config.mjs",
+                                    "svgo.config.js",
+                                    "svgo.config.yaml",
+                                ],                                          },
         { name: "typescript",   fileExtensions: ["ts"],                     },
         { name: "tsconfig",     fileNames:      ["tsconfig.json"],          },
         { name: "text-file",    fileExtensions: ["txt"],                    },
         { name: "yaml",         fileExtensions: ["yaml"],                   },
+        { name: "yarn-config",  fileNames:      [".yarnrc"],                },
+        { name: "yarn-lock",    fileNames:      ["yarn.lock"],              },
         { name: "vscode",       fileNames:      [
                                     "vsc-extension-quickstart.md"
                                 ],
                                 fileExtensions: [
                                     "vsix",
                                     "code-workspace"
-                                ],
-                                                                            },
+                                ],                                          },
         { name: "vscode-ignore",fileNames:      [".vscodeignore"],          },
         { name: "zip",          fileExtensions: [
                                     "zip",
                                     "tar",
                                     "7z",
                                     "rar",
-                                ],
-                                                                            },
+                                ],                                          },
     ],
 };
 
