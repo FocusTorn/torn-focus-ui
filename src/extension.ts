@@ -8,53 +8,41 @@ import { getThemeConfig } from './config/configurationActions';
 import { generateLogMessage, getMsgTargetLine } from './extension/helpers/log-message';
 
 
-function _lwkejfwef(){
+// function _lwkejfwef(){
     
+//     const zxc = 'asdasd';
+//     console.log(zxc);
+
+//     // Inside Array, followed by CLog
+//     const qwe  = [ 1, 2, 3];
+//     console.log(qwe);
+
+
+//     // Inside Array, followed by other
+//     const _myArray2 = [ 1, 2, 3];
+//     const _notherVar = 177;
+//     console.log(_myArray2[0]);
+
+//     const myArray3 = [
+//         1,
+//         2,
+//         3
+//     ];
+//     console.log(myArray3[0]);
+
+//     const name = "John";
+//     const greeting = `Hello, ${name}!`;
+//     console.log(greeting);
+
+//     class MyClass {
+//       myFunction() {
+//         const _myVar = 42;
+//       }
+//     }
+
+//     const _asd = new MyClass();
     
-    const zxc = 'asdasd';
-    console.log(zxc);
-
-    // Inside Array, followed by CLog
-    const qwe  = [ 1, 2, 3];
-    console.log(qwe);
-
-
-    // Inside Array, followed by other
-    const _myArray2 = [ 1, 2, 3];
-    const _notherVar = 177;
-    console.log(_myArray2[0]);
-
-
-
-
-    const myArray3 = [
-        1,
-        2,
-        3
-    ];
-    console.log(myArray3[0]);
-
-
-
-    const name = "John";
-    const greeting = `Hello, ${name}!`;
-    console.log(greeting);
-
-
-
-    
-    
-    
-    class MyClass {
-      myFunction() {
-        const _myVar = 42;
-      }
-    }
-
-    const _asd = new MyClass();
-    
-
-}
+// }
 
 
 

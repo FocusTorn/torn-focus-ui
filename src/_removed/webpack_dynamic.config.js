@@ -45,7 +45,7 @@ const path = require('path');
 
 
 
-module.exports = (env, argv) => {
+module.exports = (_env, argv) => {
     const isProduction = argv.mode === 'production';
 
 

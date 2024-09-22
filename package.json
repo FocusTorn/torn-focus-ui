@@ -1,12 +1,19 @@
 {
-    "version": "1.0.4",
+    "version": "1.0.6",
     "name": "torn-focus-ui",
     "displayName": "Torn Focus UI",
     "description": "UI Revamp",
     "publisher": "NewRealityDesigns",
     "license": "MIT",
     "scripts": {
-        "vscode:prepublish": "npm run wp-package",
+        "ppub": "bun run src/scripts/js/determineBuild.js && npm run build",
+        "vscode:prepublish": "npm run ts-es_base -- --minify",
+        "ts-es_dev": "npm run ts-es_base -- --sourcemap --watch",
+        "ts-es_base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+        "-vscode:prepublish": "npm run ests-Base -- --minify",
+        "js-es_dev": "npm run esbuild-base -- --sourcemap --watch",
+        "js-es_esbuild-base": "esbuild ./src/extension.js --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+        "--vscode:prepublish": "npm run wp-package",
         "wp-package": "webpack --mode production",
         "wp-compile": "webpack ",
         "wp-watch": "webpack --watch",
@@ -191,11 +198,13 @@
                 "title": "Variable Logger",
                 "properties": {
                     "TornFocusUi.varLogger.includeClassName": {
+                        "order": 1,
                         "type": "boolean",
                         "default": true,
                         "description": "Show the class name in the message"
                     },
                     "TornFocusUi.varLogger.includeFunctionName": {
+                        "order": 2,
                         "type": "boolean",
                         "default": true,
                         "description": "Show the function name in the message"
@@ -429,6 +438,8 @@
         "@typescript-eslint/parser": "^7.11.0",
         "@vscode/test-cli": "^0.0.10",
         "@vscode/test-electron": "^2.4.1",
+        "bun-types": "^1.1.29",
+        "esbuild": "^0.24.0",
         "esbuild-loader": "^4.2.2",
         "eslint": "^8.57.0",
         "gulp": "^5.0.0",
@@ -444,4 +455,3 @@
         "webpack-cli": "^5.1.4"
     }
 }
-
