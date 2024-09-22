@@ -1,7 +1,7 @@
 
 //cSpell:disable
 
-let folderIcons = {
+const folderIcons = {
     folder: { name: "basic" },
     rootFolder: { name: "root" },
 

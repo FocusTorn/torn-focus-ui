@@ -1,17 +1,9 @@
 import * as vscode from 'vscode';
+import * as ts from 'typescript';
 
-const CLASS_DECLARATION_REGEX = /class\s+([a-zA-Z]+)\s*(.*)\s*{/;
-const OBJECT_DECLARATION_REGEX = /(const|let|var)?\s*([a-zA-Z0-9]*)\s*=\s*{/;
+import { getThemeConfig } from '../../config/configurationActions';
 
-// Valid
-const ARRAY_DECLARATION_REGEX = /(const|let|var)?\s*([a-zA-Z0-9]*)\s*=\s*\[/;
 
-const FUNCTION_CALL_REGEX = /(const|let|var)?\s*([a-zA-Z0-9]*)\s*=\s*.*\(.*/;
-const OBJECT_FUNCTION_CALL_REGEX = /(const|let|var)?\s*([a-zA-Z0-9]*)\s*=\s*.*[a-zA-Z0-9]*\./;
-const NAMED_FUNCTION_DECLARATION_REGEX = /([a-zA-Z]+)\s*\(.*\)\s*{/;
-const NON_NAMED_FUNCTION_DECLARATION_REGEX = /function\s*\(.*\)\s*{/;
-const NAMED_FUNCTION_EXPRESSION_REGEX = /([a-zA-Z]+)\s*=\s*(function)?\s*[a-zA-Z]*\s*\(.*\)\s*(=>)?\s*{/;
-const JS_BUILT_IN_STATEMENT_REGEX = /(if|switch|while|for|catch)\s*\(.*\)\s*{/;
 
 interface LogMessageOptions {
     document: vscode.TextDocument;
@@ -21,130 +13,326 @@ interface LogMessageOptions {
     insertEnclosingFunction: boolean;
 }
 
-//- getMsgTargetLine ------------->>
 
 
+
+
+
+
+
+
+//>  START: getMsgTargetLine 
+
+/**
+ * Determines the target line number for inserting a log message based on the selected variable and code structure.
+ *
+ * This function analyzes the code to find the appropriate line to insert a `console.log` statement
+ * for the given variable. It considers factors like:
+ *
+ * - Enclosing functions: The log message will be placed inside the nearest function containing the variable.
+ * - Arrays and objects: If the variable is declared inside an array or object literal, the log message
+ *   will be placed after the declaration.
+ * - Template literals: The logic handles variables declared within template literals.
+ *
+ * @param document The VS Code TextDocument representing the current code file.
+ * @param selectionLine The line number where the variable is selected (zero-based).
+ * @param selectedVar The name of the variable being logged.
+ *
+ * @returns The zero-based line number where the log message should be inserted.
+ */
 function getMsgTargetLine(document: vscode.TextDocument, selectionLine: number, selectedVar: string): number {
+    //--- Parse into an AST ------------------------------------------
+    const sourceCode = document.getText();
+    const sourceFile = ts.createSourceFile(document.fileName, sourceCode, ts.ScriptTarget.Latest, true);
 
-    // Check if selection is on last line of document
-    if (selectionLine === document.lineCount - 1) {
+    //--- Find selectedVar's node  -----------------------------------
+    const selectedNode = findNodeAtLine(sourceFile, selectionLine, selectedVar);
+    if (!selectedNode) {
+        // Default if node not found
         return selectionLine;
     }
 
-    let currentLineNum = selectionLine;
-    let currentLineText = document.lineAt(currentLineNum).text;
-
-
-
-
-
-
-    while (currentLineNum < document.lineCount) {
-
-
-        // Get text of next line if there is one, else be blank
-        let nextLineText = currentLineNum < document.lineCount - 1
-            ? document.lineAt(currentLineNum + 1).text.replace(/\s/g, '')
-            : '';
-
-
-
-        // Prioritize checks that span multiple lines
-        if (isObject(currentLineText) ||
-            isArray(currentLineText, nextLineText) ||
-            isInlineFunctionCall(currentLineText, selectedVar, isObjectFunctionCall, nextLineText) ||
-            isObjectFunctionCall(currentLineText, nextLineText) ||
-            isFunctionCall(currentLineText) ||
-            /`/.test(currentLineText)) {
-
-
-            const DelimiterPair = getDelimiterPair(currentLineText);
-
-
-            currentLineNum = findClosingDelimiterLine(
-                document,
-                currentLineNum,
-                DelimiterPair.open,
-                DelimiterPair.close
-            );
-
-            // Update current line
-            currentLineText = document.lineAt(currentLineNum).text;
-
-            // Check if we're still within a block
-            // continue;
-        }
-
-        
-        // Simple case: return statement
-        if (currentLineText.trim().startsWith('return')) {
-            return currentLineNum;
-        }
-
-        
-        
-        
-    //- v1 --------------------------------------- 
-        
-        // return currentLineNum + 1;
-
-    //- v2 --------------------------------------- 
-        
-        // if (currentLineNum > selectionLine && 
-        //     !currentLineText.trim().startsWith('}') &&
-        //     !currentLineText.trim().startsWith(']') &&
-        //     !currentLineText.trim().startsWith(')')
-        //    ) {
-        //     return currentLineNum;
-        // }
-        
-    //- v3 --------------------------------------- 
-        
-        const closingDelimiters = [')', ']', '}'];
-        if (currentLineNum > selectionLine &&
-            !closingDelimiters.some(delimiter => currentLineText.trim().startsWith(delimiter))) {
-            return currentLineNum;
-        }
-
-
-        currentLineNum++;
-
-
-    }
-
-
-
-
-
-
-
-    // Default if we reach the end
-    return selectionLine;
+    return determineTargetLine(sourceFile, selectedNode);
 }
 
+/**
+ * Finds the TypeScript AST node at a specific line that contains a given variable name.
+ *
+ * This function traverses the Abstract Syntax Tree (AST) of a TypeScript source file
+ * to locate a node that:
+ * 1. Spans the target line number.
+ * 2. Contains the specified variable name within its text.
+ *
+ * It prioritizes finding variable declarations (`VariableDeclaration` nodes) that match
+ * the variable name exactly. If no exact match is found, it may return other node types
+ * that contain the variable name (e.g., `PropertyAccessExpression`).
+ *
+ * @param sourceFile The TypeScript `SourceFile` representing the code.
+ * @param line The zero-based line number to search on.
+ * @param varName The name of the variable to find.
+ *
+ * @returns The `ts.Node` found at the specified line containing the variable name,
+ *          or `undefined` if no matching node is found.
+ */
+function findNodeAtLine(sourceFile: ts.SourceFile, line: number, varName: string): ts.Node | undefined {
+    let foundNode: ts.Node | undefined;
 
-//---------------------------------------------------------------------------------------------------<<
-//- getEnclosingBlockName --------------->>
+    /**
+     * Recursively traverses the AST to find a node that spans the target line
+     * and contains the variable name.
+     *
+     * @param node The current AST node being visited.
+     */
+    function traverse(node: ts.Node): void {
+        // Check if the node's position encompasses the target line
+        const nodeStartLine = sourceFile.getLineAndCharacterOfPosition(node.getStart()).line;
+        const nodeEndLine = sourceFile.getLineAndCharacterOfPosition(node.getEnd()).line;
 
+        if (nodeStartLine <= line && nodeEndLine >= line) {
+            // Check if the node's text contains the variable name
+            if (node.getText().includes(varName)) {
+                // More specific check for variable declarations:
+                if (
+                    node.kind === ts.SyntaxKind.VariableDeclaration &&
+                    (node as ts.VariableDeclaration).name.getText() === varName
+                ) {
+                    foundNode = node;
+                    // Stop traversal if exact match found
+                    return;
+                } else {
+                    // Consider other node types (e.g., PropertyAccessExpression)
+                    // ... (Add logic based on your needs)
+                    foundNode = node;
+                }
+            }
+            // Continue traversal for nested nodes
+            ts.forEachChild(node, traverse);
+        }
+    }
+    traverse(sourceFile);
+    return foundNode;
+}
 
-function getEnclosingBlockName(document: vscode.TextDocument, lineOfSelectedVar: number, blockType: 'class' | 'function'): string {
+/**
+ * Determines the appropriate line number to insert the log message, considering enclosing structures.
+ *
+ * This function traverses up the AST from the given node, looking for specific parent node types
+ * (functions, arrays, objects, template literals) to determine the correct line for insertion.
+ *
+ * @param sourceFile The TypeScript `SourceFile` representing the code.
+ * @param node The AST node representing the selected variable.
+ *
+ * @returns The zero-based line number where the log message should be inserted.
+ */
+function determineTargetLine(sourceFile: ts.SourceFile, node: ts.Node): number {
+    let targetLine = sourceFile.getLineAndCharacterOfPosition(node.getEnd()).line;
+    let parent = node.parent;
+    let templateLiteralDepth = 0;
+
+    while (parent) {
+        switch (parent.kind) {
+            case ts.SyntaxKind.FunctionDeclaration:
+            case ts.SyntaxKind.ArrowFunction:
+            case ts.SyntaxKind.FunctionExpression:
+                targetLine = findNextStatementLine(sourceFile, node, parent);
+                break;
+
+            case ts.SyntaxKind.ArrayLiteralExpression:
+            case ts.SyntaxKind.ObjectLiteralExpression:
+            case ts.SyntaxKind.CallExpression:
+                targetLine = sourceFile.getLineAndCharacterOfPosition(parent.getEnd()).line + 1;
+                break;
+
+            case ts.SyntaxKind.TemplateExpression:
+                templateLiteralDepth++;
+                break;
+        }
+
+        // Move to the next parent in the AST
+        parent = parent.parent;
+
+        // Decrement depth if exiting a TemplateExpression
+        if (parent && parent.kind === ts.SyntaxKind.TemplateExpression) {
+            templateLiteralDepth--;
+        }
+
+        // If we were inside a template literal, and we've moved past it, stop
+        if (templateLiteralDepth === 0 && parent && parent.kind !== ts.SyntaxKind.TemplateExpression) {
+            targetLine = sourceFile.getLineAndCharacterOfPosition(parent.getEnd()).line + 1;
+            break;
+        }
+    }
+    return targetLine;
+}
+
+/**
+ * Finds the line number of the next statement within a function's body, after the given node.
+ *
+ * This function is used to determine where to insert a log message within a function,
+ * ensuring it's placed after the selected variable declaration or expression.
+ *
+ * @param sourceFile The TypeScript `SourceFile` representing the code.
+ * @param node The AST node representing the selected variable.
+ * @param functionNode The AST node representing the enclosing function.
+ *
+ * @returns The zero-based line number of the next statement, or the end line of the node
+ *          if no next statement is found or if the `functionNode` is not a function-like node.
+ */
+function findNextStatementLine(sourceFile: ts.SourceFile, node: ts.Node, functionNode: ts.Node): number {
+    // 1. Get the position of the selected node
+    const nodeEndPos = node.getEnd();
+
+    // 2. Check if the functionNode actually has statements
+    // Check if it's a function-like node
+    // Check for a 'body' property with a 'block' type
+    if (ts.isFunctionDeclaration(functionNode) || ts.isArrowFunction(functionNode)) {
+        if (functionNode.body && ts.isBlock(functionNode.body)) {
+            // 3. Iterate through the function body's statements
+            let targetLine = sourceFile.getLineAndCharacterOfPosition(node.getEnd()).line;
+            for (const statement of functionNode.body.statements) {
+                if (statement.getStart() > nodeEndPos) {
+                    targetLine = sourceFile.getLineAndCharacterOfPosition(statement.getStart()).line;
+                    break;
+                }
+            }
+            return targetLine;
+        }
+
+        return sourceFile.getLineAndCharacterOfPosition(node.getEnd()).line;
+    } else {
+        // Handle cases where functionNode doesn't have statements
+        // You might want to log an error or handle it differently based on your needs
+        console.error('Node does not have statements property:', functionNode.kind);
+        // Default to the end of the node
+        return sourceFile.getLineAndCharacterOfPosition(node.getEnd()).line;
+    }
+}
+
+//<  END: getMsgTargetLine 
+
+//>  START: generateLogMessage 
+
+/**
+ * Generates a log message string with optional class and function name prefixes.
+ *
+ * This function constructs a `console.log` statement for the given variable,
+ * optionally including the enclosing class and function names to provide context.
+ *
+ * @param options An object containing the following options:
+ *   - document: The VS Code TextDocument representing the current code file.
+ *   - selectedVar: The name of the variable being logged.
+ *   - lineOfSelectedVar: The line number where the variable is selected.
+ *   - insertEnclosingClass: Whether to include the enclosing class name.
+ *   - insertEnclosingFunction: Whether to include the enclosing function name.
+ *
+ * @returns The formatted log message string.
+ */
+function generateLogMessage(options: LogMessageOptions): string {
+    const { document, selectedVar, lineOfSelectedVar} = options;
+
+    
+    const config = getThemeConfig(); 
+    const includeClassName = config.get('varLogger.includeClassName') ?? true;
+    const includeFunctionName = config.get('varLogger.includeFunctionName') ?? true;
+
+    // Use configuration to determine whether to include class/function names
+    const className = includeClassName ? getEnclosingClassName(document, lineOfSelectedVar) : '';
+    const funcName = includeFunctionName ? getEnclosingFunctionName(document, lineOfSelectedVar) : '';
+
+    
+    
+    
+    
+    // const className = insertEnclosingClass ? getEnclosingClassName(document, lineOfSelectedVar) : '';
+    // const funcName = insertEnclosingFunction ? getEnclosingFunctionName(document, lineOfSelectedVar) : '';
+
+    const lineOfLogMsg = getMsgTargetLine(document, lineOfSelectedVar, selectedVar);
+    const spacesBeforeMsg = calculateSpaces(document, lineOfSelectedVar);
+
+    const debuggingMsg = `${spacesBeforeMsg}console.log('${className}${funcName}${selectedVar}:', ${selectedVar});`;
+
+    return `${lineOfLogMsg === document.lineCount ? '\n' : ''}${debuggingMsg}\n`;
+}
+
+/**
+ * Calculates the number of spaces used for indentation at the beginning of a given line.
+ *
+ * This function determines the indentation level of a line by counting the number of spaces
+ * before the first non-whitespace character.
+ *
+ * @param document The VS Code TextDocument representing the current code file.
+ * @param line The zero-based line number for which to calculate the indentation.
+ *
+ * @returns A string containing the indentation spaces.
+ */
+
+function calculateSpaces(document: vscode.TextDocument, line: number): string {
+    const currentLine = document.lineAt(line);
+    const firstNonWhitespaceIndex = currentLine.firstNonWhitespaceCharacterIndex;
+    return ' '.repeat(firstNonWhitespaceIndex);
+}
+
+/**
+ * Finds the name of the enclosing class for a variable at a given line number.
+ *
+ * This function searches backwards from the given line number to find the nearest
+ * enclosing class declaration. It returns the class name with " -> " appended
+ * if found, otherwise an empty string.
+ *
+ * @param document The VS Code TextDocument representing the current code file.
+ * @param lineOfSelectedVar The line number where the variable is selected.
+ *
+ * @returns The name of the enclosing class with " -> " appended, or an empty string if not found.
+ */
+function getEnclosingClassName(document: vscode.TextDocument, lineOfSelectedVar: number): string {
+    const classDeclarationRegex = /class\s+([a-zA-Z]+)\s*(.*)\s*{/;
+
     for (let currentLineNum = lineOfSelectedVar; currentLineNum >= 0; currentLineNum--) {
         const currentLineText = document.lineAt(currentLineNum).text;
 
-        const isClassDeclaration = blockType === 'class' && isClass(currentLineText);
-        const isFunctionDeclaration = blockType === 'function' &&
-            isFunction(currentLineText) &&
-            !isJSBuiltInStatement(currentLineText);
-
-        if (isClassDeclaration || isFunctionDeclaration) {
+        const match = classDeclarationRegex.exec(currentLineText);
+        if (match) {
             const closingBraceLine = getClosingLine(document, currentLineNum);
 
             if (lineOfSelectedVar >= currentLineNum && lineOfSelectedVar < closingBraceLine) {
-                if (isClassDeclaration) {
-                    return `${getClassName(currentLineText)} -> `;
-                } else {
-                    const functionName = getFunctionName(currentLineText);
-                    return functionName ? `${functionName} -> ` : '';
+                return `${match[1].trim()} -> `;
+            }
+        }
+    }
+    return '';
+}
+
+/**
+ * Finds the name of the enclosing function for a variable at a given line number.
+ *
+ * This function searches backwards from the given line number to find the nearest
+ * enclosing named function declaration or expression (excluding built-in statements).
+ * It returns the function name with " -> " appended if found, otherwise an empty string.
+ *
+ * @param document The VS Code TextDocument representing the current code file.
+ * @param lineOfSelectedVar The line number where the variable is selected.
+ *
+ * @returns The name of the enclosing function with " -> " appended, or an empty string if not found.
+ */
+function getEnclosingFunctionName(document: vscode.TextDocument, lineOfSelectedVar: number): string {
+    const namedFunctionDeclarationRegex = /([a-zA-Z]+)\s*\(.*\)\s*{/;
+    const namedFunctionExpressionRegex = /([a-zA-Z]+)\s*=\s*(function)?\s*[a-zA-Z]*\s*\(.*\)\s*(=>)?\s*{/;
+    const jsBuiltInStatementRegex = /(if|switch|while|for|catch)\s*\(.*\)\s*{/;
+
+    for (let currentLineNum = lineOfSelectedVar; currentLineNum >= 0; currentLineNum--) {
+        const currentLineText = document.lineAt(currentLineNum).text;
+
+        if (!jsBuiltInStatementRegex.test(currentLineText)) {
+            let match = namedFunctionDeclarationRegex.exec(currentLineText);
+            if (!match) {
+                match = namedFunctionExpressionRegex.exec(currentLineText);
+            }
+
+            if (match) {
+                const closingBraceLine = getClosingLine(document, currentLineNum);
+
+                if (lineOfSelectedVar >= currentLineNum && lineOfSelectedVar < closingBraceLine) {
+                    return `${match[1].trim()} -> `;
                 }
             }
         }
@@ -152,54 +340,18 @@ function getEnclosingBlockName(document: vscode.TextDocument, lineOfSelectedVar:
     return '';
 }
 
-
-//---------------------------------------------------------------------------------------------------<<
-//- findClosingDelimiterLine ------------>>
-
-
-function findClosingDelimiterLine(document: vscode.TextDocument, selectionLine: number,
-    openDelimiter: string, closeDelimiter: string): number {
-
-    const escapedOpenDelimiter = openDelimiter.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const escapedCloseDelimiter = closeDelimiter.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-
-    let openCount = (RegExp(escapedOpenDelimiter, 'g').exec(document.lineAt(selectionLine).text) || []).length;
-    let closeCount = (RegExp(escapedCloseDelimiter, 'g').exec(document.lineAt(selectionLine).text) || []).length;
-
-    let currentLineNum = selectionLine + 1;
-
-    if (openCount !== closeCount) {
-        while (currentLineNum < document.lineCount) {
-            const currentLineText = document.lineAt(currentLineNum).text;
-
-            // Use escaped delimiters here as well
-            openCount += (RegExp(escapedOpenDelimiter, 'g').exec(currentLineText) || []).length;
-            closeCount += (RegExp(escapedCloseDelimiter, 'g').exec(currentLineText) || []).length;
-
-            if (openCount === closeCount) {
-                break;
-            }
-            currentLineNum++;
-        }
-    }
-
-    
-//- v1 --------------------------------------- 
-    
-    // return openCount === closeCount ? currentLineNum : selectionLine + 1;
-    
-//- v2 --------------------------------------- 
-    
-    return openCount === closeCount ? currentLineNum : selectionLine;
-    
-    
-}
-
-
-
-//---------------------------------------------------------------------------------------------------<<
-//- getClosingLine ---------------------->>
-
+/**
+ * Finds the line number of the closing curly brace `}` that corresponds to an opening brace `{` on a given line.
+ *
+ * This function is used to determine the scope of code blocks, such as classes and functions,
+ * by finding the matching closing brace for an opening brace on the starting line.
+ *
+ * @param document The VS Code TextDocument representing the current code file.
+ * @param startingLine The line number where the opening curly brace `{` is located.
+ *
+ * @returns The line number of the matching closing curly brace `}`, or the document's line count
+ *          if a matching closing brace is not found within the document.
+ */
 function getClosingLine(document: vscode.TextDocument, startingLine: number): number {
     let openBrackets = 1;
     let closeBrackets = 0;
@@ -219,116 +371,12 @@ function getClosingLine(document: vscode.TextDocument, startingLine: number): nu
     return document.lineCount;
 }
 
-//---------------------------------------------------------------------------------------------------<<
-//- generateLogMessage ------------------>>
-
-
-function generateLogMessage(options: LogMessageOptions): string {
-    const {
-        document,
-        selectedVar,
-        lineOfSelectedVar,
-        insertEnclosingClass,
-        insertEnclosingFunction,
-    } = options;
-
-    const classThatEncloseTheVar = getEnclosingBlockName(document, lineOfSelectedVar, 'class');
-    const funcThatEncloseTheVar = getEnclosingBlockName(document, lineOfSelectedVar, 'function');
-
-    const lineOfLogMsg = getMsgTargetLine(document, lineOfSelectedVar, selectedVar);
-    const spacesBeforeMsg = calculateSpaces(document, lineOfSelectedVar);
-
-
-
-
-
-
-
-    const debuggingMsg = `console.log('${insertEnclosingClass ? classThatEncloseTheVar : ''}${insertEnclosingFunction ? funcThatEncloseTheVar : ''} ${selectedVar}:' , ${selectedVar});`;
-
-
-
-    return `${lineOfLogMsg === document.lineCount ? '\n' : ''}${spacesBeforeMsg}${debuggingMsg}\n`;
-}
-
-
-//---------------------------------------------------------------------------------------------------<<
+//<  END: generateLogMessage 
 
 export { generateLogMessage, getMsgTargetLine, calculateSpaces };
 
 
 
-
-//>  START: HELPERS  
-
-
-function calculateSpaces(document: vscode.TextDocument, line: number): string {
-    const currentLine = document.lineAt(line);
-    const firstNonWhitespaceIndex = currentLine.firstNonWhitespaceCharacterIndex;
-    return ' '.repeat(firstNonWhitespaceIndex);
-}
-
-function getDelimiterPair(line: string): { open: string, close: string } {
-    if (/{/.test(line)) { return { open: '{', close: '}' }; }
-    if (/\[/.test(line)) { return { open: '[', close: ']' }; }
-    if (/\(/.test(line)) { return { open: '(', close: ')' }; }
-    if (/`/.test(line)) { return { open: '`', close: '`' }; }
-    return { open: '', close: '' };
-}
-
-
-
-function isClass(lineCode: string): boolean {
-    return CLASS_DECLARATION_REGEX.test(lineCode);
-}
-function isObject(lineCode: string): boolean {
-    return OBJECT_DECLARATION_REGEX.test(lineCode);
-}
-function isArray(lineCode: string, nextLineCode?: string): boolean {
-    return ARRAY_DECLARATION_REGEX.test(lineCode) ||
-        (/(const|let|var)?\s*[a-zA-Z0-9]*\s*=\s*.*[a-zA-Z0-9]*/.test(lineCode) &&
-            (nextLineCode ? nextLineCode.trim().startsWith("[") : false));
-}
-function isJSBuiltInStatement(lineCode: string): boolean {
-    return JS_BUILT_IN_STATEMENT_REGEX.test(lineCode);
-}
-
-
-
-function isFunction(lineCode: string): boolean {
-    return NAMED_FUNCTION_DECLARATION_REGEX.test(lineCode) ||
-        NAMED_FUNCTION_EXPRESSION_REGEX.test(lineCode);
-}
-function isFunctionCall(lineCode: string): boolean {
-    return FUNCTION_CALL_REGEX.test(lineCode);
-}
-function isInlineFunctionCall(currentLineText: string, selectedVar: string, checkFunction: (line: string, nextLine?: string) => boolean, nextLineText?: string): boolean {
-    return checkFunction(currentLineText, nextLineText) &&
-        (/\((\s*)$/.test(currentLineText.split(selectedVar)[0]) || /,(\s*)$/.test(currentLineText.split(selectedVar)[0]));
-}
-function isObjectFunctionCall(lineCode: string, nextLineCode?: string): boolean {
-    return OBJECT_FUNCTION_CALL_REGEX.test(lineCode) ||
-        (/(const|let|var)?\s*[a-zA-Z0-9]*\s*=\s*.*[a-zA-Z0-9]*/.test(lineCode) &&
-            (nextLineCode ? nextLineCode.trim().startsWith(".") : false));
-}
-
-
-
-function getClassName(lineCode: string): string {
-    const match = RegExp(CLASS_DECLARATION_REGEX).exec(lineCode);
-    return match ? match[1].trim() : '';
-}
-function getFunctionName(lineCode: string): string {
-    let match = RegExp(NAMED_FUNCTION_DECLARATION_REGEX).exec(lineCode);
-    if (match) { return match[1].trim(); }
-
-    match = RegExp(NAMED_FUNCTION_EXPRESSION_REGEX).exec(lineCode);
-    if (match) { return match[1].trim(); }
-
-    return '';
-}
-
-//<  END: HELPERS 
 
 
 

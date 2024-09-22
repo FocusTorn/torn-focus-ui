@@ -1,5 +1,5 @@
 /** @format */
-import { Position, window, ExtensionContext, workspace, commands, debug } from 'vscode';
+import { Position, window, ExtensionContext, workspace, commands} from 'vscode';
 
 import { updateIconThemeNoWorkspace, updateHidesExplorerArrows } from './helpers/updateIconTheme';
 
@@ -8,36 +8,52 @@ import { getThemeConfig } from './config/configurationActions';
 import { generateLogMessage, getMsgTargetLine } from './extension/helpers/log-message';
 
 
-
-// function welcomeMessage(){
-//     const debugConsoleVisible = debug.activeDebugSession !== undefined;
-//     console.log(debugConsoleVisible);
-//     console.log(debug.activeDebugConsole);
-//     if (!debugConsoleVisible) {
-//         // workbench.debug.panel.action.clearReplAction
-//         commands.executeCommand('workbench.debug.action.toggleRepl');
-//     }
-//     console.log("Extension is up");
-// }
-
-
-function lwkejfwef(){
+function _lwkejfwef(){
     
     
     const zxc = 'asdasd';
     console.log(zxc);
-    
+
+    // Inside Array, followed by CLog
     const qwe  = [ 1, 2, 3];
     console.log(qwe);
-    
-    
+
+
+    // Inside Array, followed by other
+    const _myArray2 = [ 1, 2, 3];
+    const _notherVar = 177;
+    console.log(_myArray2[0]);
+
+
+
+
+    const myArray3 = [
+        1,
+        2,
+        3
+    ];
+    console.log(myArray3[0]);
+
+
+
     const name = "John";
     const greeting = `Hello, ${name}!`;
     console.log(greeting);
+
+
+
     
     
     
+    class MyClass {
+      myFunction() {
+        const _myVar = 42;
+      }
+    }
+
+    const _asd = new MyClass();
     
+
 }
 
 
@@ -49,14 +65,6 @@ function lwkejfwef(){
 
 export function activate(context: ExtensionContext) {
 
-    if (debug.activeDebugConsole !== undefined) {
-        const packageJson = context.extension.packageJSON;
-        const extensionVersion = packageJson.version;
-        window.showInformationMessage(`FTUI v${extensionVersion} loaded for debugging.`);
-        console.log(`FTUI v${extensionVersion} loaded for debugging.`);
-
-    }
-    
     context.subscriptions.push(...registerCommands(context));
 
     //--- onDidChangeConfiguration ---------------------------------------------------------------------->>
@@ -79,11 +87,11 @@ export function activate(context: ExtensionContext) {
     //---------------------------------------------------------------------------------------------------<<
 
 
-    
-    
-    
-    
-    
+
+
+
+
+
 
 
 
@@ -93,30 +101,24 @@ export function activate(context: ExtensionContext) {
             "torn-focus-ui.debug.logMessage",
             async () => {
 
-
                 const editor = window.activeTextEditor;
-                if (!editor) {
-                    // Log if no active editor
-                    console.log("[e.ts: logMessage] No active editor found.");
-                    return;
-                }
-
+                if (!editor) { console.log("[MAIN: logMessage] No active editor found."); return; }
+                
                 const document = editor.document;
+                console.log(`[MAIN: logMessage] Number of selections: ${editor.selections.length}`);
 
                 
-                
-                // Log the number of selections
-                console.log(`[e.ts: logMessage] Number of selections: ${editor.selections.length}`);
-
                 for (const element of editor.selections) {
                     const selection = element;
                     const selectedVar = document.getText(selection);
+                    
+                    // zero based line number
                     const lineOfSelectedVar = selection.active.line;
 
-                    
-                    
+
+
                     // Log selected variable and line
-                    console.log(`[e.ts: logMessage] Selected variable: ${selectedVar}, Line: ${lineOfSelectedVar} (actual: ${lineOfSelectedVar+1})`);
+                    console.log(`[MAIN: logMessage] Selected variable: ${selectedVar}, Line: ${lineOfSelectedVar} (actual: ${lineOfSelectedVar+1})`);
 
                     if (selectedVar.trim().length !== 0) {
                         await editor.edit(editBuilder => {
@@ -126,10 +128,10 @@ export function activate(context: ExtensionContext) {
                                 selectedVar
                             );
 
-                            
-                            
+
+
                             // Log the calculated line
-                            console.log(`[e.ts: logMessage] Calculated log message line: ${logMessageLine}`);
+                            console.log(`[MAIN: logMessage] Calculated log message line: ${logMessageLine} (actual: ${logMessageLine+1})`);
 
                             const logMessageContent = generateLogMessage({
                                 document: document,
@@ -139,10 +141,10 @@ export function activate(context: ExtensionContext) {
                                 insertEnclosingFunction: true
                             });
 
-                            
-                            
+
+
                             // Log the generated message
-                            console.log(`[e.ts: logMessage] Generated log message: ${logMessageContent}`);
+                            console.log(`[MAIN: logMessage] Generated log message: ${logMessageContent}`);
 
                             editBuilder.insert(
                                 new Position(
@@ -151,16 +153,16 @@ export function activate(context: ExtensionContext) {
                                         : logMessageLine,
                                     0
                                 ),
-                                
+
                                 logMessageContent
                             );
                         });
-                        
-                        
+
+
                     } else {
 
                         // Log if selection is empty
-                        console.log("[e.ts: logMessage] Skipping empty selection.");
+                        console.log("[MAIN: logMessage] Skipping empty selection.");
                     }
                 }
             }
@@ -287,7 +289,7 @@ export function activate(context: ExtensionContext) {
     //                     );
 
     //                     // Get the log message (including enclosing class/function logic)
-    //                     const logMessageContent = generateLogMessage({ 
+    //                     const logMessageContent = generateLogMessage({
     //                         document: document,
     //                         selectedVar: selectedVar,
     //                         lineOfSelectedVar: lineOfSelectedVar,
@@ -302,7 +304,7 @@ export function activate(context: ExtensionContext) {
     //                                 : logMessageLine,
     //                             0
     //                         ),
-    //                         logMessageContent 
+    //                         logMessageContent
     //                     );
     //                 });
     //             }
