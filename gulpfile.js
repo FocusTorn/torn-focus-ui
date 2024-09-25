@@ -54,6 +54,7 @@ gulp.task('optimize___assets-icons', (done) => {
 gulp.task('apex_optimize-generate-pack', gulp.series(
     'optimize___assets-icons',
     'generate___icon-manifests',
+    'generate___preview-images',
     'generate___package-json'
 ));
 

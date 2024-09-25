@@ -19,7 +19,7 @@
 
 
 
-<img src="./assets/images/File_icons_preview.png" alt="file icons">
+<img src="https://github.com/FocusTorn/torn-focus-ui/blob/master/assets/images/File_icons_preview.png" alt="file icons">
 
 &nbsp;
 

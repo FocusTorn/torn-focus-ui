@@ -360,9 +360,6 @@
         "_pycache": {
             "iconPath": "../icons/file_icons/pycache.svg"
         },
-        "_raspberry-pi-svgrepo-com": {
-            "iconPath": "../icons/file_icons/raspberry-pi-svgrepo-com.svg"
-        },
         "_svg-alt": {
             "iconPath": "../icons/file_icons/svg-alt.svg"
         },
