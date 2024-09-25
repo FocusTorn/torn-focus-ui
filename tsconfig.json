@@ -1,13 +1,22 @@
 {
     
 	"compilerOptions": {
+        
+        
+        "target": "es2020", // Or your desired target
+        // "module": "commonjs", // Or "esnext" for ES modules
+        // "outDir": "./dist",
+        
+    
+    
 		"module": "Node16",
-		"sourceMap": true,
+		
         "strict": true,
         
-        "target": "ES2022",
-        "lib": ["ES2022"],
+        "lib": ["ES2020"],
         "skipLibCheck": true,
+        
+        "importHelpers": true,
 
 		"outDir": "out/src",
         "rootDir": "src",
@@ -22,7 +31,13 @@
             "@icons": ["assets/icons"]
         },
     },
+    
     "include": ["src/**/*.ts", "../test/**/*.ts"]
     
     
 } 
+
+
+
+
+// Whats the difference between "module": "commonjs" and "module": "Node16" and "module": "ESNext"

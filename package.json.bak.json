@@ -1,5 +1,5 @@
 {
-    "version": "1.1.1",
+    "version": "1.1.0",
     "name": "torn-focus-ui",
     "displayName": "Torn Focus UI",
     "description": "UI Revamp",
@@ -7,20 +7,37 @@
     "license": "MIT",
     "scripts": {
         "tses_base": "esbuild ./src/extension.ts --external:vscode --bundle --outfile=dist/extension.cjs  --format=cjs --platform=node",
-        "tses_w": "bun tses_base -- --sourcemap --watch",
-        "tses_p": "bun clean && bun tses_base -- --external:vscode --minify && bun package",
+        "tses_w": "npm run tses_base -- --sourcemap --watch",
+        "tses_p": "npm run clean && npm run tses_base -- --external:vscode --minify && npm run package",
+        "----------": "",
+        "esc:watch": "bun run ./build/watch-with-esbuild.ts",
+        "tsc-es_base": "npm run clean && npm run tsc-es_compile && bun run ./build/build-with-esbuild.ts --sourcemap=false --minify=true",
+        "tsc-es_compile": "tsc -p ./",
+        "------------": "",
+        "es:watch": "bun run ./build/watch-with-esbuild.ts",
+        "esb": "rimraf dist && bun run ./build/build-with-esbuild.ts --sourcemap=false --minify=true",
+        "esb:no-min": "rimraf dist && bun run ./build/build-with-esbuild.ts --sourcemap=false --minify=true",
+        "esb:analyze": "rimraf dist && bun run ./build/build-with-esbuild.ts --sourcemap=true --minify=false && source-map-explorer dist/extension.cjs",
+        "-----------": "",
+        "js-es_dev": "npm run esbuild-base -- --sourcemap --watch",
+        "js-es_esbuild-base": "esbuild ./src/extension.js --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
         "------------------": "",
+        "wp-build": "webpack --mode production",
+        "wp-compile": "webpack ",
+        "wp-analyze": "bun run webpack  --mode production --profile --json=dist/compilation-stats.json",
+        "wp-watch": "webpack --watch",
+        "wpv_test": "vscode-test",
+        "--------": "",
         "jest": "jest",
         "sjest": "jest --runInBand",
         "lint": "eslint src --ext ts",
-        "-------------------": "",
+        "----": "",
         "generate-package.json": "bun src/scripts/js/generate___package-json.js",
         "generate-icon_manifests": "bun src/scripts/js/generate___icon-manifests.js",
         "generate-preview_images": "bun src/scripts/js/generate___preview-images.js",
-        "verify_command": "bun src/scripts/js/verify___command_registration.js",
-        "incrementVersion": "bun src/scripts/js/increase_version_number.js",
+        "vup": "bun src/scripts/js/increase_version_number.js",
         "clean": "rimraf dist && rimraf out",
-        "package": "bun incrementVersion && vsce package"
+        "package": "npm run vup && vsce package"
     },
     "engines": {
         "vscode": "1.93.1"
@@ -71,100 +88,19 @@
                 "_watch": true
             }
         ],
-        "commands": [
-            {
-                "title": "FT-UI: Use Alternate icon",
-                "command": "torn-focus-ui.assignIcon"
-            },
-            {
-                "title": "FT-UI: Use Default Icon",
-                "command": "torn-focus-ui.revertIcon"
-            },
-            {
-                "title": "FT-UI: Show Available Icons",
-                "command": "torn-focus-ui.showAvailableIcons"
-            },
-            {
-                "title": "FT-UI: Show Folder Assignments",
-                "command": "torn-focus-ui.showFolderIconAssignment"
-            },
-            {
-                "title": "FT-UI: Log Message",
-                "command": "torn-focus-ui.varLogger.logMessage"
-            },
-            {
-                "title": "FT-UI: Update Terminal Path",
-                "command": "torn-focus-ui.terminal.updateTerminalPath"
-            },
-            {
-                "title": "FT-UI: Icons > Toggle Icons",
-                "command": "torn-focus-ui.toggleIcons"
-            },
-            {
-                "title": "FT-UI: Icons > Activate Icon Theme",
-                "command": "torn-focus-ui.activateIconTheme"
-            },
-            {
-                "title": "FT-UI: Icons > Toggle Explorer Arrows",
-                "command": "torn-focus-ui.toggleExplorerArrows"
-            }
-        ],
-        "menus": {
-            "explorer/context": [
-                {
-                    "group": "2_workspace1@0",
-                    "submenu": "torn-focus-ui.assignIconSubmenu"
-                },
-                {
-                    "group": "9_cutcopypaste1@0",
-                    "command": "torn-focus-ui.terminal.updateTerminalPath"
-                }
-            ],
-            "torn-focus-ui.assignIconSubmenu": [
-                {
-                    "group": "assignIconSubmenu1@0",
-                    "command": "torn-focus-ui.assignIcon"
-                },
-                {
-                    "group": "assignIconSubmenu1@1",
-                    "command": "torn-focus-ui.revertIcon"
-                },
-                {
-                    "group": "assignIconSubmenu2@0",
-                    "command": "torn-focus-ui.showAvailableIcons"
-                },
-                {
-                    "group": "assignIconSubmenu2@1",
-                    "command": "torn-focus-ui.showFolderIconAssignment"
-                }
-            ],
-            "editor/context": [
-                {
-                    "group": "1_modification1@0",
-                    "command": "torn-focus-ui.varLogger.logMessage"
-                }
-            ],
-            "null": [
-                {
-                    "group": "undefined1@0",
-                    "command": "torn-focus-ui.toggleIcons"
-                },
-                {
-                    "group": "undefined1@1",
-                    "command": "torn-focus-ui.activateIconTheme"
-                },
-                {
-                    "group": "undefined1@2",
-                    "command": "torn-focus-ui.toggleExplorerArrows"
-                }
-            ]
-        },
-        "submenus": [
-            {
-                "label": "FT-UI: Assign Icon",
-                "id": "torn-focus-ui.assignIconSubmenu"
-            }
-        ],
+        
+        
+        
+        
+        
+        "commands": [],
+        "menus": {},
+        "submenus": [],
+        
+        
+        
+        
+        
         "configuration": [
             {
                 "type": "object",
@@ -247,13 +183,6 @@
                 }
             },
             {
-                "id": "biome-syntax-tree",
-                "icon": {
-                    "light": "./assets/icons/file_icons/biome.svg",
-                    "dark": "./assets/icons/file_icons/biome.svg"
-                }
-            },
-            {
                 "id": "c",
                 "icon": {
                     "light": "./assets/icons/file_icons/c.svg",
@@ -331,21 +260,7 @@
                 }
             },
             {
-                "id": "ini",
-                "icon": {
-                    "light": "./assets/icons/file_icons/config.svg",
-                    "dark": "./assets/icons/file_icons/config.svg"
-                }
-            },
-            {
                 "id": "javascript",
-                "icon": {
-                    "light": "./assets/icons/file_icons/javascript.svg",
-                    "dark": "./assets/icons/file_icons/javascript.svg"
-                }
-            },
-            {
-                "id": "javascriptreact",
                 "icon": {
                     "light": "./assets/icons/file_icons/javascript.svg",
                     "dark": "./assets/icons/file_icons/javascript.svg"
@@ -391,27 +306,6 @@
                 "icon": {
                     "light": "./assets/icons/file_icons/changelog.svg",
                     "dark": "./assets/icons/file_icons/changelog.svg"
-                }
-            },
-            {
-                "id": "markdown",
-                "icon": {
-                    "light": "./assets/icons/file_icons/markdown.svg",
-                    "dark": "./assets/icons/file_icons/markdown.svg"
-                }
-            },
-            {
-                "id": "objective-c",
-                "icon": {
-                    "light": "./assets/icons/file_icons/c.svg",
-                    "dark": "./assets/icons/file_icons/c.svg"
-                }
-            },
-            {
-                "id": "objective-cpp",
-                "icon": {
-                    "light": "./assets/icons/file_icons/cpp.svg",
-                    "dark": "./assets/icons/file_icons/cpp.svg"
                 }
             },
             {
@@ -464,13 +358,6 @@
                 }
             },
             {
-                "id": "typescriptreact",
-                "icon": {
-                    "light": "./assets/icons/file_icons/typescript.svg",
-                    "dark": "./assets/icons/file_icons/typescript.svg"
-                }
-            },
-            {
                 "id": "txtc",
                 "icon": {
                     "light": "./assets/icons/file_icons/text-file.svg",
@@ -499,6 +386,8 @@
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.2",
+        "@statoscope/cli": "^5.28.2",
+        "@statoscope/webpack-plugin": "^5.28.2",
         "@types/jest": "^29.5.13",
         "@types/node": "20.x",
         "@types/vscode": "^1.92.0",
@@ -512,13 +401,17 @@
         "eslint": "^8.57.0",
         "gulp": "^5.0.0",
         "jest": "^29.7.0",
-        "js-yaml": "^4.1.0",
+        "nodemon": "^3.1.4",
         "puppeteer": "^23.4.0",
         "rimraf": "^6.0.1",
         "sharp": "^0.33.5",
+        "source-map-explorer": "^2.5.3",
         "ts-jest": "^29.2.5",
         "ts-loader": "^9.5.1",
         "ts-node": "^10.9.2",
-        "typescript": "^5.6.2"
+        "typescript": "^5.6.2",
+        "webpack": "^5.94.0",
+        "webpack-bundle-analyzer": "^4.10.2",
+        "webpack-cli": "^5.1.4"
     }
 }

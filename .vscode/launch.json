@@ -4,38 +4,18 @@
 // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 
 {"version": "0.2.0", "configurations": [
-
-	{ 	"name": "Webpack - Debug",
-	  	"type": "extensionHost",
-	  	"internalConsoleOptions": "openOnSessionStart",
-	  	"outFiles": ["${workspaceFolder}/dist/extension.js"],
-		
-	  	"sourceMaps": true,
-	  	
-		"preLaunchTask": "${defaultBuildTask}",
-	  	// "trace": true,
-		"request": "launch",
-	  	"args": [
-			"--profile=Clean",
-			"--extensionDevelopmentPath=${workspaceFolder}",
-	  	],
-		
-		
-		// "sourceMapPathOverrides": {
-		// 	"webpack:/*": "${webRoot}/*",
-		// 	"/./*": "${webRoot}/*",
-		// 	"/src/*": "${webRoot}/*",
-		// 	"/*": "*",
-		// 	"/./~/*": "${webRoot}/node_modules/*"
-		// },
-		
-		
-	},
-	
-	
-	
-	
-	
+	{ 	"name": "TsEs - Debug",
+        "type": "extensionHost",
+        "internalConsoleOptions": "openOnSessionStart",
+        "outFiles": ["${workspaceFolder}/dist/extension.js"],
+        "sourceMaps": true,
+        "preLaunchTask": "TsEs - Watch",
+        "request": "launch",
+        "args": [
+        "--profile=Clean",
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        ],
+    },
 	{ 	"type": "node",
 		"request": "launch",
 		"name": "Debug active",
@@ -44,13 +24,22 @@
 			"<node_internals>/**"
 		]
 	},
-	
-	
 ]}
 
 
 
-
+// { 	"name": "Webpack - Debug",
+// 	  	"type": "extensionHost",
+// 	  	"internalConsoleOptions": "openOnSessionStart",
+// 	  	"outFiles": ["${workspaceFolder}/dist/extension.js"],
+// 	  	"sourceMaps": true,
+// 		"preLaunchTask": "${defaultBuildTask}",
+// 		"request": "launch",
+// 	  	"args": [
+// 			"--profile=Clean",
+// 			"--extensionDevelopmentPath=${workspaceFolder}",
+// 	  	],
+// 	},
 
 
 // "runtimeExecutable": "${execPath}",

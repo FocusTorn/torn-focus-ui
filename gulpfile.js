@@ -25,6 +25,7 @@ gulp.task('generate___icon-manifests', (done) => {
     });
 });
 
+
 gulp.task('generate___preview-images', (done) => {
     exec('bun src/scripts/js/generate___preview-images.js', (err, stdout, stderr) => {
         if (err) {
@@ -50,4 +51,9 @@ gulp.task('optimize___assets-icons', (done) => {
     });
 });
 
+gulp.task('apex_optimize-generate-pack', gulp.series(
+    'optimize___assets-icons',
+    'generate___icon-manifests',
+    'generate___package-json'
+));
 

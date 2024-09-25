@@ -5,6 +5,9 @@ const languages = {
     icons: [
         { "id": "ahk",              "icon": "ahk.svg"         },
         { "id": "bat",              "icon": "terminal.svg"    },
+        
+        { "id": "biome-syntax-tree","icon": "biome.svg"       },
+        
         { "id": "c",                "icon": "c.svg"           },
         { "id": "cpp",              "icon": "cpp.svg"         },
         { "id": "csharp",           "icon": "csharp.svg"      },
@@ -16,13 +19,22 @@ const languages = {
         { "id": "dockerfile",       "icon": "docker.svg"      },
         { "id": "git-commit",       "icon": "git.svg"         },
         { "id": "git-rebase",       "icon": "git.svg"         },
+        { "id": "ini",              "icon": "config.svg"      },
+        
         { "id": "javascript",       "icon": "javascript.svg"  },
+        { "id": "javascriptreact",  "icon": "javascript.svg"  },
         { "id": "json",             "icon": "json.svg"        },
         { "id": "jsonl",            "icon": "json.svg"        },
         { "id": "jsonc",            "icon": "json.svg"        },
         { "id": "julia",            "icon": "julia.svg"       },
         { "id": "juliamarkdown",    "icon": "julia.svg"       },
         { "id": "log",              "icon": "changelog.svg"   },
+        { "id": "markdown",         "icon": "markdown.svg"    },
+        
+        { "id": "objective-c",      "icon": "c.svg"           },
+        { "id": "objective-cpp",    "icon": "cpp.svg"         },
+        
+        
         { "id": "python",           "icon": "python.svg"      },
         { "id": "plaintext",        "icon": "text-file.svg"   },
         { "id": "python",           "icon": "python.svg"      },
@@ -30,6 +42,9 @@ const languages = {
         { "id": "shellscript",      "icon": "shell.svg"       },
         { "id": "snippets",         "icon": "vscode.svg"      },
         { "id": "typescript",       "icon": "typescript.svg"  },
+        
+        { "id": "typescriptreact",  "icon": "typescript.svg"  },
+        
         { "id": "txtc",             "icon": "text-file.svg"   },
         { "id": "cpp",              "icon": "cpp.svg"         },
         { "id": "yaml",             "icon": "yaml.svg"        },

@@ -1,42 +1,29 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
 import * as path from 'path';
+import { getIconOptionsFromDirectory } from './../helpers/getIconOptionsFromDirectory';
 
-//--- getIconIdsFromDirectory ----------------------------------------------------------------------->>
-
-function getIconIdsFromDirectory(directoryPath: string): string[] {
-    const iconFiles = fs.readdirSync(directoryPath);
-    return iconFiles
-        .filter((file) => {
-            return (
-                path.extname(file).toLowerCase() === '.svg' &&
-                !file.endsWith('-open.svg')
-            );
-        })
-        .map((file) => {
-            
-            // Get the filename without extension
-            let iconId = path.parse(file).name; 
-            
-            // Remove prefixes
-            iconId = iconId.replace(/^_/, '').replace(/^folder-/, ''); 
-            const iconPrefix = directoryPath.endsWith('folder_icons') ? '📁' : '📄';
-            return `${iconPrefix} ${iconId}`;
-        });
-}
-
-//---------------------------------------------------------------------------------------------------<<
-
+/**
+ *
+ *
+ *
+ * Displays a Markdown document listing all available file and folder icons within the extension.
+ *
+ * This function retrieves icon information from the extension's assets directory,
+ * categorizes them into folder icons and file icons, and generates a Markdown document
+ * that lists each icon with its corresponding label. The document is then displayed
+ * in a new editor window, allowing users to easily browse and copy icon names.
+ *
+ * @param context - The extension context.
+ */
 export const showAvailableIcons = async (context: vscode.ExtensionContext) => {
     try {
-        
-        console.log(`function called: showAvailableIcons`);
-        
         const folderIconsDir = path.join(context.extensionPath, 'assets', 'icons', 'folder_icons');
         const fileIconsDir = path.join(context.extensionPath, 'assets', 'icons', 'file_icons');
 
-        const folderIconIds = getIconIdsFromDirectory(folderIconsDir);
-        const fileIconIds = getIconIdsFromDirectory(fileIconsDir);
+        const folderIconIds = getIconOptionsFromDirectory(folderIconsDir, (file) => !file.endsWith('-open.svg')).map(
+            (option) => `📁 ${option.label}`
+        );
+        const fileIconIds = getIconOptionsFromDirectory(fileIconsDir).map((option) => `📄 ${option.label}`);
 
         const markdownContent = `# Available Icons\n\n## Folder Icons\n\n${folderIconIds.join(
             '\n'
@@ -48,13 +35,8 @@ export const showAvailableIcons = async (context: vscode.ExtensionContext) => {
         });
 
         await vscode.window.showTextDocument(newDocument);
-
     } catch (error) {
         console.error('Error showing icons:', error);
-        vscode.window.showErrorMessage(
-            'An error occurred while showing icons.'
-        );
+        vscode.window.showErrorMessage('An error occurred while showing icons.');
     }
 };
-
-

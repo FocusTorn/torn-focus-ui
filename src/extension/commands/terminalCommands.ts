@@ -1,20 +1,13 @@
 
-import * as path from 'path';
-import * as fs from 'fs';
-import * as vscode from 'vscode';
-
-import { window } from 'vscode';
+import path from 'path';
+import fs from 'fs';
+import { Uri, window, ExtensionContext } from 'vscode';
 
 
 
 
 
-
-export const updateTerminalPath = (fileUri: vscode.Uri) => {
-    return updateTerminalPath_fn(fileUri);
-};
-
-const updateTerminalPath_fn = async (fileUri: vscode.Uri) => {
+export const updateTerminalPath = async (_context: ExtensionContext, fileUri: Uri) => {
     try {
 
         const terminal = window.activeTerminal;
@@ -24,7 +17,7 @@ const updateTerminalPath_fn = async (fileUri: vscode.Uri) => {
                 : path.dirname(fileUri.fsPath);
 
             // Use Get_CDCommand to get the correct command
-            const cdCommand = Get_CDCommand(targetPath);
+            const cdCommand = getCDCommand(targetPath);
 
             if (cdCommand) {
                 terminal.sendText(cdCommand);
@@ -49,7 +42,7 @@ const updateTerminalPath_fn = async (fileUri: vscode.Uri) => {
 
 
 
-function Get_CDCommand(folder: string | undefined): string | undefined {
+function getCDCommand(folder: string | undefined): string | undefined {
     const isWindows = process.platform === 'win32';
 
     const activeTerminal = window.activeTerminal;

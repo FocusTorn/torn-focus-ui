@@ -1,233 +1,243 @@
-import * as vscode from 'vscode';
 import { Disposable, ExtensionContext, Uri, commands } from 'vscode';
 import { constants } from '../../config/index';
 
 import { activateIconTheme } from '../../extension/commands/activateIconTheme';
 import { showAvailableIcons } from '../../extension/commands/showAvailableIcons';
 import { showFolderIconAssignment } from '../../extension/commands/showFolderIconAssignment';
-import { updateTerminalPath } from '../../extension/commands/terminalCommands';
+import { updateTerminalPath } from '../commands/terminalCommands';
 import { assignIcon, revertIcon } from '../../extension/commands/assignIcon';
 import { toggleIcons } from '../../extension/commands/toggleIcons';
 import { toggleExplorerArrows } from '../../extension/commands/explorerArrows';
+import { logMessage } from '../../extension/commands/logMessage';
 
-
+/**
+ * Registers all extension commands and their handlers.
+ *
+ * This function iterates through a list of command definitions and registers each command
+ * with the VS Code extension context. It handles two types of commands:
+ *
+ * 1. Commands that require the extension context: These commands are defined as functions
+ *    that accept an `ExtensionContext` object as an argument.
+ * 2. Commands that require a URI: These commands are defined as functions that accept a `Uri`
+ *    object as an argument.
+ *
+ * For each command, the function constructs the full command identifier (e.g., "torn-focus-ui.showFolderIconAssignment")
+ * and registers it with the appropriate handler function.
+ *
+ * @param context - The VS Code extension context.
+ * @returns An array of `Disposable` objects representing the registered commands. These can be used to unregister the commands later if needed.
+ */
 export function registerCommands(context: ExtensionContext) {
     const registered: Disposable[] = [];
 
-    // Use ExtensionContext
-    const extensionCommands: Record<string, (context: vscode.ExtensionContext) => Promise<void>> = {
+    ////////////////////////////////////////////////////////////////////
+    ////  Commands
+    ////////////////////////////////////////////////////////////////////
+
+    //- Simple Commands (context) ------------------------------------
+    const contextCommands: Record<string, (context: ExtensionContext) => Promise<void>> = {
         showFolderIconAssignment,
         toggleIcons,
         activateIconTheme,
         showAvailableIcons,
-        toggleExplorerArrows
+        toggleExplorerArrows,
     };
-    for (const commandName in extensionCommands) {
+
+    //
+    //- Simple Commands (context, uri) -------------------------------
+    const uriCommands: Record<string, (context: ExtensionContext, uri: Uri) => Promise<void>> = {
+        assignIcon,
+        revertIcon,
+        updateTerminalPath,
+    };
+
+    //
+    //- Dotted Commands (context) ------------------------------------
+    const prefixedContextCommands: Record<string, (context: ExtensionContext) => Promise<void>> = {
+        'varLogger.logMessage': logMessage,
+    };
+
+    //
+    //- Dotted Commands (context, uri) ------------------------------------
+    const prefixedUriCommands: Record<string, (context: ExtensionContext, uri: Uri) => Promise<void>> = {
+        'terminal.updateTerminalPath': updateTerminalPath,
+    };
+
+    //
+    //
+    //
+    ////////////////////////////////////////////////////////////////////
+    ////  Register Commands
+    ////////////////////////////////////////////////////////////////////
+
+    //- Context commands with no prefix ------------------------------
+    for (const commandName in contextCommands) {
         registered.push(
             commands.registerCommand(`${constants.extension.name}.${commandName}`, () => {
-                extensionCommands[commandName](context);
+                contextCommands[commandName](context);
             })
         );
     }
 
-    
-    // Need a Uri
-    registered.push(commands.registerCommand( `${constants.extension.name}.updateTerminalPath`,
-        async (uri: Uri) => { updateTerminalPath(uri); }
-    ));
+    //- Uri commands with no prefix ----------------------------------
+    for (const commandName in uriCommands) {
+        registered.push(
+            commands.registerCommand(`${constants.extension.name}.${commandName}`, (uri: Uri) => {
+                uriCommands[commandName](context, uri);
+            })
+        );
+    }
 
-    registered.push(commands.registerCommand( `${constants.extension.name}.assignIcon`,
-        async (uri: Uri) => { assignIcon(context, uri); }
-    ));
+    //- Register prefixed commands -----------------------------------
+    for (const commandKey in prefixedContextCommands) {
+        registered.push(
+            commands.registerCommand(`${constants.extension.name}.${commandKey}`, () => {
+                prefixedContextCommands[commandKey](context);
+            })
+        );
+    }
 
-    registered.push(commands.registerCommand( `${constants.extension.name}.revertIcon`,
-        async (uri: Uri) => { revertIcon(uri); }
-    ));
+    //- Register prefixed commands -----------------------------------
+    for (const commandKey in prefixedUriCommands) {
+        registered.push(
+            commands.registerCommand(`${constants.extension.name}.${commandKey}`, (uri: Uri) => {
+                prefixedUriCommands[commandKey](context, uri);
+            })
+        );
+    }
 
     return registered;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ////////////////////////////////////////////////////////////////////
-// ////  Commands with arguments
-// ////////////////////////////////////////////////////////////////////
-// registered.push(commands.registerCommand(
-//     'torn-focus-ui.updateTerminalPath',
-//     async (uri: Uri) => { updateTerminalPath(uri); }
-// ));
-
-// registered.push(commands.registerCommand(
-//     `${constants.extension.name}.assignIcon`,
-//     async (uri: Uri) => { assignIcon(context, uri); }
-// ));
-
-// registered.push(commands.registerCommand(
-//     'torn-focus-ui.revertIcon',
-//     async (uri: Uri) => { revertIcon(uri); }
-// ));
-
-
-
-
-
-
-// ////////////////////////////////////////////////////////////////////
-// ////  Command with function reference
-// ////////////////////////////////////////////////////////////////////
-
-// /*
-//     const extensionRefCommands: { [command: string]: () => Promise<void> } = {
-//         "commandID": functionName
-
-//     };
-
-//     Object.keys(extensionRefCommands).forEach((commandName) => {
-//         registered.push(
-//             vscode.commands.registerCommand(`${constants.extension.name}.${commandName}`, () => {
-//                 extensionRefCommands[commandName]();
-//             })
-//         );
-//     });
-// */
-
-
-// // ////////////////////////////////////////////////////////////////////
-// // ////  Command with no arguments or function reference
-// // ////////////////////////////////////////////////////////////////////
-// // const extensionCommands: Record<string, () => Promise<void>> = {
-// //     activateIconTheme,
-// //     showAvailableIcons,
-// //     showFolderIconAssignment,
-// //     toggleIcons
-
-// // };
-
-// // for (const commandName in extensionCommands) {
-// //     registered.push(
-// //         vscode.commands.registerCommand(`${constants.extension.name}.${commandName}`, () => {
-// //             extensionCommands[commandName]();
-// //         })
-// //     );
-// // }
-
-
-
-
-
-
-// export function registerCommands(context: vscode.ExtensionContext) {
-//     const registered: vscode.Disposable[] = [];
-//     const extensionCommands: Record<string, (context: vscode.ExtensionContext) => Promise<void>> = {
-//         showFolderIconAssignment,
-//         toggleIcons,
-//         activateIconTheme,
-//         showAvailableIcons,
-//         toggleExplorerArrows
-
-//     };
-
-//     for (const commandName in extensionCommands) {
-//         registered.push(
-//             vscode.commands.registerCommand(`${constants.extension.name}.${commandName}`, () => {
-//                 // Pass the context to the command handler
-//                 extensionCommands[commandName](context);
-//             })
-//         );
-//     }
-
-//     return registered;
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const registered: vscode.Disposable[] = [];
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// Is there a way by parsing the
+
+// D:\_dev\torn-focus-ui\src\extension\commands\_commands.json
+
+// to populate the contextCommands
+
+// in the
+
+// D:\_dev\torn-focus-ui\src\extension\helpers\registration.ts
+
+//
+//
+//
+// registered.push(
+//     commands.registerCommand(`${constants.extension.name}.varLogger.logMessage`, async () => {
+//         logMessage();
+//     })
+// );
+//
+//
+//
+
+////////////////////////////////////////////////////////////////////
+////  Need a Uri
+////////////////////////////////////////////////////////////////////
 
 // registered.push(
-//     vscode.commands.registerCommand('torn-focus-ui.updateTerminalPath', async (uri: vscode.Uri) => {
-//         updateTerminalPath(uri); // Pass the uri to your function
+//     commands.registerCommand(`${constants.extension.name}.updateTerminalPath`, async (uri: Uri) => {
+//         updateTerminalPath(uri);
 //     })
 // );
 
+// registered.push(
+//     commands.registerCommand(`${constants.extension.name}.assignIcon`, async (uri: Uri) => {
+//         assignIcon(context, uri);
+//     })
+// );
 
+// registered.push(
+//     commands.registerCommand(`${constants.extension.name}.revertIcon`, async (uri: Uri) => {
+//         revertIcon(uri);
+//     })
+// );
 
+// Use ExtensionContext
+// const extensionCommands: Record<string, (context: ExtensionContext) => Promise<void>> = {
+//     showFolderIconAssignment,
+//     toggleIcons,
+//     activateIconTheme,
+//     showAvailableIcons,
+//     toggleExplorerArrows,
 
-// const extensionCommands: { [command: string]: () => Promise<void> } = {
-//     activateIconTheme
+// };
+// for (const commandName in extensionCommands) {
+//     registered.push(
+//         commands.registerCommand(`${constants.extension.name}.${commandName}`, () => {
+//             extensionCommands[commandName](context);
+//         })
+//     );
+// }
+
+// How to have the command list more like this
+
+// 'showFolderIconAssignment',
+// 'toggleIcons',
+// 'activateIconTheme',
+// 'showAvailableIcons',
+// 'toggleExplorerArrows',
+// 'varLogger.logMessage'
+
+// instead of this
+
+// 'showFolderIconAssignment': showFolderIconAssignment,
+// 'toggleIcons': toggleIcons,
+// 'activateIconTheme': activateIconTheme,
+// 'showAvailableIcons': showAvailableIcons,
+// 'toggleExplorerArrows': toggleExplorerArrows,
+// 'varLogger.logMessage': logMessage,
+
+// Is there a programatic way to convert this
+
+// const extensionCommandNames: string[] = [
+//     'showFolderIconAssignment',
+//     'toggleIcons',
+//     'activateIconTheme',
+//     'showAvailableIcons',
+//     'toggleExplorerArrows',
+//     'varLogger.logMessage'
+// ];
+
+// to this
+
+// // Map command names to their functions
+// const commandFunctions: Record<string, (context: ExtensionContext) => Promise<void>> = {
+//     'showFolderIconAssignment': showFolderIconAssignment,
+//     'toggleIcons': toggleIcons,
+//     'activateIconTheme': activateIconTheme,
+//     'showAvailableIcons': showAvailableIcons,
+//     'toggleExplorerArrows': toggleExplorerArrows,
+//     'varLogger.logMessage': logMessage
 // };
 
-// export const registered = Object.keys(extensionCommands).map((commandName) => {
-//     const callCommand = () => extensionCommands[commandName]();
+// const extensionCommandNames: string[] = [
+//     'showFolderIconAssignment',
+//     'toggleIcons',
+//     'activateIconTheme',
+//     'showAvailableIcons',
+//     'toggleExplorerArrows',
+//     'varLogger.logMessage'
+// ];
 
-//     // window.showInformationMessage(`Command Name: ${constants.extension.name}.${commandName}`); // Show a message box
-//     // console.log(`Command Name: ${constants.extension.name}.${commandName}`); // Log to the console
+// // Programmatically create the commandFunctions object
+// const commandFunctions: Record<string, (context: ExtensionContext) => Promise<void>> = extensionCommandNames.reduce(
+//     (acc, commandName) => {
+//         // Assuming your functions are available in the current scope
+//         acc[commandName] = eval(commandName);
+//         return acc;
+//     },
+//     {} as Record<string, (context: ExtensionContext) => Promise<void>>
+// );
 
-//     return commands.registerCommand(
-//         `${constants.extension.name}.${commandName}`,
-//         callCommand
-//     );
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-// export const registered = Object.keys(extensionCommands).map((commandName) => {
-//     const callCommand = () => {
-//         window.showInformationMessage(`Command Name: ${extensionName}.${commandName}`);
-//         console.log(`Command Name: ${extensionName}.${commandName}`);
-
-//         extensionCommands[commandName]();
-//     };
-
-//     // Command name is now constructed when the command is executed
-//     return commands.registerCommand(`${extensionName}.${commandName}`, callCommand);
-// });
+// console.log(commandFunctions);

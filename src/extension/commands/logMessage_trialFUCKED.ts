@@ -1,14 +1,54 @@
-import * as vscode from 'vscode';
+import { Position, window, TextDocument } from 'vscode';
 import ts from 'typescript';
 import { getThemeConfig } from '../../config/configurationActions';
 
 interface LogMessageOptions {
-    document: vscode.TextDocument;
+    document: TextDocument;
     selectedVar: string;
     lineOfSelectedVar: number;
     insertEnclosingClass: boolean;
     insertEnclosingFunction: boolean;
 }
+
+
+
+
+// torn-focus-ui.debug.logMessage - context: ExtensionContext, fileUri: Uri
+const logMessage = async () => {
+    const editor = window.activeTextEditor;
+    if (!editor) {
+        return;
+    }
+
+    const document = editor.document;
+
+    for (const selection of editor.selections) {
+        const selectedVar = document.getText(selection);
+        const lineOfSelectedVar = selection.active.line;
+
+        if (selectedVar.trim() !== '') {
+            await editor.edit((editBuilder) => {
+                const logMessageLine = getMsgTargetLine(document, lineOfSelectedVar, selectedVar);
+
+                const logMessageContent = generateLogMessage({
+                    document,
+                    selectedVar,
+                    lineOfSelectedVar,
+                    insertEnclosingClass: true,
+                    insertEnclosingFunction: true,
+                });
+
+                editBuilder.insert(
+                    new Position(logMessageLine >= document.lineCount ? document.lineCount : logMessageLine, 0),
+                    logMessageContent
+                );
+            });
+        }
+    }
+};
+
+
+
 
 //>  START: getMsgTargetLine 
 
@@ -29,7 +69,7 @@ interface LogMessageOptions {
  *
  * @returns The zero-based line number where the log message should be inserted.
  */
-function getMsgTargetLine(document: vscode.TextDocument, selectionLine: number, selectedVar: string): number {
+function getMsgTargetLine(document: TextDocument, selectionLine: number, selectedVar: string): number {
     //--- Parse into an AST ------------------------------------------
     const sourceCode = document.getText();
     const sourceFile = ts.createSourceFile(document.fileName, sourceCode, ts.ScriptTarget.Latest, true);
@@ -250,7 +290,7 @@ function generateLogMessage(options: LogMessageOptions): string {
  * @returns A string containing the indentation spaces.
  */
 
-function calculateSpaces(document: vscode.TextDocument, line: number): string {
+function calculateSpaces(document: TextDocument, line: number): string {
     const currentLine = document.lineAt(line);
     const firstNonWhitespaceIndex = currentLine.firstNonWhitespaceCharacterIndex;
     return ' '.repeat(firstNonWhitespaceIndex);
@@ -268,7 +308,7 @@ function calculateSpaces(document: vscode.TextDocument, line: number): string {
  *
  * @returns The name of the enclosing class with " -> " appended, or an empty string if not found.
  */
-function getEnclosingClassName(document: vscode.TextDocument, lineOfSelectedVar: number): string {
+function getEnclosingClassName(document: TextDocument, lineOfSelectedVar: number): string {
     const classDeclarationRegex = /class\s+([a-zA-Z]+)\s*(.*)\s*{/;
 
     for (let currentLineNum = lineOfSelectedVar; currentLineNum >= 0; currentLineNum--) {
@@ -298,7 +338,7 @@ function getEnclosingClassName(document: vscode.TextDocument, lineOfSelectedVar:
  *
  * @returns The name of the enclosing function with " -> " appended, or an empty string if not found.
  */
-function getEnclosingFunctionName(document: vscode.TextDocument, lineOfSelectedVar: number): string {
+function getEnclosingFunctionName(document: TextDocument, lineOfSelectedVar: number): string {
     const namedFunctionDeclarationRegex = /([a-zA-Z]+)\s*\(.*\)\s*{/;
     const namedFunctionExpressionRegex = /([a-zA-Z]+)\s*=\s*(function)?\s*[a-zA-Z]*\s*\(.*\)\s*(=>)?\s*{/;
     const jsBuiltInStatementRegex = /(if|switch|while|for|catch)\s*\(.*\)\s*{/;
@@ -336,7 +376,7 @@ function getEnclosingFunctionName(document: vscode.TextDocument, lineOfSelectedV
  * @returns The line number of the matching closing curly brace `}`, or the document's line count
  *          if a matching closing brace is not found within the document.
  */
-function getClosingLine(document: vscode.TextDocument, startingLine: number): number {
+function getClosingLine(document: TextDocument, startingLine: number): number {
     let openBrackets = 1;
     let closeBrackets = 0;
     let currentLineNum = startingLine + 1;
@@ -357,4 +397,14 @@ function getClosingLine(document: vscode.TextDocument, startingLine: number): nu
 
 //<  END: generateLogMessage 
 
-export { generateLogMessage, getMsgTargetLine, calculateSpaces };
+export { logMessage, generateLogMessage, getMsgTargetLine, calculateSpaces };
+
+
+
+
+
+
+
+
+
+

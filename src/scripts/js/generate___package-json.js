@@ -1,7 +1,6 @@
 const fs = require('fs');
 
 const packageJsonPath = './package.json';
-
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
 const commandsJsonPath = 'src/extension/commands/_commands.json';
@@ -13,127 +12,152 @@ const commandsData = JSON.parse(commandsJsonWithoutComments);
 const commands = commandsData;
 delete commands.submenus;
 
-/**
- * Generates an array of command objects for the package.json "contributes.commands" section.
- * It iterates through the provided commands object, skipping submenus, and creates
- * a command entry for each regular command.
- *
- * @param {Object} commands An object containing command definitions.
- * @returns {Array<Object>} An array of command objects suitable for package.json.
- */
-function generateCommandsArray(commands) {
-    return Object.entries(commands)
-        .map(([commandKey, cmd]) => {
-            // Ignore objects that are submenus
-            if (commandKey.endsWith('Submenu')) {
-                return null; // Skip submenus
-            }
+class MenuSection {
+  constructor(baseGroup) {
+    this.baseGroup = baseGroup;
+    this.groupNumber = 1;
+    this.order = 0;
+  }
 
-            return {
-                title: `FT-UI: ${cmd.group ? cmd.group + ' > ' : ''}${cmd.name}`,
-                command: `torn-focus-ui.${cmd.command || commandKey}`,
-            };
-        })
-        .filter((command) => command !== null); // Remove null entries (submenus)
+  nextGroup() {
+    this.groupNumber++;
+    this.order = 0;
+  }
+
+  generateGroup() {
+    return `${this.baseGroup}${this.groupNumber}@${this.order++}`;
+  }
 }
 
-/**
- * Reads language icon data from a module and formats it for package.json.
- *
- * @param {string} languagesModulePath - Path to the language icons module.
- * @param {string} iconPath - Base path for icon files.
- * @returns {Array<Object>} - Formatted language icon data.
- */
-function generateLanguagesArray(languagesModulePath, iconPath) {
-    const languagesModule = require(languagesModulePath);
-    const languages = languagesModule.languages;
+class SubmenuSection extends MenuSection {
+  constructor(submenu, submenuName) {
+    super(submenu.group);
+    this.submenu = submenu;
+    this.submenuName = submenuName;
+  }
 
-    return languages.icons.map((lang) => ({
-        id: lang.id,
-        icon: {
-            light: `${iconPath}${lang.icon}`,
-            dark: `${iconPath}${lang.icon}`,
-        },
-    }));
-}
-
-/**
- * Adds a submenu definition to the package.json "contributes.submenus" section
- * and returns a menu entry object that references the newly added submenu.
- *
- * @param {Object} submenu The submenu object to be added.
- * @param {string} submenuName The key of the submenu in the commands object.
- * @returns {Object} A menu entry object referencing the added submenu.
- */
-function addSubmenu(submenu, submenuName) {
-    // Add submenu to package.json
+  addToPackageJson(packageJson) {
     packageJson.contributes.submenus.push({
-        label: submenu.label,
-        id: `torn-focus-ui.${submenuName}`,
+      label: this.submenu.label,
+      id: `torn-focus-ui.${this.submenuName}`,
+    });
+  }
+
+  generateMenuEntry() {
+    return {
+      group: this.generateGroup(),
+      submenu: `torn-focus-ui.${this.submenuName}`,
+    };
+  }
+}
+
+class CommandSection {
+  constructor(commands) {
+    this.commands = commands;
+  }
+
+  generateCommandsArray() {
+    return Object.entries(this.commands)
+      .map(([commandKey, cmd]) => {
+        if (commandKey.endsWith('Submenu')) {
+          return null;
+        }
+        return {
+          title: `FT-UI: ${cmd.group ? cmd.group + ' > ' : ''}${cmd.name}`,
+          command: `torn-focus-ui.${cmd.command || commandKey}`,
+        };
+      })
+      .filter((command) => command !== null);
+  }
+}
+
+class MenuGenerator {
+  constructor(commands) {
+    this.commands = commands;
+    this.menus = {};
+    this.menuSections = {};
+  }
+
+  getSubmenuSection(submenu, submenuName) {
+    return new SubmenuSection(submenu, submenuName);
+  }
+
+  getCommandSection() {
+    return new CommandSection(this.commands);
+  }
+
+  getMenuSection(baseGroup) {
+    if (!this.menuSections[baseGroup]) {
+      this.menuSections[baseGroup] = new MenuSection(baseGroup);
+    }
+    return this.menuSections[baseGroup];
+  }
+
+  addCommandToMenu(cmd, menuId, key) {
+    const baseGroup = cmd.menu ? cmd.menu.group : `${cmd.submenu}`;
+    const menuSection = this.getMenuSection(baseGroup);
+
+    this.menus[menuId] = this.menus[menuId] || [];
+    this.menus[menuId].push({
+      group: menuSection.generateGroup(),
+      command: `torn-focus-ui.${cmd.command || key}`,
     });
 
-    return {
-        group: submenu.group,
-        submenu: `torn-focus-ui.${submenuName}`,
-    };
-}
-
-/**
- * Adds a regular command to the specified menus object, organizing it
- * under the appropriate menu ID and group.
- *
- * @param {Object} cmd The command object to add.
- * @param {Object} menus The menus object to modify.
- * @param {string} key The key of the command in the original commands object.
- */
-function addCommandToMenu(cmd, menus, key) {
-    let menuId = cmd.menu ? cmd.menu.name : null;
-
-    if (cmd.submenu && commands[cmd.submenu]) {
-        menuId = `torn-focus-ui.${cmd.submenu}`;
+    if (cmd.dividerAfter) {
+      menuSection.nextGroup();
     }
+  }
 
-    if (menuId) {
-        menus[menuId] = menus[menuId] || [];
-
-        let group = cmd.menu ? cmd.menu.group : `${cmd.submenu}@`;
-        group = cmd.subgroup !== undefined ? `${cmd.submenu}${cmd.subgroup}@1` : `${group}1`;
-
-        menus[menuId].push({
-            group: group,
-            command: `torn-focus-ui.${cmd.command || key}`,
-        });
-    }
-}
-
-/**
- * Generates the "contributes.menus" object for the package.json,
- * defining the structure and commands within each menu.
- *
- * @param {Object} commands The object containing all command definitions.
- * @returns {Object} The generated menus object for package.json.
- */
-function generateMenusObject(commands) {
-    const menus = {};
+  generateMenusObject() {
     packageJson.contributes.menus = {};
     packageJson.contributes.submenus = [];
 
-    for (const [key, cmd] of Object.entries(commands)) {
-        if (key.endsWith('Submenu')) {
-            const menuEntry = addSubmenu(cmd, key);
-            menus[cmd.location] = menus[cmd.location] || [];
-            menus[cmd.location].push(menuEntry);
-        } else {
-            addCommandToMenu(cmd, menus, key); // Pass key to the function
+    for (const [key, cmd] of Object.entries(this.commands)) {
+      if (key.endsWith('Submenu')) {
+        const submenuSection = this.getSubmenuSection(cmd, key);
+        submenuSection.addToPackageJson(packageJson);
+        const menuEntry = submenuSection.generateMenuEntry();
+        this.menus[cmd.location] = this.menus[cmd.location] || [];
+        this.menus[cmd.location].push(menuEntry);
+      } else {
+        let menuId = cmd.menu ? cmd.menu.name : null;
+        if (cmd.submenu && commands[cmd.submenu]) {
+          menuId = `torn-focus-ui.${cmd.submenu}`;
         }
+        this.addCommandToMenu(cmd, menuId, key);
+      }
     }
-    return menus;
+    return this.menus;
+  }
 }
 
-const formattedLanguages = generateLanguagesArray('../../dict/language_icons.model.js', './assets/icons/file_icons/');
+class LanguagesSection {
+  constructor(languagesModulePath, iconPath) {
+    this.languagesModulePath = languagesModulePath;
+    this.iconPath = iconPath;
+  }
 
-packageJson.contributes.commands = generateCommandsArray(commands);
-packageJson.contributes.menus = generateMenusObject(commands);
-packageJson.contributes.languages = formattedLanguages;
+  generateLanguagesArray() {
+    const languagesModule = require(this.languagesModulePath);
+    const languages = languagesModule.languages;
+
+    return languages.icons.map((lang) => ({
+      id: lang.id,
+      icon: {
+        light: `${this.iconPath}${lang.icon}`,
+        dark: `${this.iconPath}${lang.icon}`,
+      },
+    }));
+  }
+}
+
+// Usage:
+const menuGenerator = new MenuGenerator(commands);
+const commandSection = menuGenerator.getCommandSection();
+const languagesSection = new LanguagesSection('../../dict/language_icons.model.js', './assets/icons/file_icons/');
+
+packageJson.contributes.commands = commandSection.generateCommandsArray();
+packageJson.contributes.menus = menuGenerator.generateMenusObject();
+packageJson.contributes.languages = languagesSection.generateLanguagesArray();
 
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 4));

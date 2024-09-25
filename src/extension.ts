@@ -1,48 +1,48 @@
 /** @format */
-import { Position, window, ExtensionContext, workspace, commands} from 'vscode';
+import {ExtensionContext, workspace, commands} from 'vscode';
 
 import { updateIconThemeNoWorkspace, updateHidesExplorerArrows } from './helpers/updateIconTheme';
 
 import { registerCommands } from './extension/helpers/registration';
 import { getThemeConfig } from './config/configurationActions';
-import { generateLogMessage, getMsgTargetLine } from './extension/helpers/log-message';
+// import { generateLogMessage, getMsgTargetLine } from './extension/helpers/log-message';
 
 
-// function _lwkejfwef(){
-    
-//     const zxc = 'asdasd';
-//     console.log(zxc);
+function _lwkejfwef(){
 
-//     // Inside Array, followed by CLog
-//     const qwe  = [ 1, 2, 3];
-//     console.log(qwe);
+    const zxc = 'asdasd';
+    console.log(zxc);
+
+    // Inside Array, followed by CLog
+    const qwe  = [ 1, 2, 3];
+    console.log(qwe);
 
 
-//     // Inside Array, followed by other
-//     const _myArray2 = [ 1, 2, 3];
-//     const _notherVar = 177;
-//     console.log(_myArray2[0]);
+    // Inside Array, followed by other
+    const _myArray2 = [ 1, 2, 3];
+    const _notherVar = 177;
+    console.log(_myArray2[0]);
 
-//     const myArray3 = [
-//         1,
-//         2,
-//         3
-//     ];
-//     console.log(myArray3[0]);
+    const myArray3 = [
+        1,
+        2,
+        3
+    ];
+    console.log(myArray3[0]);
 
-//     const name = "John";
-//     const greeting = `Hello, ${name}!`;
-//     console.log(greeting);
+    const name = "John";
+    const greeting = `Hello, ${name}!`;
+    console.log(greeting);
 
-//     class MyClass {
-//       myFunction() {
-//         const _myVar = 42;
-//       }
-//     }
+    class MyClass {
+      myFunction() {
+        const _myVar = 42;
+      }
+    }
 
-//     const _asd = new MyClass();
-    
-// }
+    const _asd = new MyClass();
+
+}
 
 
 
@@ -75,87 +75,118 @@ export function activate(context: ExtensionContext) {
     //---------------------------------------------------------------------------------------------------<<
 
 
+    
 
 
 
 
+    // context.subscriptions.push( commands.registerCommand( "torn-focus-ui.debug.logMessage", async () => {
+    //     const editor = window.activeTextEditor;
+    //     if (!editor) { return; }
+
+    //     const document = editor.document;
+
+    //     for (const selection of editor.selections) {
+    //         const selectedVar = document.getText(selection);
+    //         const lineOfSelectedVar = selection.active.line;
+
+    //         if (selectedVar.trim() !== "") {
+    //             await editor.edit(editBuilder => {
+    //                 const logMessageLine = getMsgTargetLine(document, lineOfSelectedVar, selectedVar);
+
+    //                 const logMessageContent = generateLogMessage({
+    //                     document,
+    //                     selectedVar,
+    //                     lineOfSelectedVar,
+    //                     insertEnclosingClass: true,
+    //                     insertEnclosingFunction: true
+    //                 });
+
+
+    //                 editBuilder.insert(
+    //                     new Position(logMessageLine >= document.lineCount ? document.lineCount : logMessageLine, 0),
+    //                     logMessageContent
+    //                 );
+    //             });
+    //         }
+    //     }
+    // }));
 
 
 
 
+    // context.subscriptions.push(
+    //     commands.registerCommand(
+    //         "torn-focus-ui.debug.logMessage",
+    //         async () => {
 
-    context.subscriptions.push(
-        commands.registerCommand(
-            "torn-focus-ui.debug.logMessage",
-            async () => {
+    //             const editor = window.activeTextEditor;
+    //             if (!editor) { console.log("[MAIN: logMessage] No active editor found."); return; }
 
-                const editor = window.activeTextEditor;
-                if (!editor) { console.log("[MAIN: logMessage] No active editor found."); return; }
-                
-                const document = editor.document;
-                console.log(`[MAIN: logMessage] Number of selections: ${editor.selections.length}`);
-
-                
-                for (const element of editor.selections) {
-                    const selection = element;
-                    const selectedVar = document.getText(selection);
-                    
-                    // zero based line number
-                    const lineOfSelectedVar = selection.active.line;
+    //             const document = editor.document;
+    //             console.log(`[MAIN: logMessage] Number of selections: ${editor.selections.length}`);
 
 
+    //             for (const element of editor.selections) {
+    //                 const selection = element;
+    //                 const selectedVar = document.getText(selection);
 
-                    // Log selected variable and line
-                    console.log(`[MAIN: logMessage] Selected variable: ${selectedVar}, Line: ${lineOfSelectedVar} (actual: ${lineOfSelectedVar+1})`);
-
-                    if (selectedVar.trim().length !== 0) {
-                        await editor.edit(editBuilder => {
-                            const logMessageLine = getMsgTargetLine(
-                                document,
-                                lineOfSelectedVar,
-                                selectedVar
-                            );
+    //                 // zero based line number
+    //                 const lineOfSelectedVar = selection.active.line;
 
 
 
-                            // Log the calculated line
-                            console.log(`[MAIN: logMessage] Calculated log message line: ${logMessageLine} (actual: ${logMessageLine+1})`);
+    //                 // Log selected variable and line
+    //                 console.log(`[MAIN: logMessage] Selected variable: ${selectedVar}, Line: ${lineOfSelectedVar} (actual: ${lineOfSelectedVar+1})`);
 
-                            const logMessageContent = generateLogMessage({
-                                document: document,
-                                selectedVar: selectedVar,
-                                lineOfSelectedVar: lineOfSelectedVar,
-                                insertEnclosingClass: true,
-                                insertEnclosingFunction: true
-                            });
-
-
-
-                            // Log the generated message
-                            console.log(`[MAIN: logMessage] Generated log message: ${logMessageContent}`);
-
-                            editBuilder.insert(
-                                new Position(
-                                    logMessageLine >= document.lineCount
-                                        ? document.lineCount
-                                        : logMessageLine,
-                                    0
-                                ),
-
-                                logMessageContent
-                            );
-                        });
+    //                 if (selectedVar.trim().length !== 0) {
+    //                     await editor.edit(editBuilder => {
+    //                         const logMessageLine = getMsgTargetLine(
+    //                             document,
+    //                             lineOfSelectedVar,
+    //                             selectedVar
+    //                         );
 
 
-                    } else {
 
-                        // Log if selection is empty
-                        console.log("[MAIN: logMessage] Skipping empty selection.");
-                    }
-                }
-            }
-        )
-    );
+    //                         // Log the calculated line
+    //                         console.log(`[MAIN: logMessage] Calculated log message line: ${logMessageLine} (actual: ${logMessageLine+1})`);
+
+    //                         const logMessageContent = generateLogMessage({
+    //                             document: document,
+    //                             selectedVar: selectedVar,
+    //                             lineOfSelectedVar: lineOfSelectedVar,
+    //                             insertEnclosingClass: true,
+    //                             insertEnclosingFunction: true
+    //                         });
+
+
+
+    //                         // Log the generated message
+    //                         console.log(`[MAIN: logMessage] Generated log message: ${logMessageContent}`);
+
+    //                         editBuilder.insert(
+    //                             new Position(
+    //                                 logMessageLine >= document.lineCount
+    //                                     ? document.lineCount
+    //                                     : logMessageLine,
+    //                                 0
+    //                             ),
+
+    //                             logMessageContent
+    //                         );
+    //                     });
+
+
+    //                 } else {
+
+    //                     // Log if selection is empty
+    //                     console.log("[MAIN: logMessage] Skipping empty selection.");
+    //                 }
+    //             }
+    //         }
+    //     )
+    // );
 
 
 
@@ -241,7 +272,7 @@ export function activate(context: ExtensionContext) {
     //         console.log('Not a workspace file.');
     //     }
     // } else {
-    //     console.log('No workspace open.');
+    //     console.log('No workspaceef open.');
     // }
 
 
@@ -446,3 +477,4 @@ export function deactivate() { /* There is nothing to deactivate */ }
 
 
 
+console.log('lwkejfwef -> console:', console);

@@ -22,6 +22,8 @@
 # Files to include in the extension package
 # Documentation for this format:
 # https://code.visualstudio.com/api/working-with-extensions/publishing-extension#using-.vscodeignore
+
+
 !CHANGELOG.md
 !LICENSE.txt
 !README.md
@@ -32,6 +34,9 @@
 !package.nls.*.json
 
 !dist
+dist/compilation-stats.json
+
+
 
 # !out
 

@@ -4,10 +4,9 @@
     "assignIconSubmenu": {
         "label": "FT-UI: Assign Icon",
         "location": "explorer/context",
-        "group": "2_workspace@0"
+        "group": "2_workspace"
     },
 
-    //- Commands for AssignIcon submenu ----------
     "assignIcon": {
         "name": "Use Alternate icon",
         "submenu": "assignIconSubmenu"
@@ -15,43 +14,100 @@
 
     "revertIcon": {
         "name": "Use Default Icon",
-        "submenu": "assignIconSubmenu"
+        "submenu": "assignIconSubmenu",
+        "dividerAfter": true
     },
 
     "showAvailableIcons": {
         "name": "Show Available Icons",
-        "submenu": "assignIconSubmenu", "subgroup":2
+        "submenu": "assignIconSubmenu"
     },
 
     "showFolderIconAssignment": {
         "name": "Show Folder Assignments",
-        "submenu": "assignIconSubmenu", "subgroup":2
+        "submenu": "assignIconSubmenu"
     },
     //---------------------------------------------------------------------------------------------------<<
 
+
     
-    //- Editor/Context ------------------------------------------------------------ 
     
-    "debug.logMessage": { 
+    
+    
+    
+    //- Editor/Context -----------------------------------------------
+
+    "varLogger.logMessage": {
         "name": "Log Message",
-        "menu": { "name": "editor/context", "group": "navigation@10" } // TODO Fix why this outputs "group": "navigation@101",
+        "menu": { "name": "editor/context", "group": "1_modification" }
     },
-    
-    
-    
-    //- Command Palette only ------------------------------------------------------ 
+
+
+    //- Explorer/Context ---------------------------------------------
+
+    "terminal.updateTerminalPath": {
+        "name": "Update Terminal Path",
+        "menu": { "name": "explorer/context", "group": "9_cutcopypaste" }
+    },
+
+
+    //- Command Palette only -----------------------------------------
 
     "toggleIcons":          { "name": "Toggle Icons",           "group": "Icons" },
     "activateIconTheme":    { "name": "Activate Icon Theme",    "group": "Icons" },
     "toggleExplorerArrows": { "name": "Toggle Explorer Arrows", "group": "Icons" }
 
-    
-    
+
+
 }
 
 
 
-// "menu": { "name": "explorer/context", "group": "navigation@10" },
+
+
+/*
+
+
+items default with a grouping of 1 untill a divider = true then group would go up by one
+order starts at 0 and increments by 1 for each item, untill the grouping increments, then it woudl start over at 0
+    
+"group": "assignIconSubmenu${grouping}@${order}",
+    
+"torn-focus-ui.assignIconSubmenu": [
+    {
+        "group": "assignIconSubmenu1@0",
+        "command": "torn-focus-ui.assignIcon"
+    },
+    {
+        "group": "assignIconSubmenu1@1",
+        "command": "torn-focus-ui.revertIcon"
+    },
+  
+    {
+        "group": "assignIconSubmenu2@0",
+        "command": "torn-focus-ui.showAvailableIcons"
+    },
+    {
+        "group": "assignIconSubmenu2@1",
+        "command": "torn-focus-ui.showFolderIconAssignment"
+    }
+],
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+// "menu": { "name": "explorer/context", "group": "navigation" },
 
 // ** OR **
 
